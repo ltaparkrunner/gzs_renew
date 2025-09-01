@@ -27,7 +27,8 @@ Rectangle {
         Rectangle{
             id: r1
             Layout.alignment: Qt.AlignTop
-            implicitHeight : 60//parent.height
+//            implicitHeight : 60//parent.height
+            implicitHeight : parent.height
             implicitWidth : parent.width
             color: "light blue"
             TabView {
@@ -48,6 +49,7 @@ Rectangle {
                 }
                 Tab {
                     id: tb3
+                    anchors.fill: parent
                     title: "Тесты"
                     Plot2{
                     }

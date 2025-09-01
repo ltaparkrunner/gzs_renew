@@ -36,15 +36,20 @@ Rectangle{
                 height: 250
                 color: "lightyellow"
                 ChartView {
-                    title: "Канал 'Сухой разбавитель'"
+//                    title: "Канал 'Сухой разбавитель'"
                     anchors.fill: parent
                     antialiasing: true
                     // Define X-axis
+                    legend.visible: false
+                    margins.bottom: 0
+                    margins.top: 0
+                    margins.left: 0
+                    margins.right: 0
                     ValueAxis {
                         id: xAxis
                         min: 0
                         max: 10
-                        titleText: "X-Axis Label"
+//                        titleText: "X-Axis Label"
                     }
 
                     // Define Y-axis
@@ -52,8 +57,9 @@ Rectangle{
                         id: yAxis
                         min: 0
                         max: 5
-                        titleText: "Y-Axis Label"
+//                        titleText: "Y-Axis Label"
                     }
+
                     LineSeries{
                         axisX: xAxis
                         axisY: yAxis
