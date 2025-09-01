@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main_5.qml</file>
+        <file>Gview2.qml</file>
+		<file>TableCombo.qml</file>
+		<file>TableSimple.qml</file>
+		<file>TableCalibr.qml</file>
+		<file>WorkParams.qml</file>
+		<file>CalibrMaster.qml</file>
+		<file>Calibr1.qml</file>
+		<file>Plot1.qml</file>	
+		<file>Plot2.qml</file>	
+		<file>MergedColumns.qml</file>		
+		<file>MergedColumns2.qml</file>	
+        <file>clover_3.png</file>
+		<file>resources/GAS2.jpg</file>
+		<file>resources/Gas.ico</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+		<file>clover_3.png</file>
+    </qresource>
+</RCC>
