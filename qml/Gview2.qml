@@ -28,8 +28,10 @@ Rectangle {
             id: r1
             Layout.alignment: Qt.AlignTop
 //            implicitHeight : 60//parent.height
-            implicitHeight : parent.height
-            implicitWidth : parent.width
+//            implicitHeight : parent.height - cndln.height
+            Layout.fillHeight: true
+//            implicitWidth : parent.width
+            Layout.fillWidth: true
             color: "light blue"
             TabView {
                 id: tbv1
@@ -54,13 +56,22 @@ Rectangle {
                     Plot2{
                     }
                 }
+                Tab {
+                    id: tb4
+                    anchors.fill: parent
+                    title: "Scroll View"
+                    Scroll_1{
+                    }
+                }
             }
         }
         Rectangle{
+            id: cndln
 //            anchors.bottom: parent.bottom
             Layout.alignment: Qt.AlignBottom
+            Layout.fillWidth: true
 //            implicitWidth : parent.width
-            width:200
+//            width:200
             height: 20
             color: "yellow"
             Text{

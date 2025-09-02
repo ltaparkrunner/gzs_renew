@@ -8,6 +8,7 @@ Rectangle{
     implicitHeight: parent.height
     implicitWidth: parent.width
     color: "green"
+
     RowLayout{
         anchors.fill: parent
         Button{
@@ -15,8 +16,27 @@ Rectangle{
 //            anchors.top: parent.top
             text: "Очистить все"
         }
+        Rectangle{
+            height: 600
+            width: 800
+            color: "violet"
+
+        ScrollView{
+                anchors.fill: parent
+//            Layout.fillHeight: true
+//            Layout.fillWidth: true
+            Rectangle{
+//                Layout.fillHeight: true
+//                Layout.fillWidth: true
+    //            anchors.fill: parent
+                color: "red"
+                height: 900
+                width: 800
         ColumnLayout{
-            Layout.alignment: Qt.AlignTop
+//            Layout.alignment: Qt.AlignTop
+//            Layout.fillWidth: true
+//            Layout.fillHeight: true
+            anchors.fill: parent
 //            anchors.top: parent.top
             Rectangle{
 //                implicitWidth: parent.width
@@ -28,6 +48,35 @@ Rectangle{
                     title: "Канал 'Целевой газ'"
                     anchors.fill: parent
                     antialiasing: true
+                    // Define X-axis
+                    legend.visible: false
+                    margins.bottom: 0
+                    margins.top: 0
+                    margins.left: 0
+                    margins.right: 0
+
+                    ValueAxis {
+                        id: xAxis1
+                        min: 0
+                        max: 10
+        //                        titleText: "X-Axis Label"
+                    }
+                    ValueAxis {
+                        id: yAxis1
+                        min: 0
+                        max: 5
+                        titleText: "Сигнал, В"
+                    }
+
+                    LineSeries{
+                        axisX: xAxis1
+                        axisY: yAxis1
+
+                        XYPoint { x: 1; y: 2 }
+                        XYPoint { x: 3; y: 4 }
+                        XYPoint { x: 5; y: 3 }
+                    }
+
                 }
             }
             Rectangle{
@@ -36,7 +85,7 @@ Rectangle{
                 height: 250
                 color: "lightyellow"
                 ChartView {
-//                    title: "Канал 'Сухой разбавитель'"
+                    title: "Канал 'Сухой разбавитель'"
                     anchors.fill: parent
                     antialiasing: true
                     // Define X-axis
@@ -46,23 +95,20 @@ Rectangle{
                     margins.left: 0
                     margins.right: 0
                     ValueAxis {
-                        id: xAxis
+                        id: xAxis2
                         min: 0
                         max: 10
-//                        titleText: "X-Axis Label"
+        //                        titleText: "X-Axis Label"
                     }
-
-                    // Define Y-axis
                     ValueAxis {
-                        id: yAxis
+                        id: yAxis2
                         min: 0
                         max: 5
-//                        titleText: "Y-Axis Label"
+                        titleText: "Сигнал, В"
                     }
-
                     LineSeries{
-                        axisX: xAxis
-                        axisY: yAxis
+                        axisX: xAxis2
+                        axisY: yAxis2
 
                         XYPoint { x: 1; y: 2 }
                         XYPoint { x: 3; y: 4 }
@@ -79,8 +125,42 @@ Rectangle{
                     title: "Канал 'Влажный разбавитель'"
                     anchors.fill: parent
                     antialiasing: true
+                    // Define X-axis
+                    legend.visible: false
+                    margins.bottom: 0
+                    margins.top: 0
+                    margins.left: 0
+                    margins.right: 0
+                    ValueAxis {
+                        id: xAxis3
+                        min: 0
+                        max: 10
+        //                        titleText: "X-Axis Label"
+                    }
+                    ValueAxis {
+                        id: yAxis3
+                        min: 0
+                        max: 5
+                        titleText: "Сигнал, В"
+                    }
+                    LineSeries{
+                        axisX: xAxis3
+                        axisY: yAxis3
+
+                        XYPoint { x: 1; y: 2 }
+                        XYPoint { x: 3; y: 4 }
+                        XYPoint { x: 5; y: 3 }
+                    }
+
                 }
             }
         }
+        }
+        }
+        }
     }
+
+
+//    }
+//    }
 }

@@ -18,5 +18,6 @@
         <file>resources/Gas.ico</file>
         <file>RadioB.qml</file>
         <file>TableHeader.qml</file>
+        <file>Scroll_1.qml</file>
     </qresource>
 </RCC>
