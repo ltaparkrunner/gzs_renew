@@ -23,32 +23,42 @@ Rectangle {
 //        onToQML_smplTbl:
         function onToQML_smplTbl(lc)
         {
-            var i
+            var i,j,l
             var imax = lc.length/6
+            var st
+            const ml = 12//15
+            var row
             console.log("onToQML_smplTbl imax: ", imax)
-//            lm2.model[0] = lc[6]
+
             lm2.clear()
-            lm2.append({title1:lc[6]})
-            lm2.append({title1:lc[7]})
-            lm2.append({title1:lc[8]})
-            lm2.append({title1:lc[9]})
-            lm2.append({title1:lc[10]})
-            lm2.append({title1:lc[11]})
-//            header2.model[1] = lc[7]
-//            header2.model[0] = lc[8]
-//            header2.model[1] = lc[9]
-//            header2.model[0] = lc[10]
-//            header2.model[1] = lc[11]
-//            tvc1.title = lc[6];
-//            tvc2.title = lc[7];
-//            tvc3.title = lc[8];
-//            tvc4.title = lc[9];
-//            tvc5.title = lc[10];
-//            tvc6.title = lc[11];
-//            for(i = 2; i<imax; i++){
-//                lm1.append({"mnumber":lc[6*i], "duration":lc[6*i+1], "cncntr1":lc[6*i+2],
-//                               "cncntr2":lc[6*i+3], "sumStream":lc[6*i+4], "humidity":lc[6*i+5]})
-//            }
+
+            for(i = 6; i < 12; i++) {
+                if (lc[i].length > ml){
+                    var strlist = lc[i].split(" ")
+                    l = strlist.length
+                    st = "";
+                    row = 1;
+//                    strlist.foreach()
+//                     console.log("onToQML_smplTbl lc.length: ", l)
+                    for(j = 0; j < l; j++){
+                        if((st.length + strlist[j].length) > (ml * row) && j > 0){
+                            st = st + " \n" + strlist[j]
+                            row++
+//                            console.log("onToQML_smplTbl (st.lenght + strlist[j].length) > ml * row", )
+                        }
+                        else{
+                            st = st + " " + strlist[j]
+                        }
+                    }
+                    lm2.append({title1: st})
+                }
+                else lm2.append({title1:lc[i]})
+            }
+            tm21.clear()
+            for(i=2; i<imax; i++){
+                tm21.appendRow({"mnumber":lc[6*i], "duration":lc[6*i+1], "cncntr1":lc[6*i+2],
+                               "cncntr2":lc[6*i+3], "sumStream":lc[6*i+4], "humidity":lc[6*i+5]})
+            }
         }
     }
 //    color: "ivory"
@@ -93,7 +103,7 @@ Rectangle {
               implicitWidth: 100
               implicitHeight: 20
               border.width: 1
-              Label {
+              TextEdit {
                   text: display
                   anchors.centerIn: parent
               }
