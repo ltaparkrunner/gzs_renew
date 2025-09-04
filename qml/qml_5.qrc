@@ -19,5 +19,7 @@
         <file>RadioB.qml</file>
         <file>TableHeader.qml</file>
         <file>Scroll_1.qml</file>
+        <file>Chooser_1.qml</file>
+        <file>Choose_2.qml</file>
     </qresource>
 </RCC>

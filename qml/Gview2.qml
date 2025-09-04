@@ -63,6 +63,20 @@ Rectangle {
                     Scroll_1{
                     }
                 }
+                Tab {
+                    id: tb5
+                    anchors.fill: parent
+                    title: "Chooser View"
+                    Chooser_1{
+                    }
+                }
+                Tab {
+                    id: tb6
+                    anchors.fill: parent
+                    title: "Chooser View"
+                    Choose_2{
+                    }
+                }
             }
         }
         Rectangle{

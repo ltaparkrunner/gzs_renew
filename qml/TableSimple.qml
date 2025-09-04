@@ -64,13 +64,18 @@ Rectangle {
 //    color: "ivory"
     TableModel{
         id: tm21
-        TableModelColumn { display: "mnumber"}
+//        TableModelColumn { display: "mnumber"}
+//        TableModelColumn { display: "duration"}
+//        TableModelColumn { display: "cncntr1"}
+//        TableModelColumn { display: "cncntr2"}
+//        TableModelColumn { display: "sumStream"}
+//        TableModelColumn { display: "humidity"}
+        TableModelColumn { display : "mnumber"}
         TableModelColumn { display: "duration"}
         TableModelColumn { display: "cncntr1"}
         TableModelColumn { display: "cncntr2"}
         TableModelColumn { display: "sumStream"}
         TableModelColumn { display: "humidity"}
-
         rows:[{
             "mnumber" : "mnumber",
             "duration" : "duration",
@@ -79,6 +84,10 @@ Rectangle {
             "sumStream" : "sumStream",
             "humidity" : "humidity"
         }]
+//        function column2(){
+//            if()
+
+//        }
     }
 
 //    HorizontalHeaderView {
@@ -99,11 +108,7 @@ Rectangle {
         clip: true
 
         model: tm21
-          delegate: DelegateChooser{
-              role: display
-              DelegateChoice {
-                  roleValue: "duration"
-                  Rectangle {
+          delegate: Rectangle {
                       implicitWidth: 100
                       implicitHeight: 30
                       border.width: 1
@@ -112,7 +117,10 @@ Rectangle {
         //                  anchors.centerIn: parent
         //                  validator: RegExpValidator{regular
                           // google AI regular expression for hh:mm:ss
-                          validator: RegularExpressionValidator{regularExpression: /^([0-1][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/}
+//                          validator: RegularExpressionValidator{regularExpression: /^([0-1][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/}
+//                          validator: (tm21.columnCount() !== 2) ?  RegularExpressionValidator{regularExpression: /^\d+$/}
+//                          validator: calibr2.column2() ? /^([0-1][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/ : /^\d+$/
+                          validator: RegularExpressionValidator{regularExpression: /^\d+$/}
                           anchors.fill:parent
                           Keys.onReturnPressed: {
                                 console.log("onToQML_smplTbl TextField Keys.onReturnPressed duration")
@@ -122,30 +130,7 @@ Rectangle {
                           }
                       }
                   }
-              }
-              DelegateChoice {
-//                  roleValue: "duration"
-                  Rectangle {
-                      implicitWidth: 100
-                      implicitHeight: 30
-                      border.width: 1
-                      TextField {
-                          text: display
-        //                  anchors.centerIn: parent
-        //                  validator: RegExpValidator{regular
-                          // google AI regular expression for only numbers
-                          validator: RegularExpressionValidator{regularExpression: /^\d+$/}
-                          anchors.fill:parent
-                          Keys.onReturnPressed: {
-                                console.log("onToQML_smplTbl TextField Keys.onReturnPressed EXCEPT DURATION")
-                          }
-                          onEditingFinished: {
-                                console.log("onToQML_smplTbl TextField Keys.onEditingFinished EXCEPT DURATION")
-                          }
-                      }
-                  }
-              }
-          }
+                  function column2(){ if (Column === 2) return true; else return false; }
     }
 
     HorizontalHeaderView {
