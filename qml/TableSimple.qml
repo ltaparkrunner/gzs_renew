@@ -108,19 +108,17 @@ Rectangle {
         clip: true
 
         model: tm21
-          delegate: Rectangle {
+          delegate: DelegateChooser {
+              DelegateChoice {
+                  column: 1
+                  delegate: Rectangle {
                       implicitWidth: 100
                       implicitHeight: 30
                       border.width: 1
                       TextField {
                           text: display
-        //                  anchors.centerIn: parent
-        //                  validator: RegExpValidator{regular
                           // google AI regular expression for hh:mm:ss
-//                          validator: RegularExpressionValidator{regularExpression: /^([0-1][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/}
-//                          validator: (tm21.columnCount() !== 2) ?  RegularExpressionValidator{regularExpression: /^\d+$/}
-//                          validator: calibr2.column2() ? /^([0-1][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/ : /^\d+$/
-                          validator: RegularExpressionValidator{regularExpression: /^\d+$/}
+                          validator: RegularExpressionValidator{regularExpression: /^([0-1][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/}
                           anchors.fill:parent
                           Keys.onReturnPressed: {
                                 console.log("onToQML_smplTbl TextField Keys.onReturnPressed duration")
@@ -130,7 +128,26 @@ Rectangle {
                           }
                       }
                   }
-                  function column2(){ if (Column === 2) return true; else return false; }
+              }
+              DelegateChoice {
+                  delegate: Rectangle {
+                      implicitWidth: 100
+                      implicitHeight: 30
+                      border.width: 1
+                      TextField {
+                          text: display
+                          validator: RegularExpressionValidator{regularExpression: /^\d+$/}
+                          anchors.fill:parent
+                          Keys.onReturnPressed: {
+                                console.log("onToQML_smplTbl TextField Keys.onReturnPressed EXCEPT DURATION")
+                          }
+                          onEditingFinished: {
+                                console.log("onToQML_smplTbl TextField Keys.onEditingFinished EXCEPT DURATION")
+                          }
+                      }
+                  }
+              }
+          }
     }
 
     HorizontalHeaderView {

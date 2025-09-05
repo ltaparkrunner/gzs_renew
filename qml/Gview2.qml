@@ -56,7 +56,7 @@ Rectangle {
                     Plot2{
                     }
                 }
-                Tab {
+/*                Tab {
                     id: tb4
                     anchors.fill: parent
                     title: "Scroll View"
@@ -77,6 +77,7 @@ Rectangle {
                     Choose_2{
                     }
                 }
+                */
             }
         }
         Rectangle{

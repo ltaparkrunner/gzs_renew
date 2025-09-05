@@ -2,12 +2,22 @@ import QtQuick 2.0
 import QtQuick.Layouts 1.0
 import QtCharts 2.0
 import QtQuick.Controls 1.5
-import QtCharts 2.1
+import QtCharts 2.9
 
 Rectangle{
     implicitHeight: parent.height
     implicitWidth: parent.width
     color: "green"
+
+    Timer{
+        interval: 1000
+        running: true
+        repeat: true
+        onTriggered: {
+            var now = new Date();
+//            NewVariable.text = Qt.formatDateTime(now, "hh:mm:ss")
+        }
+    }
 
     RowLayout{
         anchors.fill: parent
@@ -55,12 +65,18 @@ Rectangle{
                     margins.left: 0
                     margins.right: 0
 
-                    ValueAxis {
+//                    ValueAxis {
+//                        id: xAxis1
+//                        min: 0
+//                        max: 10
+//        //                        titleText: "X-Axis Label"
+//                    }
+                    DateTimeAxis{
                         id: xAxis1
-                        min: 0
-                        max: 10
-        //                        titleText: "X-Axis Label"
+                        min: new Date(2000,1,1) //{new Date(); return Date.now()}
+                        max: new Date(2001,1,1)
                     }
+
                     ValueAxis {
                         id: yAxis1
                         min: 0
