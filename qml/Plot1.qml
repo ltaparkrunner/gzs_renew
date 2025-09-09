@@ -49,7 +49,14 @@ Rectangle{
             anchors.fill: parent
 //            anchors.top: parent.top
             Rectangle{
-//                implicitWidth: parent.width
+//                property date currentDate: new Date()
+//                property date midDate: new Date(currentDate - 1.5 * 60 * 1000)
+//                property date prevDate: new Date(currentDate - 3 * 60 * 1000)
+//                var currentDate = new Date()
+//                var midDate = new Date(currentDate - 1.5 * 60 * 1000)
+//                var prevDate = new Date(currentDate - 3 * 60 * 1000)
+
+                implicitWidth: parent.width
                 Layout.fillWidth: true
 //                width:100
                 height: 250
@@ -65,16 +72,11 @@ Rectangle{
                     margins.left: 0
                     margins.right: 0
 
-//                    ValueAxis {
-//                        id: xAxis1
-//                        min: 0
-//                        max: 10
-//        //                        titleText: "X-Axis Label"
-//                    }
                     DateTimeAxis{
                         id: xAxis1
-                        min: new Date(2000,1,1) //{new Date(); return Date.now()}
-                        max: new Date(2001,1,1)
+//                        min: prevDate //{new Date(); return Date.now()}
+//                        max: currentDate
+                        format: "dd-MM-yyyy hh:mm"
                     }
 
                     ValueAxis {
@@ -87,10 +89,9 @@ Rectangle{
                     LineSeries{
                         axisX: xAxis1
                         axisY: yAxis1
-
-                        XYPoint { x: 1; y: 2 }
-                        XYPoint { x: 3; y: 4 }
-                        XYPoint { x: 5; y: 3 }
+                        XYPoint { x: new Date().getTime() - 120000; y: 2 }
+                        XYPoint { x: new Date().getTime() - 60000; y: 4 }
+                        XYPoint { x: new Date().getTime(); y: 3 }
                     }
 
                 }

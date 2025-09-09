@@ -32,6 +32,7 @@ if(QT_VERSION_MAJOR EQUAL 6)
         ${src_dir}simpletable.cpp
         ${src_dir}params.cpp
         ${src_dir}tableModel.cpp
+        ${src_dir}monitoring.cpp
         qml/qml.qrc
         ${inc_dir}main.h
         ${inc_dir}master.h
@@ -42,6 +43,7 @@ if(QT_VERSION_MAJOR EQUAL 6)
         ${inc_dir}calibrtable.h
         ${inc_dir}simpletable.h
         ${inc_dir}params.h
+        ${inc_dir}monitoring.h
     )
 elseif(QT_VERSION_MAJOR EQUAL 5)
     set(PROJECT_SOURCES
@@ -55,6 +57,7 @@ elseif(QT_VERSION_MAJOR EQUAL 5)
         ${src_dir}simpletable.cpp
         ${src_dir}params.cpp
         ${src_dir}tableModel.cpp
+        ${src_dir}monitoring.cpp
 #        ${src_dir}mycppobject.cpp
         qml/qml_5.qrc
         ${inc_dir}main.h
@@ -67,6 +70,7 @@ elseif(QT_VERSION_MAJOR EQUAL 5)
         ${inc_dir}simpletable.h
         ${inc_dir}params.h
         ${inc_dir}mycppobject.h
+        ${inc_dir}monitoring.h
     )
 else()
     message(FATAL_ERROR "Unsupported Qt version")

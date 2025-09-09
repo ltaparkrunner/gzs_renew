@@ -29,6 +29,7 @@ master::master(QString cmb_name, QString tname,  QString clbr_name, int tim, QOb
 
     qDebug() << "Check checksum STATION-3K.exe";
 }
+
 void master::publish(){
     const QList<QSerialPortInfo> serialPortInfos = QSerialPortInfo::availablePorts();
     QList<QString> lc;
