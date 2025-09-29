@@ -14,13 +14,22 @@ ApplicationWindow{
 
     readonly property int menuh: 35
     readonly property int spch: 10
-/*
+
     Connections {
         target: master // Указываем целевое соединение
 
-        onToQML_comList:
+//        onToQML_comList:
+        function onToQML_comList(lc)
         {
             console.debug("inside QML onToQML_comList")
+            mn1.clear()
+//            mn1.addItem(lc[0])
+//            for(var i = 0; i < lc.length; i++){
+                let nmni = mn1.addItem(lc[0])
+                mn1.addDynamicItem()
+//                nmni.action = console.log(lc[0], " was pushed")
+//                mn1.addItem({text: lc[0], onTriggered: console.log(lc[0], " was pushed")})
+//            }
         }
 //        function onOpenFileSucc(text, title){
 
@@ -28,7 +37,7 @@ ApplicationWindow{
 //            messageDialog2.open()
 //        }
     }
-*/
+
     menuBar:
        MenuBar{
         id:menuB
@@ -64,20 +73,23 @@ ApplicationWindow{
         Menu {
             title: {qsTr("Соединение")}
             Menu {
+                id: mn1
                 title: "Установка"
-//                cascade: true
-//                Action { text: qsTr("A1") }
-//                Action { text: qsTr("A2") }
-//                Action { text: qsTr("A3") }
+                Component {
+                    id: dynI
+                    MenuItem{
+                        text: "Dynamic Item"
+                        onTriggered: console.log("Dynamic Item Triggered")
+                    }
+                }
+
                 MenuItem {
-                    text: "COM1"
+                    text: "Нет доступных COM портов"
 //                    onTriggered:
                 }
-                MenuItem {
-                    text: "COM2"
-                }
-                MenuItem {
-                    text: "COM3"
+                function addDynamicItem(){
+                    let nmni2 = dynI.createObject(mn1)
+                    mn1.addItem(nmni2)
                 }
             }
         }

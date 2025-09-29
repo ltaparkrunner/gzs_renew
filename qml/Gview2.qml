@@ -11,13 +11,13 @@ Rectangle {
     Connections {
         target: master // Указываем целевое соединение
 //        onToQML_comList:
-        function onToQML_comList(lc)
-        {
-            console.log("inside QML onToQML_comList")
+//        function onToQML_comList(lc)
+//        {
+//            console.log("inside QML onToQML_comList")
 //            for(c in lc){
 //                cbItems.append({text: c})
 //            }
-        }
+//        }
     }
     ColumnLayout{
         spacing: 3

@@ -21,7 +21,7 @@ master::master(QString cmb_name, QString tname,  QString clbr_name, int tim, QOb
 //    connect(test_tmr, &QTimer::timeout, this, &master::ch_val);
 //    test_tmr->start(1000);
 
-    QTimer::singleShot(8000, this, &master::publish);
+    QTimer::singleShot(1000, this, &master::publish);
     for(int row=1; row < params.smplTbl.rowsNum; row++)
         params.checkTblRow(row);
     params.button_calculateClick();
@@ -33,13 +33,13 @@ master::master(QString cmb_name, QString tname,  QString clbr_name, int tim, QOb
 void master::publish(){
     const QList<QSerialPortInfo> serialPortInfos = QSerialPortInfo::availablePorts();
     QList<QString> lc;
-
+    qDebug()<< "Доступных последовательных портов: " << serialPortInfos.length();
     for (QSerialPortInfo port: serialPortInfos) {
        lc.append(port.portName());
-       qDebug() << port.portName();
+       qDebug() << "Доступный последовательный порт: "<< port.portName();
     }
 //    qDebug() << "Attempt to receive COMs, total: " << lc.length();
-    if(lc.length() > 1) toQML_comList(lc);
+    if(lc.length() > 0) toQML_comList(lc);
     else {
         toQML_comList(lc);
         QMessageBox msgBox(QMessageBox::Warning, "Сообщение о проблеме", "Последовательные порты отсутствуют. Не получится связаться с газосмесительной установкой", QMessageBox::Close);
