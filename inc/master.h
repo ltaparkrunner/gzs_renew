@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QTimer>
+#include <QSerialPortInfo>
 
 #include "simpletable.h"
 #include "calibrtable.h"
@@ -26,6 +27,7 @@ public slots:
     void openefile_fromQML(QString urlList);
     void startTest_fromQML();
     void stopTest_fromQML();
+    void eqpRqst_fromQML();
 private:
 //    int tm;
 //    QTimer* test_tmr;
@@ -34,6 +36,8 @@ private:
     int startInit();
     void publish();
 //    unsigned char     crc_pr;
+    QList<QString> cports;
+    QList<QSerialPortInfo> serialPortInfos;
 public:
     Parameters params;
 //    MyCppObject mo;

@@ -1,8 +1,8 @@
-import QtQuick 2.0
+import QtQuick 2.15
 import QtQuick.Layouts 1.0
 import QtCharts 2.0
 
-import QtQuick.Controls 1.4     //2.3     //1.0//
+import QtQuick.Controls 2.15     //2.3     //1.0//
 import QtQuick.Dialogs 1.2
 
 ApplicationWindow{
@@ -21,15 +21,25 @@ ApplicationWindow{
 //        onToQML_comList:
         function onToQML_comList(lc)
         {
-            console.debug("inside QML onToQML_comList")
-            mn1.clear()
-//            mn1.addItem(lc[0])
+            mn1.removeItem(mni_1)
 //            for(var i = 0; i < lc.length; i++){
                 let nmni = mn1.addItem(lc[0])
-                mn1.addDynamicItem()
-//                nmni.action = console.log(lc[0], " was pushed")
-//                mn1.addItem({text: lc[0], onTriggered: console.log(lc[0], " was pushed")})
-//            }
+            let nmn13 = Qt.createQmlObject("
+                import QtQuick 2.15
+                import QtQuick.Controls 2.15
+
+                MenuItem {
+                    text: qsTr(\"Dynamic Item\")
+                    onTriggered: {
+                            console.log(\"Dynamic Item Triggered\")
+                            master.eqpRqst_fromQML()
+                    }
+                }
+            ",
+            mn1
+            )
+            nmn13.text = lc[0]
+            mn1.addItem(nmn13)
         }
 //        function onOpenFileSucc(text, title){
 
@@ -37,7 +47,13 @@ ApplicationWindow{
 //            messageDialog2.open()
 //        }
     }
-
+    Component {
+        id: dynI
+        MenuItem{
+            text: "Dynamic Item"
+            onTriggered: console.log("Dynamic Item Triggered")
+        }
+    }
     menuBar:
        MenuBar{
         id:menuB
@@ -75,22 +91,15 @@ ApplicationWindow{
             Menu {
                 id: mn1
                 title: "Установка"
-                Component {
-                    id: dynI
-                    MenuItem{
-                        text: "Dynamic Item"
-                        onTriggered: console.log("Dynamic Item Triggered")
-                    }
-                }
-
                 MenuItem {
+                    id: mni_1
                     text: "Нет доступных COM портов"
 //                    onTriggered:
                 }
-                function addDynamicItem(){
-                    let nmni2 = dynI.createObject(mn1)
-                    mn1.addItem(nmni2)
-                }
+//                function addDynamicItem(){
+//                    let nmni2 = dynI.createObject(mn1)
+//                    mn1.addItem(nmni2)
+//                }
             }
         }
         Menu {

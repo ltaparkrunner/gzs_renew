@@ -3,6 +3,7 @@
 #include <QFileInfo>
 #include <QMessageBox>
 #include <QSerialPortInfo>
+#include <QSerialPort>
 
 #include "wfiles.h"
 
@@ -31,17 +32,17 @@ master::master(QString cmb_name, QString tname,  QString clbr_name, int tim, QOb
 }
 
 void master::publish(){
-    const QList<QSerialPortInfo> serialPortInfos = QSerialPortInfo::availablePorts();
-    QList<QString> lc;
+/*    const QList<QSerialPortInfo> */ serialPortInfos = QSerialPortInfo::availablePorts();
+//    QList<QString> lc;
     qDebug()<< "Доступных последовательных портов: " << serialPortInfos.length();
     for (QSerialPortInfo port: serialPortInfos) {
-       lc.append(port.portName());
+       cports.append(port.portName());
        qDebug() << "Доступный последовательный порт: "<< port.portName();
     }
 //    qDebug() << "Attempt to receive COMs, total: " << lc.length();
-    if(lc.length() > 0) toQML_comList(lc);
+    if(cports.length() > 0) toQML_comList(cports);
     else {
-        toQML_comList(lc);
+        toQML_comList(cports);
         QMessageBox msgBox(QMessageBox::Warning, "Сообщение о проблеме", "Последовательные порты отсутствуют. Не получится связаться с газосмесительной установкой", QMessageBox::Close);
         msgBox.exec();
     }
@@ -163,6 +164,12 @@ void master::startTest_fromQML(){
 
 void master::stopTest_fromQML(){
     stopTest();
+}
+
+void master::eqpRqst_fromQML(){
+
+    QSerialPort *sp = new QSerialPort(serialPortInfos[0]);
+    sp->open()
 }
 
 void master::sendPbData(){
