@@ -4,6 +4,7 @@
 #include <QMessageBox>
 #include <QSerialPortInfo>
 #include <QSerialPort>
+#include <QProcess>
 
 #include "wfiles.h"
 
@@ -13,6 +14,7 @@ master::master(QString cmb_name, QString tname,  QString clbr_name, int tim, QOb
 //  , tm (tim)
 //  , test_tmr (new QTimer(this))
   , params(cmb_name, tname, clbr_name, this)
+//  , terminal_finished (false)
 //  , mo()
 //  , fp (nullptr)
 //  ,fp(new file_parser(fname, lag, parent))
@@ -26,7 +28,7 @@ master::master(QString cmb_name, QString tname,  QString clbr_name, int tim, QOb
     for(int row=1; row < params.smplTbl.rowsNum; row++)
         params.checkTblRow(row);
     params.button_calculateClick();
-    params.toQML_statusBar("Настройте связь с газовой станцией");
+    emit params.toQML_statusBar("Настройте связь с газовой станцией");
 
     qDebug() << "Check checksum STATION-3K.exe";
 }
@@ -40,9 +42,9 @@ void master::publish(){
        qDebug() << "Доступный последовательный порт: "<< port.portName();
     }
 //    qDebug() << "Attempt to receive COMs, total: " << lc.length();
-    if(cports.length() > 0) toQML_comList(cports);
+    if(cports.length() > 0) emit toQML_comList(cports);
     else {
-        toQML_comList(cports);
+        emit toQML_comList(cports);
         QMessageBox msgBox(QMessageBox::Warning, "Сообщение о проблеме", "Последовательные порты отсутствуют. Не получится связаться с газосмесительной установкой", QMessageBox::Close);
         msgBox.exec();
     }
@@ -65,7 +67,7 @@ int master::startInit(){
             break;
         case 0: {
                 QList<QString>* cb = wfiles::linesOfFile(QString("Combo.str"));
-                toQML_initListString(*cb, 1);
+                emit toQML_initListString(*cb, 1);
             }
     //        return res;
             break;
@@ -85,14 +87,14 @@ int master::startInit(){
     }
     else{
         QList<QString>* cb = wfiles::linesOfFile(QString("Table.cfg"));
-        toQML_initListString(*cb, 2);
+        emit toQML_initListString(*cb, 2);
     }
     QString timeString = "14:30:15";
     QString format = "hh:mm:ss";
     QTime time = QTime::fromString(timeString, format);
     QTime totalTime = wfiles::sumTime(QString("Table.cfg"));
 
-    toQML_message("Настройте связь с газовой станцией");
+    emit toQML_message("Настройте связь с газовой станцией");
 
     int crc_pr = wfiles::checkExe("STATION-3K.exe");
     return 0;
@@ -165,11 +167,42 @@ void master::startTest_fromQML(){
 void master::stopTest_fromQML(){
     stopTest();
 }
+bool terminal_finished = false;
+void master::pwExit(/*int ec, QProcess::ExitStatus es*/){
+    terminal_finished = true;
+}
 
 void master::eqpRqst_fromQML(){
+//    QProcess *proc = new QProcess();
 
+    proc = new QProcess(this);
+//    connect(proc, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), [&](int exitCode, QProcess::ExitStatus eS){
+//        qDebug() << "Process finished with exit code: " << exitCode << " and status: " << eS;
+//        terminal_finished = true;
+//    });
+//    connect(proc, QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished), this, &master::pwExit);
+//    proc -> execute("gnome-terminal", QStringList() << "-e" << "bash -c 'sudo chmod 777 /dev/ttyUSB0; exit; exec bash'");
+    proc -> start("gnome-terminal", QStringList() << "-e" << "bash -c 'sudo chmod 777 /dev/ttyUSB0; exec bash'");
+    proc -> waitForFinished(-1);
+//    while(QProcess::NormalExit == proc->exitStatus());
+//    proc->setProgram("/bin/bash");
+//    proc->setArguments(QStringList() << "-c" << "sleep 5 && echo 'Process finished'");
+//    proc->start();
+//    while(!terminal_finished);
+//    QProcess::execute("gnome-terminal", QStringList() << "-e" << "bash -c 'sudo chmod 777 /dev/ttyUSB0; exit; exec bash'");
+    qDebug() << "proc->waitForFinished(): " << "  " << proc -> exitCode() << "  " << proc->exitStatus() << " " << proc->state() << "\n";
+//    while(process->waitForFinished());
     QSerialPort *sp = new QSerialPort(serialPortInfos[0]);
-    sp->open()
+    sp->setPortName(serialPortInfos[0].portName());
+    sp->setBaudRate(115200);
+    if(!sp->open(QIODevice::ReadWrite)) {
+        QMessageBox msgBox(QMessageBox::Warning, "Сообщение о проблеме", "Не могу открыть последовательный порт " + sp->portName() , QMessageBox::Close);
+        msgBox.exec();
+    }
+    else{
+        QMessageBox msgBox(QMessageBox::Warning, "Сообщение об успехе", "Последовательный порт " + sp->portName() + " успешно открыт." , QMessageBox::Close);
+        msgBox.exec();
+    }
 }
 
 void master::sendPbData(){

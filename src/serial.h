@@ -5,7 +5,7 @@
 
 class serial
 {
-    Q_OBJECT
+//    Q_OBJECT
 public:
     serial();
 };

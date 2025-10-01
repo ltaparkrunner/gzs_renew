@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QTimer>
 #include <QSerialPortInfo>
+#include <QProcess>
 
 #include "simpletable.h"
 #include "calibrtable.h"
@@ -35,9 +36,11 @@ private:
     int stopTest();
     int startInit();
     void publish();
+    void pwExit(/*int ec, QProcess::ExitStatus es*/);
 //    unsigned char     crc_pr;
     QList<QString> cports;
     QList<QSerialPortInfo> serialPortInfos;
+    QProcess *proc;
 public:
     Parameters params;
 //    MyCppObject mo;
