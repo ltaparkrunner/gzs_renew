@@ -22,24 +22,25 @@ ApplicationWindow{
         function onToQML_comList(lc)
         {
             mn1.removeItem(mni_1)
-//            for(var i = 0; i < lc.length; i++){
+            for(var i = 0; i < lc.length; i++){
                 let nmni = mn1.addItem(lc[0])
-            let nmn13 = Qt.createQmlObject("
-                import QtQuick 2.15
-                import QtQuick.Controls 2.15
+                let nmn13 = Qt.createQmlObject("
+                    import QtQuick 2.15
+                    import QtQuick.Controls 2.15
 
-                MenuItem {
-                    text: qsTr(\"Dynamic Item\")
-                    onTriggered: {
-                            console.log(\"Dynamic Item Triggered\")
-                            master.eqpRqst_fromQML()
+                    MenuItem {
+                        text: qsTr(\"Dynamic Item\")
+                        onTriggered: {
+                                console.log(\"Dynamic Item Triggered\")
+                                master.eqpRqst_fromQML(text)
+                        }
                     }
-                }
-            ",
-            mn1
-            )
-            nmn13.text = lc[0]
-            mn1.addItem(nmn13)
+                    ",
+                    mn1
+                    )
+                nmn13.text = lc[i]
+                mn1.addItem(nmn13)
+            }
         }
 //        function onOpenFileSucc(text, title){
 
