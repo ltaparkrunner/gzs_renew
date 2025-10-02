@@ -167,6 +167,7 @@ void master::startTest_fromQML(){
 void master::stopTest_fromQML(){
     stopTest();
 }
+
 // bool terminal_finished = false;
 // void master::pwExit(/*int ec, QProcess::ExitStatus es*/){
 //     terminal_finished = true;

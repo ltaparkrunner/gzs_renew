@@ -37,6 +37,7 @@ private:
     int stopTest();
     int startInit();
     void publish();
+
 //    void pwExit(/*int ec, QProcess::ExitStatus es*/);
 //    unsigned char     crc_pr;
     QList<QString> cports;

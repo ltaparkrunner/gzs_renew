@@ -8,7 +8,7 @@
 
 class serial : public QObject
 {
-    Q_OBJECT
+//    Q_OBJECT
 public:
     serial(QSerialPortInfo &spi, QObject *parent = nullptr);
     bool open();
