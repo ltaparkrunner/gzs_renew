@@ -174,10 +174,9 @@ void master::stopTest_fromQML(){
 // }
 
 void master::eqpRqst_fromQML(QString pname){
-//    QProcess *proc = new QProcess();
-
     QProcess *proc = new QProcess(this);
     QString prog ="xfce4-terminal";
+//    QString prog = "mousepad";
     QStringList args;
     for(QSerialPortInfo pinfo: serialPortInfos){
         if (pinfo.portName() == pname) {
@@ -198,6 +197,15 @@ void master::eqpRqst_fromQML(QString pname){
             break;
         }
     }
+    connect(sp, &serial::readyRead, [&](){
+       qDebug() << "master after reading Equipment Serial Num, the num is: " << sp->getEqpNum();
+    });
+    connect(sp, &serial::errMsg, [&](){
+       qDebug() << "master after reading Error, the Error is: " << sp->getEMsg();
+    });
+    qDebug() << "Just before sp->requestEqpNum()";
+    sp->requestEqpNum();
+    qDebug() << "Just after sp->requestEqpNum()";
 }
 
 void master::sendPbData(){
