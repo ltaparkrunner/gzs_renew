@@ -67,3 +67,10 @@ void serial::parseNum() {
 QString serial::getEMsg(){
     return eMsg;
 }
+
+bool serial::isOpen(){
+    return sp->isOpen();
+}
+void serial::close(){
+    sp->close();
+}

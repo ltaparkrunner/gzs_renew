@@ -7,7 +7,11 @@
 #include <QProcess>
 
 #include "wfiles.h"
-
+extern "C" {
+    #include "sio.h"
+    #include "i7k.h"
+    #include "i87000_lnx.h"
+}
 master::master(QString cmb_name, QString tname,  QString clbr_name, int tim, QObject *parent) :
     QObject(parent)
 //  , fn (fname)
@@ -178,6 +182,7 @@ void master::eqpRqst_fromQML(QString pname){
     QString prog ="xfce4-terminal";
 //    QString prog = "mousepad";
     QStringList args;
+
     for(QSerialPortInfo pinfo: serialPortInfos){
         if (pinfo.portName() == pname) {
             qDebug() << "bash -c 'sudo chmod 777 " + pinfo.systemLocation() + "; exit; exec bash'";
@@ -196,6 +201,18 @@ void master::eqpRqst_fromQML(QString pname){
             }
             break;
         }
+    }
+    if(sp->isOpen()) sp->close();
+
+    {
+        const int RBUF_SIZE = 80;
+        __tod_t texp;
+        int sp = sio_open("/dev/ttyUSB0", B115200, DATA_BITS_8, NO_PARITY, ONE_STOP_BIT);
+        static char name_tx[20] ={0x24, 0x30, 0x30, 0x4d, 0x44, 0x31, 0x0d};
+        static char rbuf[RBUF_SIZE] = {0};
+
+        int retVal = i7k_send_readt(sp, name_tx, rbuf, RBUF_SIZE, &texp);
+        qDebug() << "i7k_send_readt result: " << QString(rbuf);
     }
     connect(sp, &serial::readyRead, [&](){
        qDebug() << "master after reading Equipment Serial Num, the num is: " << sp->getEqpNum();

@@ -17,6 +17,8 @@ public:
     int getEqpNum();
     QSerialPort * getptr();
     QString getEMsg();
+    bool isOpen();
+    void close();
 signals:
     void readyRead();
     void errMsg();
