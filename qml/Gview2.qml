@@ -5,7 +5,7 @@ import QtQuick.Controls 1.5
 
 
 Rectangle {
-    id: ch_com
+//    id: ch_com
 //    width: 270
     color: "light green"
     Connections {
@@ -23,6 +23,7 @@ Rectangle {
         spacing: 3
     //    anchors.top: parent
     //    anchors.left: parent
+        visible: vsbl
         anchors.fill: parent
         Rectangle{
             id: r1

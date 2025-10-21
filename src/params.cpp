@@ -18,7 +18,8 @@
 Parameters::Parameters(QString cmb_name, QString tname,  QString clbr_name, QObject *parent):
     QObject(parent)
 ,   cmbTbl(cmb_name, this)
-,   smplTbl(tname, this)
+//,   smplTbl(tname, this)
+,   smplTbl(this)
 ,   clbrTbl(clbr_name, this)
 {
 }

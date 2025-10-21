@@ -10,7 +10,7 @@ ApplicationWindow{
     width: 1050
     height: 750
     visible: true
-    title : "Обмен с устройствои"
+    title : "Station-3K"
 
     readonly property int menuh: 35
     readonly property int spch: 10
@@ -42,6 +42,11 @@ ApplicationWindow{
                 mn1.addItem(nmn13)
             }
         }
+        function onToQML_startMainW()
+        {
+            mainw.vsbl = true
+        }
+
 //        function onOpenFileSucc(text, title){
 
 //            messageDialog2.text = text
@@ -131,7 +136,9 @@ ApplicationWindow{
 //    }
 
     Gview2{
+        id: mainw
         anchors.fill: parent
+        property bool vsbl: false
     }
 
 //    ColumnLayout{

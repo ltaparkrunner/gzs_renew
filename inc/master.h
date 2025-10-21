@@ -25,6 +25,7 @@ signals:
     void toQML_data(QList<QString> pb);
     void toQML_comList(QList<QString> lc);
     void toQML_initListString(QList<QString> lc, int c);
+    void toQML_startMainW();
 public slots:
     void openefile_fromQML(QString urlList);
     void startTest_fromQML();

@@ -125,7 +125,7 @@ void master::openefile_fromQML(QString urlList){
     qDebug() << "canConvert<QUrl>() successfully" << urlList;
     QString fn = urlList;
 
-    if(/*fn.isEmpty() &&*/ fileExist("Calibr.str")){
+    if(fn.isEmpty() && fileExist("Calibr.str")){
         QFile cfile("Calibr.str");
         if(!cfile.open(QIODevice::ReadOnly | QIODevice::Unbuffered)){
              qDebug() << "openefile_fromQML Could not open file for reading:" << cfile.errorString();
@@ -217,6 +217,7 @@ void master::eqpRqst_fromQML(QString pname){
         sio_set_timer(sp, 0, 1);		/* set timeout for 0.1 sec */
         int retVal = i7k_send_readt_cs(sp, name_tx, rbuf, RBUF_SIZE, &texp);
         qDebug() << "i7k_send_readt result: " << QString(rbuf);
+        emit toQML_startMainW();
     }
     connect(sp, &serial::readyRead, [&](){
        qDebug() << "master after reading Equipment Serial Num, the num is: " << sp->getEqpNum();

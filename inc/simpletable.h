@@ -32,7 +32,8 @@ public:
     dt_t dt[4];
     dim_t dim;
 
-    explicit simpleTable(QString tn = "Table.cfg", QObject *parent = nullptr);
+    /*explicit*/ simpleTable(QString tn = "Table.cfg", QObject *parent = nullptr);
+    /*explicit*/ simpleTable(QObject *parent = nullptr);
     void publish();
     QFile *stf;
 
