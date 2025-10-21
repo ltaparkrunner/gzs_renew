@@ -159,8 +159,8 @@ ApplicationWindow{
         id: openFileDialog
         title: "Please choose a file"
         onAccepted: {
-            console.log("You chose: " + fileDialog.fileUrls)
-            master.openefile_fromQML(fileDialog.fileUrls)
+            console.log("You chose: " + openFileDialog.fileUrls)
+            master.openefile_fromQML(openFileDialog.fileUrls)
         }
         onRejected: {
             console.log("Canceled")

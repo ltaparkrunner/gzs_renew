@@ -125,7 +125,7 @@ void master::openefile_fromQML(QString urlList){
     qDebug() << "canConvert<QUrl>() successfully" << urlList;
     QString fn = urlList;
 
-    if(fn.isEmpty() && fileExist("Calibr.str")){
+    if(/*fn.isEmpty() &&*/ fileExist("Calibr.str")){
         QFile cfile("Calibr.str");
         if(!cfile.open(QIODevice::ReadOnly | QIODevice::Unbuffered)){
              qDebug() << "openefile_fromQML Could not open file for reading:" << cfile.errorString();
@@ -134,15 +134,15 @@ void master::openefile_fromQML(QString urlList){
         QByteArray tmp = cfile.readAll();
         cfile.close();
         int len = tmp.length();
-        tmp[len-2] = 4;
+        tmp[len-2] = 5;
         char summ = wfiles::CalcCrc8(tmp, len-1);
 
 
         /*if(summ != tmp[len-1])*/{
             tmp[len-1] = summ;
-            QMessageBox msgBox(QMessageBox::Warning, "Сообщение об действии", "Создаю Calibr_04.str. Номер 22, другая контрольная сумма", QMessageBox::Close);
+            QMessageBox msgBox(QMessageBox::Warning, "Сообщение об действии", "Создаю Calibr_05.str. Номер 05, другая контрольная сумма", QMessageBox::Close);
             msgBox.exec();
-            QFile cfile("Calibr_04.str");
+            QFile cfile("Calibr_05.str");
             cfile.open(QIODevice::WriteOnly | QIODevice::Unbuffered);
             cfile.write(tmp);
         }
@@ -208,10 +208,14 @@ void master::eqpRqst_fromQML(QString pname){
         const int RBUF_SIZE = 80;
         __tod_t texp;
         int sp = sio_open("/dev/ttyUSB0", B115200, DATA_BITS_8, NO_PARITY, ONE_STOP_BIT);
-        static char name_tx[20] ={0x24, 0x30, 0x30, 0x4d, 0x44, 0x31, 0x0d};
+        qDebug() << "sp = " << sp;
+//        static char name_tx[20] ={0x24, 0x30, 0x30, 0x4d, 0x44, 0x31, 0x0d};
+        static char name_tx[20] = {0}; // ={0x23, 0x30, 0x30, 0xd};
+        sprintf(name_tx, "#%02X\r", 0);
         static char rbuf[RBUF_SIZE] = {0};
-
-        int retVal = i7k_send_readt(sp, name_tx, rbuf, RBUF_SIZE, &texp);
+        sio_set_noncan(sp);
+        sio_set_timer(sp, 0, 1);		/* set timeout for 0.1 sec */
+        int retVal = i7k_send_readt_cs(sp, name_tx, rbuf, RBUF_SIZE, &texp);
         qDebug() << "i7k_send_readt result: " << QString(rbuf);
     }
     connect(sp, &serial::readyRead, [&](){
