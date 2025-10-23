@@ -203,31 +203,20 @@ void master::eqpRqst_fromQML(QString pname){
         }
     }
     if(sp->isOpen()) sp->close();
-
-    {
-        const int RBUF_SIZE = 80;
-        __tod_t texp;
-        int sp = sio_open("/dev/ttyUSB0", B115200, DATA_BITS_8, NO_PARITY, ONE_STOP_BIT);
-        qDebug() << "sp = " << sp;
-//        static char name_tx[20] ={0x24, 0x30, 0x30, 0x4d, 0x44, 0x31, 0x0d};
-        static char name_tx[20] = {0}; // ={0x23, 0x30, 0x30, 0xd};
-        sprintf(name_tx, "#%02X\r", 0);
-        static char rbuf[RBUF_SIZE] = {0};
-        sio_set_noncan(sp);
-        sio_set_timer(sp, 0, 1);		/* set timeout for 0.1 sec */
-        int retVal = i7k_send_readt_cs(sp, name_tx, rbuf, RBUF_SIZE, &texp);
-        qDebug() << "i7k_send_readt result: " << QString(rbuf);
-        emit toQML_startMainW();
+    int err;
+    gst = new station("/dev/ttyUSB0", 6, err, this);
+    switch(err){
+        case 0:{
+            QMessageBox msgBox(QMessageBox::Warning, "Инициализация прошла успешно", "Загрузите/создайте настройки газовой станции." , QMessageBox::Close);
+            msgBox.exec();
+            emit toQML_startMainW();}
+            break;
+        default:
+            {QMessageBox msgBox(QMessageBox::Warning, "Сообщение о проблеме", "Не могу подключиться к станции." , QMessageBox::Close);
+            msgBox.exec();}
+            break;
     }
-    connect(sp, &serial::readyRead, [&](){
-       qDebug() << "master after reading Equipment Serial Num, the num is: " << sp->getEqpNum();
-    });
-    connect(sp, &serial::errMsg, [&](){
-       qDebug() << "master after reading Error, the Error is: " << sp->getEMsg();
-    });
-    qDebug() << "Just before sp->requestEqpNum()";
-    sp->requestEqpNum();
-    qDebug() << "Just after sp->requestEqpNum()";
+
 }
 
 void master::sendPbData(){

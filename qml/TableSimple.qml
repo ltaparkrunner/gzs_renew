@@ -100,7 +100,7 @@ Rectangle {
 //    }
 
     TableView {
-        id: calibr2
+        id: smpl
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
@@ -152,10 +152,10 @@ Rectangle {
 
     HorizontalHeaderView {
         id: header2
-        anchors.left: calibr2.left
-        anchors.right: calibr2.right
+        anchors.left: smpl.left
+        anchors.right: smpl.right
         anchors.top: parent.top//topheader.bottom
-        syncView: calibr2
+        syncView: smpl
         clip: true
 //        model: [ "Номер режима",
 //            "Длительность подачи газовой смеси", "Концентрация газовой смеси (%, ppm)",

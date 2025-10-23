@@ -35,7 +35,8 @@ if(QT_VERSION_MAJOR EQUAL 6)
         ${src_dir}tableModel.cpp
         ${src_dir}monitoring.cpp
         ${src_dir}serial.cpp
-        ${src_dir}i87000_lnx.c
+        ${src_dir}i87000_lnx.cpp
+        ${src_dir}station.cpp
         qml/qml.qrc
         ${inc_dir}main.h
         ${inc_dir}master.h
@@ -49,6 +50,7 @@ if(QT_VERSION_MAJOR EQUAL 6)
         ${inc_dir}monitoring.h
         ${inc_dir}serial.h
         ${inc_dir}i87000_lnx.h
+        ${inc_dir}station.h
     )
 elseif(QT_VERSION_MAJOR EQUAL 5)
     set(PROJECT_SOURCES
@@ -65,7 +67,8 @@ elseif(QT_VERSION_MAJOR EQUAL 5)
         ${src_dir}monitoring.cpp
 #        ${src_dir}mycppobject.cpp
         ${src_dir}serial.cpp
-        ${src_dir}i87000_lnx.c
+        ${src_dir}i87000_lnx.cpp
+        ${src_dir}station.cpp
         qml/qml_5.qrc
         ${inc_dir}main.h
         ${inc_dir}master.h
@@ -80,6 +83,7 @@ elseif(QT_VERSION_MAJOR EQUAL 5)
         ${inc_dir}monitoring.h
         ${inc_dir}serial.h
         ${inc_dir}i87000_lnx.h
+        ${inc_dir}station.h
     )
 else()
     message(FATAL_ERROR "Unsupported Qt version")
@@ -87,6 +91,7 @@ endif()
 
 #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-Bstatic")
 add_executable(gaz_mixer  ${PROJECT_SOURCES})
+#    src/station.h src/station.cpp)
 
 target_compile_definitions(gaz_mixer PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 target_link_libraries(gaz_mixer PRIVATE Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Quick

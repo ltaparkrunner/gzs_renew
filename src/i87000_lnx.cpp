@@ -1,3 +1,4 @@
+extern "C" {
 #include<stdio.h>
 #include<stdlib.h>
 #include "sio.h"
@@ -618,13 +619,14 @@ WORD /*CALLBACK*/ AnalogInAll_87K(DWORD dwBuf[], float fBuf[],
 		default: return(ModuleIdError);
 	}
 
-	sprintf(szCmd8K,"#%02X",wAddr);
+    sprintf(szCmd8K,"#%02X", wAddr);
 
 	sio_set_noncan(wPort);
 	sio_set_timer(wPort, 0, 1);		/* set timeout for 0.1 sec */
 	memset(szRec8K, 0, RBUF_SIZE);
+    printf("wPort= %d, message: %s\n", wPort, szCmd8K);
 	wRetVal = i7k_send_readt_cs(wPort, szCmd8K, szRec8K, RBUF_SIZE, &texp);
-	printf("Received string length: %d, \nString: %s \n", wRetVal, szRec8K);
+    printf("Received string length: %d, \nString: \n%s \n", wRetVal, szRec8K);
 
 	if(wFlag)
 	{
@@ -741,4 +743,5 @@ WORD /*CALLBACK*/ AnalogInAll_87K(DWORD dwBuf[], float fBuf[],
 		break;
   }
 	return wRet;
+}
 }

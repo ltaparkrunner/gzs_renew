@@ -10,6 +10,7 @@
 #include "calibrtable.h"
 #include "params.h"
 #include "serial.h"
+#include "station.h"
 
 #include "mycppobject.h"
 
@@ -44,6 +45,7 @@ private:
     QList<QString> cports;
     QList<QSerialPortInfo> serialPortInfos;
     serial *sp;
+    station *gst;
 //    QProcess *proc;
 public:
     Parameters params;
