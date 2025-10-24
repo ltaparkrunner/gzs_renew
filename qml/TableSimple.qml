@@ -110,6 +110,33 @@ Rectangle {
         model: tm21
           delegate: DelegateChooser {
               DelegateChoice {
+                  column: smpl.columns - 1
+                  row: smpl.rows - 1
+                  delegate: Rectangle {
+                      implicitWidth: 100
+                      implicitHeight: 30
+                      border.width: 1
+                      TextField {
+                          text: display
+                          // google AI regular expression for hh:mm:ss
+                          validator: RegularExpressionValidator{regularExpression: /^([0-1][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/}
+                          anchors.fill:parent
+                          Keys.onReturnPressed: {
+                                console.log("onToQML_smplTbl TextField Keys.onReturnPressed column 5")
+                                console.log("The last row: ", smpl.rows)
+                              console.log("The last row:")
+                                /*if(tm21.getRow() === smpl.rows)*/
+                              tm21.appendRow({"mnumber":tm21.columns.toString(), "duration":0, "cncntr1":0,
+                                             "cncntr2":0, "sumStream":0, "humidity":0})
+                          }
+                          onEditingFinished: {
+                                console.log("onToQML_smplTbl TextField Keys.onEditingFinished duration")
+
+                          }
+                      }
+                  }
+              }
+              DelegateChoice {
                   column: 1
                   delegate: Rectangle {
                       implicitWidth: 100
@@ -122,6 +149,7 @@ Rectangle {
                           anchors.fill:parent
                           Keys.onReturnPressed: {
                                 console.log("onToQML_smplTbl TextField Keys.onReturnPressed duration")
+                              console.log("The simple row: ")
                           }
                           onEditingFinished: {
                                 console.log("onToQML_smplTbl TextField Keys.onEditingFinished duration")
@@ -140,6 +168,7 @@ Rectangle {
                           anchors.fill:parent
                           Keys.onReturnPressed: {
                                 console.log("onToQML_smplTbl TextField Keys.onReturnPressed EXCEPT DURATION")
+                              console.log("The simple row: ")
                           }
                           onEditingFinished: {
                                 console.log("onToQML_smplTbl TextField Keys.onEditingFinished EXCEPT DURATION")
