@@ -1,6 +1,7 @@
 ﻿import QtQuick 2.15
 import QtQuick.Controls 2.15
 import Qt.labs.qmlmodels 1.0
+import QtQml.Models 2.15
 
 //import QtQuick 2.0
 import QtQuick.Layouts 1.0
@@ -56,7 +57,7 @@ Rectangle {
             }
             tm21.clear()
             for(i=2; i<imax; i++){
-                tm21.appendRow({"mnumber":lc[6*i], "duration":lc[6*i+1], "cncntr1":lc[6*i+2],
+                tm21.appendRow({"mnumber":lc[6*i], duration:lc[6*i+1], "cncntr1":lc[6*i+2],
                                "cncntr2":lc[6*i+3], "sumStream":lc[6*i+4], "humidity":lc[6*i+5]})
             }
         }
@@ -78,7 +79,7 @@ Rectangle {
         TableModelColumn { display: "humidity"}
         rows:[{
             "mnumber" : "mnumber",
-            "duration" : "duration",
+            duration : "duration",
             "cncntr1" : "cncntr1",
             "cncntr2" : "cncntr2",
             "sumStream" : "sumStream",
@@ -126,8 +127,18 @@ Rectangle {
                                 console.log("The last row: ", smpl.rows)
                               console.log("The last row:")
                                 /*if(tm21.getRow() === smpl.rows)*/
-                              tm21.appendRow({"mnumber":tm21.columns.toString(), "duration":0, "cncntr1":0,
-                                             "cncntr2":0, "sumStream":0, "humidity":0})
+                              tm21.clear()
+                              tm21.appendRow({"mnumber":"1", "duration":"00:00:10", "cncntr1":"0",
+                                             "cncntr2":"0", "sumStream":"0", "humidity":"0"})
+                              tm21.appendRow({"mnumber":"2", "duration":"00:00:10", "cncntr1":"0",
+                                             "cncntr2":"0", "sumStream":"0", "humidity":"0"})
+                              tm21.appendRow({"mnumber":"3", "duration":"00:00:10", "cncntr1":"0",
+                                             "cncntr2":"0", "sumStream":"0", "humidity":"0"})
+                              // tm21.appendRow({"mnumber":"3", "duration":tm21.data(1, 2), "cncntr1":0,
+                              //                 "cncntr2":0, "sumStream":0, "humidity":0})
+
+                              //tm21.appendRow(tm21.rows[1])
+                              console.log(tm21.rows[1])
                           }
                           onEditingFinished: {
                                 console.log("onToQML_smplTbl TextField Keys.onEditingFinished duration")
@@ -136,27 +147,27 @@ Rectangle {
                       }
                   }
               }
-              DelegateChoice {
-                  column: 1
-                  delegate: Rectangle {
-                      implicitWidth: 100
-                      implicitHeight: 30
-                      border.width: 1
-                      TextField {
-                          text: display
-                          // google AI regular expression for hh:mm:ss
-                          validator: RegularExpressionValidator{regularExpression: /^([0-1][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/}
-                          anchors.fill:parent
-                          Keys.onReturnPressed: {
-                                console.log("onToQML_smplTbl TextField Keys.onReturnPressed duration")
-                              console.log("The simple row: ")
-                          }
-                          onEditingFinished: {
-                                console.log("onToQML_smplTbl TextField Keys.onEditingFinished duration")
-                          }
-                      }
-                  }
-              }
+              // DelegateChoice {
+              //     column: 1
+              //     delegate: Rectangle {
+              //         implicitWidth: 100
+              //         implicitHeight: 30
+              //         border.width: 1
+              //         TextField {
+              //             text: display
+              //             // google AI regular expression for hh:mm:ss
+              //             validator: RegularExpressionValidator{regularExpression: /^([0-1][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/}
+              //             anchors.fill:parent
+              //             Keys.onReturnPressed: {
+              //                   console.log("onToQML_smplTbl TextField Keys.onReturnPressed duration")
+              //                 console.log("The simple row: ")
+              //             }
+              //             onEditingFinished: {
+              //                   console.log("onToQML_smplTbl TextField Keys.onEditingFinished duration")
+              //             }
+              //         }
+              //     }
+              // }
               DelegateChoice {
                   delegate: Rectangle {
                       implicitWidth: 100
@@ -166,6 +177,25 @@ Rectangle {
                           text: display
                           validator: RegularExpressionValidator{regularExpression: /^\d+$/}
                           anchors.fill:parent
+//                           Keys.onTabPressed: {
+//                             //smpl.focus(1,2)
+//                             //smpl.currentRow = 1
+//                             //smpl.currentColumn = 2
+//                             //smpl.forceActiveFocus(1,2)
+//                             //  smpl.nextItemInFocusChain()
+//                             //console.log("currentRow", smpl.currentRow)
+//                             console.log("currentRow", tm21.currentRow)
+//                             console.log("Active Focus", smpl.focus)
+//                             console.log("Active Focus_2", smpl.movingVertically)
+//                             console.log("Focus 3", tm21.columnCount, "   ", tm21.rowCount)
+//                             console.log("Focus 4", tm21.hasIndex(1,1), "   ", tm21.hasChildren())
+//                             console.log("Focus 4", tm21.index(1,1).forceActiveFocus, "   ", tm21.hasChildren())
+// //                              smpl.childAt(5,7).forceActiveFocus()
+//                             console.log(tm21.index(1,2))
+// //                            tm21.getRow(1).focusObject
+// //                              ism.select(tm21.index)
+//                           }
+
                           Keys.onReturnPressed: {
                                 console.log("onToQML_smplTbl TextField Keys.onReturnPressed EXCEPT DURATION")
                               console.log("The simple row: ")
@@ -176,6 +206,9 @@ Rectangle {
                       }
                   }
               }
+          }
+          ItemSelectionModel{
+              id: ism
           }
     }
 
