@@ -115,5 +115,5 @@ void calibrTable::fromQML_calibTableCompleted(int id) {
             lc.append(QString::number(arr3[i][2]));
         }
     }
-     emit toQML_clbrTbl2(lc, id);
+    emit toQML_clbrTbl2(lc, id);
 }

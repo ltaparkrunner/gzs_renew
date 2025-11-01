@@ -33,7 +33,7 @@ Rectangle {
         TableModelColumn { display: "percent3"}
         TableModelColumn { display: "mlm3"}
         TableModelColumn { display: "coeff"}
-          }
+    }
 
 //    HorizontalHeaderView {
 //        id: topheader

@@ -29,6 +29,7 @@ signals:
 public slots:
     void fromQML_calibTableCompleted(QString id);
     void fromQML_calibTableCompleted(int id);
+//    void fromQML_
 };
 
 #endif // CALIBRTABLE_H

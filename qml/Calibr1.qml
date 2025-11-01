@@ -79,19 +79,46 @@ Rectangle{
 //                ExclusiveGroup { id: colorGroup }
                 ButtonGroup {
                     buttons: column.children
+//                    onButtonsChanged: console.log("RadioB changed ", column.index)
                 }
                 Column{
                     id: column
                     RadioB{
-                        checked: true
-                        text: "Red"
+//                        checked: true
+                        text: "1"
+                        onClicked: console.log("RadioB changed ", text)
                     }
                     RadioB {
-                        text: "Green"
+                        text: "2"
+                        onClicked: console.log("RadioB changed ", text)
                     }
-
                     RadioB {
-                        text: "Blue"
+                        text: "3"
+                        onClicked: console.log("RadioB changed ", text)
+                    }
+                    RadioB {
+                        text: "4"
+                    }
+                    RadioB {
+                        text: "5"
+                    }
+                    RadioB {
+                        text: "6"
+                    }
+                    RadioB {
+                        text: "7"
+                    }
+                    RadioB {
+                        text: "8"
+                    }
+                    RadioB {
+                        text: "9"
+                    }
+                    RadioB {
+                        text: "10"
+                    }
+                    RadioB {
+                        text: "none"
                     }
                 }
             }
