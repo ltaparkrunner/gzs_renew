@@ -2,6 +2,12 @@
 #define CALIBRTABLE_H
 
 #include <QFile>
+#include <QTimer>
+struct cfs_points{
+    float c_mix[3][10];             // Поправочные коэффициенты для расходомеров
+    float set_point[3][10];         // Калибровочные точки из таблицы
+};
+
 struct calibrTable : public QObject
 {
     Q_OBJECT
@@ -10,12 +16,12 @@ public:
         int f;
         QString s;
     } top;
-    float arr1_max;
-    float arr1[10][3];
-    float arr2_max;
-    float arr2[10][3];
-    float arr3_max;
-    float arr3[10][3];
+//    float arr1_max;
+    float arr1[10][7];
+//    float arr2_max;
+    float arr2[10][7];
+//    float arr3_max;
+    float arr3[10][7];
 
     int MaxFlow_1;
     int MaxFlow_2;
@@ -29,6 +35,14 @@ signals:
 public slots:
     void fromQML_calibTableCompleted(QString id);
     void fromQML_calibTableCompleted(int id);
+    void fromQML_RadioB(QString tabn, QString rbn);
+private:
+    int curtabn;
+    int currbn;
+    QTimer *calibTmr;
+    void calibStage();
+    cfs_points cfpt;
+//    unsigned int Max
 //    void fromQML_
 };
 

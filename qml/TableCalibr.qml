@@ -10,14 +10,14 @@ Rectangle {
         function onToQML_clbrTbl2(lc, n)
         {
             var i
-            var imax = lc.length/3
+            var imax = lc.length/7
             console.log("imax: ", imax)
             if (n !== tabln) return;
             for(i = 0; i<imax; i++){
-                tm1.appendRow({"num":i+1, "percent1":Number(lc[3*i])/2, "mlm1":lc[3*i],
-                                        "percent2":Number(lc[3*i+1])/2, "mlm2":lc[3*i+1],
-                                        "percent3":Number(lc[3*i+2])/2, "mlm3":lc[3*i+2],
-                                "coeff": 0})
+                tm1.appendRow({"num":i+1, "percent1":Number(lc[7*i]), "mlm1":lc[7*i+1],
+                                        "percent2":Number(lc[7*i+2]), "mlm2":lc[7*i+3],
+                                        "percent3":Number(lc[7*i+4]), "mlm3":lc[7*i+5],
+                                "coeff": lc[7*i+6]})
 //                console.log("from inside QML onToQML_clbrTbl")
             }
         }

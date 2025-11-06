@@ -11,6 +11,10 @@ Rectangle{
     Layout.fillHeight: true
     Layout.fillWidth: true
     color: "green"
+    Connections{
+        target: clbrTbl
+//        function onToQML_clbrTbl2(lc, n) {}
+    }
     ColumnLayout{
 //        implicitHeight : parent.height
 //        implicitWidth : parent.width
@@ -86,39 +90,47 @@ Rectangle{
                     RadioB{
 //                        checked: true
                         text: "1"
-                        onClicked: console.log("RadioB changed ", text)
+                        onClicked: clbrTbl.fromQML_RadioB(tabn, text)
                     }
                     RadioB {
                         text: "2"
-                        onClicked: console.log("RadioB changed ", text)
+                        onClicked: clbrTbl.fromQML_RadioB(tabn, text)
                     }
                     RadioB {
                         text: "3"
-                        onClicked: console.log("RadioB changed ", text)
+                        onClicked: clbrTbl.fromQML_RadioB(tabn, text)
                     }
                     RadioB {
                         text: "4"
+                        onClicked: clbrTbl.fromQML_RadioB(tabn, text)
                     }
                     RadioB {
                         text: "5"
+                        onClicked: clbrTbl.fromQML_RadioB(tabn, text)
                     }
                     RadioB {
                         text: "6"
+                        onClicked: clbrTbl.fromQML_RadioB(tabn, text)
                     }
                     RadioB {
                         text: "7"
+                        onClicked: clbrTbl.fromQML_RadioB(tabn, text)
                     }
                     RadioB {
                         text: "8"
+                        onClicked: clbrTbl.fromQML_RadioB(tabn, text)
                     }
                     RadioB {
                         text: "9"
+                        onClicked: clbrTbl.fromQML_RadioB(tabn, text)
                     }
                     RadioB {
                         text: "10"
+                        onClicked: clbrTbl.fromQML_RadioB(tabn, text)
                     }
                     RadioB {
                         text: "none"
+                        onClicked: clbrTbl.fromQML_RadioB(tabn, "0")
                     }
                 }
             }
