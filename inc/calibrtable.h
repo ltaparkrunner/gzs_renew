@@ -27,6 +27,7 @@ public:
     int MaxFlow_2;
     int MaxFlow_3;
     calibrTable(QString clb_name = "Combo.str", QObject *parent = nullptr);
+    ~calibrTable();
     void publish();
     QFile *clbrf;
 signals:
@@ -36,6 +37,7 @@ public slots:
     void fromQML_calibTableCompleted(QString id);
     void fromQML_calibTableCompleted(int id);
     void fromQML_RadioB(QString tabn, QString rbn);
+    void fromQML_calibTableManualEditingFinished(int tabn, int row, int column);
 private:
     int curtabn;
     int currbn;

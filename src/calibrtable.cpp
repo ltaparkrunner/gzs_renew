@@ -196,3 +196,11 @@ void calibrTable::calibStage() {
     qDebug() << "calibStage stage";
     calibTmr->stop();
 }
+
+void calibrTable::fromQML_calibTableManualEditingFinished(int tabn, int row, int column) {
+    qDebug() << "fromQML_calibTableManualEditingFinished tabn: " << tabn << " row: " << row << " column: " << column;
+}
+
+calibrTable::~calibrTable(){
+
+}

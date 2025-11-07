@@ -88,7 +88,7 @@ Rectangle {
 
         model: tm21
           delegate: DelegateChooser {
-              id:dcd
+//              id:dcd
               DelegateChoice {
                   column: smpl.columns - 1
                   row: smpl.rows - 1
