@@ -183,8 +183,15 @@ Rectangle {
         }
     }
 
+
     Component.onCompleted: {
         clbrTbl.fromQML_calibTableCompleted(tabln)
 //        console.log("inside TableCalib")
+    }
+    function getValue(num){
+        var n = Number(num) - 1
+//        tm1.getRow()
+        var row = tm1.getRow(n)
+        return row.mlm1
     }
 }

@@ -5,12 +5,15 @@
 #include <QDebug>
 
 #include <QTimer>
+#include <QMessageBox>
+#include "clibinc.h"
 
 calibrTable::calibrTable(QString clbrn, QObject *parent) :
     QObject (parent)
 ,   clbrf (new QFile(clbrn))
 ,   curtabn (0)
 ,   currbn (0)
+,   curvalue (0.0)
 ,   calibTmr (new QTimer(this))
 ,   cfpt ({0.0})
 {
@@ -166,10 +169,12 @@ void calibrTable::fromQML_calibTableCompleted(int id) {
     emit toQML_clbrTbl2(lc, id);
 }
 
-void calibrTable::fromQML_RadioB(QString tabn, QString rbn){
+//void calibrTable::fromQML_RadioB(QString tabn, QString rbn){
+void calibrTable::fromQML_RadioB(QString tabn, QString rbn, QString value) {
     qDebug() << "fromQML_RadioB tabn: " << tabn << " rbn: " << rbn;
     int ntabn = tabn.toInt();
     int nrbn = rbn.toInt();
+    curvalue = value.toFloat();
     if((curtabn != 0 && currbn != 0) && ( ntabn != 0 && nrbn != 0) && (curtabn != ntabn || currbn != nrbn) ){
 
     }
@@ -185,7 +190,8 @@ void calibrTable::fromQML_RadioB(QString tabn, QString rbn){
 
         connect(calibTmr, &QTimer::timeout, this, &calibrTable::calibStage);
 //        calibTmr->setInterval(300);
-        calibTmr->start(300);
+        calibStage();
+        calibTmr->start(1000); //какой период таймера?
     }
     else if ((curtabn == 0 || currbn == 0) && ( ntabn == 0 && nrbn == 0 )){
 
@@ -193,7 +199,86 @@ void calibrTable::fromQML_RadioB(QString tabn, QString rbn){
 }
 
 void calibrTable::calibStage() {
-    qDebug() << "calibStage stage";
+    int err;
+    qDebug() << "calibStage stage, curvalue: " << curvalue;
+    float anOut0=0, anOut1=0, anOut2=0;
+    float anIn0, anIn1, anIn2;
+    QList<QString> lc;
+    switch (curtabn){
+    case 1:
+        anOut0 = curvalue * 5.000 / MaxFlow_1;
+        ar._87063_TX[5] = 0x2;
+        break;
+    case 2:
+        anOut1 = curvalue * 5.000 / MaxFlow_1;
+        ar._87063_TX[5] = 0x4;
+        break;
+    case 3:
+        anOut2 = curvalue * 5.000 / MaxFlow_1;
+        ar._87063_TX[5] = 0x4;
+        break;
+    }
+
+    {
+        ar._87024_TX[5] = 0;
+        ar._87024_RX[0] = anOut0;
+        err = AnalogOut_87K(ar._87024_TX, ar._87024_RX, ar.szSend, ar.szReceive);
+        if (err != 0){
+           QMessageBox msgBox(QMessageBox::Critical, "Сообщение о проблеме", "Ошибка модуля i-87024", QMessageBox::Close);
+           msgBox.exec();
+           return;
+        }
+        ar._87024_TX[5] = 1;
+        ar._87024_RX[0] = anOut1;
+        err = AnalogOut_87K(ar._87024_TX, ar._87024_RX, ar.szSend, ar.szReceive);
+        if (err != 0){
+           QMessageBox msgBox(QMessageBox::Critical, "Сообщение о проблеме", "Ошибка модуля i-87024", QMessageBox::Close);
+           msgBox.exec();
+           return;
+        }
+        ar._87024_TX[5] = 2;
+        ar._87024_RX[0] = anOut2;
+        err = AnalogOut_87K(ar._87024_TX, ar._87024_RX, ar.szSend, ar.szReceive);
+        if (err != 0){
+           QMessageBox msgBox(QMessageBox::Critical, "Сообщение о проблеме", "Ошибка модуля i-87024", QMessageBox::Close);
+           msgBox.exec();
+           return;
+        }
+        err = DigitalOut_87K(ar._87063_TX, ar._87063_RX, ar.szSend, ar.szReceive);
+        if (err != 0){
+           QMessageBox msgBox(QMessageBox::Critical, "Сообщение о проблеме", "Ошибка модуля i-87063", QMessageBox::Close);
+           msgBox.exec();
+           return;
+        }
+        err = AnalogInAll_87K(ar._87017_TX, ar._87017_RX, ar.szSend, ar.szReceive);
+        if (err != 0){
+           QMessageBox msgBox(QMessageBox::Critical, "Сообщение о проблеме", "Ошибка модуля i-87017", QMessageBox::Close);
+           msgBox.exec();
+           return;
+        }
+        lc.append(QTime::currentTime().toString());
+        switch (curtabn){
+        case 1:
+            anIn0 = ar._87017_RX[0];
+            toQML_clbrTbl3(anIn0 * MaxFlow_1/5.0, currbn);
+            lc.append(QString::number(anOut0));
+            lc.append(QString::number(anIn0));
+            break;
+        case 2:
+            anIn1 = ar._87017_RX[0];
+            toQML_clbrTbl3(anIn1 * MaxFlow_1/5.0, currbn);
+            lc.append(QString::number(anOut0));
+            lc.append(QString::number(anIn0));
+            break;
+        case 3:
+            anIn2 = ar._87017_RX[0];
+            toQML_clbrTbl3(anIn2 * MaxFlow_1/5.0, currbn);
+            lc.append(QString::number(anOut0));
+            lc.append(QString::number(anIn0));
+            break;
+        }
+    }
+    toQml_clbrPlot(lc);
     calibTmr->stop();
 }
 

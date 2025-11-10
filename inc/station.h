@@ -4,14 +4,7 @@
 #include <QObject>
 #include <QString>
 
-extern "C" {
-    #include "sio.h"
-    #include "i7k.h"
-    #include "i87000_lnx.h"
-}
-
-const int RBUF_SIZE = 80;
-const int TBUF_SIZE = 20;
+#include "clibinc.h"
 
 class station : public QObject
 {

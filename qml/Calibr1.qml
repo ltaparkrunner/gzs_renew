@@ -90,47 +90,51 @@ Rectangle{
                     RadioB{
 //                        checked: true
                         text: "1"
-                        onClicked: clbrTbl.fromQML_RadioB(tabn, text)
+                        onClicked: clbrTbl.fromQML_RadioB(tabn, text, "0.0")
                     }
                     RadioB {
                         text: "2"
-                        onClicked: clbrTbl.fromQML_RadioB(tabn, text)
+                        onClicked: clbrTbl.fromQML_RadioB(tabn, text, "0.0")
                     }
                     RadioB {
                         text: "3"
-                        onClicked: clbrTbl.fromQML_RadioB(tabn, text)
+
+                        onClicked: {
+                            var val = tc.getValue(text)
+                            clbrTbl.fromQML_RadioB(tabn, text, val)
+                        }
                     }
                     RadioB {
                         text: "4"
-                        onClicked: clbrTbl.fromQML_RadioB(tabn, text)
+                        onClicked: clbrTbl.fromQML_RadioB(tabn, text, "0.0")
                     }
                     RadioB {
                         text: "5"
-                        onClicked: clbrTbl.fromQML_RadioB(tabn, text)
+                        onClicked: clbrTbl.fromQML_RadioB(tabn, text, "0.0")
                     }
                     RadioB {
                         text: "6"
-                        onClicked: clbrTbl.fromQML_RadioB(tabn, text)
+                        onClicked: clbrTbl.fromQML_RadioB(tabn, text, "0.0")
                     }
                     RadioB {
                         text: "7"
-                        onClicked: clbrTbl.fromQML_RadioB(tabn, text)
+                        onClicked: clbrTbl.fromQML_RadioB(tabn, text, "0.0")
                     }
                     RadioB {
                         text: "8"
-                        onClicked: clbrTbl.fromQML_RadioB(tabn, text)
+                        onClicked: clbrTbl.fromQML_RadioB(tabn, text, "0.0")
                     }
                     RadioB {
                         text: "9"
-                        onClicked: clbrTbl.fromQML_RadioB(tabn, text)
+                        onClicked: clbrTbl.fromQML_RadioB(tabn, text, "0.0")
                     }
                     RadioB {
                         text: "10"
-                        onClicked: clbrTbl.fromQML_RadioB(tabn, text)
+                        onClicked: clbrTbl.fromQML_RadioB(tabn, text, "0.0")
                     }
                     RadioB {
                         text: "none"
-                        onClicked: clbrTbl.fromQML_RadioB(tabn, "0")
+                        onClicked: clbrTbl.fromQML_RadioB(tabn, "0", "0.0")
                     }
                 }
             }

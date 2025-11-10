@@ -3,6 +3,7 @@
 
 #include <QFile>
 #include <QTimer>
+
 struct cfs_points{
     float c_mix[3][10];             // Поправочные коэффициенты для расходомеров
     float set_point[3][10];         // Калибровочные точки из таблицы
@@ -36,11 +37,13 @@ signals:
 public slots:
     void fromQML_calibTableCompleted(QString id);
     void fromQML_calibTableCompleted(int id);
-    void fromQML_RadioB(QString tabn, QString rbn);
+//    void fromQML_RadioB(QString tabn, QString rbn);
+    void fromQML_RadioB(QString tabn, QString rbn, QString value);
     void fromQML_calibTableManualEditingFinished(int tabn, int row, int column);
 private:
     int curtabn;
     int currbn;
+    float curvalue;
     QTimer *calibTmr;
     void calibStage();
     cfs_points cfpt;
