@@ -35,43 +35,73 @@ calibrTable::calibrTable(QString clbrn, QObject *parent) :
     MaxFlow_1 = sl[0].toFloat();
     for(int i=0; i<10; i++){
         sl = in.readLine().split(':');
-        arr1[i][1] = sl[0].toFloat();
-        arr1[i][0] = arr1[i][1]*100/MaxFlow_1;
-        arr1[i][3] = sl[1].toFloat();
-        arr1[i][2] = arr1[i][3]*100/MaxFlow_1;
-        arr1[i][5] = sl[2].toFloat();
-        arr1[i][4] = arr1[i][5]*100/MaxFlow_1;
-        cfpt.c_mix[0][i] = (arr1[i][3] - arr1[i][5]) / arr1[i][5] + 1.0;
-        arr1[i][6] = cfpt.c_mix[0][i];
-        cfpt.set_point[0][i] = arr1[i][1];
+        // arr1[i][1] = sl[0].toFloat();
+        // arr1[i][0] = arr1[i][1]*100/MaxFlow_1;
+        // arr1[i][3] = sl[1].toFloat();
+        // arr1[i][2] = arr1[i][3]*100/MaxFlow_1;
+        // arr1[i][5] = sl[2].toFloat();
+        // arr1[i][4] = arr1[i][5]*100/MaxFlow_1;
+        // cfpt.c_mix[0][i] = (arr1[i][3] - arr1[i][5]) / arr1[i][5] + 1.0;
+        // arr1[i][6] = cfpt.c_mix[0][i];
+        // cfpt.set_point[0][i] = arr1[i][1];
+
+        tbl1[i].ml1 = sl[0].toFloat();
+        tbl1[i].pc1 = tbl1[i].ml1*100.0/MaxFlow_1;
+        tbl1[i].ml2 = sl[1].toFloat();
+        tbl1[i].pc2 = tbl1[i].ml2*100.0/MaxFlow_1;
+        tbl1[i].ml3 = sl[2].toFloat();
+        tbl1[i].pc3 = tbl1[i].ml3*100.0/MaxFlow_1;
+        cfpt.c_mix[0][i] = (tbl1[i].ml2 - tbl1[i].ml3)/tbl1[i].ml3 + 1.0;
+        tbl1[i].coeff = cfpt.c_mix[0][i];
+        cfpt.set_point[0][i] = tbl1[i].ml1;
     }
     sl = in.readLine().split(':');
     MaxFlow_2 = sl[0].toFloat();
     for(int i=0; i<10; i++){
         sl = in.readLine().split(':');
-        arr2[i][1] = sl[0].toFloat();
-        arr2[i][0] = arr2[i][1]*100/MaxFlow_2;
-        arr2[i][3] = sl[1].toFloat();
-        arr2[i][2] = arr2[i][3]*100/MaxFlow_2;
-        arr2[i][5] = sl[2].toFloat();
-        arr2[i][4] = arr2[i][5]*100/MaxFlow_2;
-        cfpt.c_mix[1][i] = (arr2[i][3] - arr2[i][5]) / arr2[i][5] + 1.0;
-        arr2[i][6] = cfpt.c_mix[1][i];
-        cfpt.set_point[1][i] = arr2[i][1];
+        // arr2[i][1] = sl[0].toFloat();
+        // arr2[i][0] = arr2[i][1]*100/MaxFlow_2;
+        // arr2[i][3] = sl[1].toFloat();
+        // arr2[i][2] = arr2[i][3]*100/MaxFlow_2;
+        // arr2[i][5] = sl[2].toFloat();
+        // arr2[i][4] = arr2[i][5]*100/MaxFlow_2;
+        // cfpt.c_mix[1][i] = (arr2[i][3] - arr2[i][5]) / arr2[i][5] + 1.0;
+        // arr2[i][6] = cfpt.c_mix[1][i];
+        // cfpt.set_point[1][i] = arr2[i][1];
+
+        tbl2[i].ml1 = sl[0].toFloat();
+        tbl2[i].pc1 = tbl2[i].ml1*100.0/MaxFlow_2;
+        tbl2[i].ml2 = sl[1].toFloat();
+        tbl2[i].pc2 = tbl2[i].ml2*100.0/MaxFlow_2;
+        tbl2[i].ml3 = sl[2].toFloat();
+        tbl2[i].pc3 = tbl2[i].ml3*100.0/MaxFlow_2;
+        cfpt.c_mix[1][i] = (tbl2[i].ml2 - tbl2[i].ml3)/tbl2[i].ml3 + 1.0;
+        tbl2[i].coeff = cfpt.c_mix[1][i];
+        cfpt.set_point[1][i] = tbl2[i].ml1;
     }
     sl = in.readLine().split(':');
     MaxFlow_3 = sl[0].toFloat();
     for(int i=0; i<10; i++){
         sl = in.readLine().split(':');
-        arr3[i][1] = sl[0].toFloat();
-        arr3[i][0] = arr3[i][1]*100/MaxFlow_3;
-        arr3[i][3] = sl[1].toFloat();
-        arr3[i][2] = arr3[i][3]*100/MaxFlow_3;
-        arr3[i][5] = sl[2].toFloat();
-        arr3[i][4] = arr3[i][5]*100/MaxFlow_3;
-        cfpt.c_mix[2][i] = (arr3[i][3] - arr3[i][5]) / arr3[i][5] + 1.0;
-        arr3[i][6] = cfpt.c_mix[2][i];
-        cfpt.set_point[2][i] = arr3[i][1];
+        // arr3[i][1] = sl[0].toFloat();
+        // arr3[i][0] = arr3[i][1]*100/MaxFlow_3;
+        // arr3[i][3] = sl[1].toFloat();
+        // arr3[i][2] = arr3[i][3]*100/MaxFlow_3;
+        // arr3[i][5] = sl[2].toFloat();
+        // arr3[i][4] = arr3[i][5]*100/MaxFlow_3;
+        // cfpt.c_mix[2][i] = (arr3[i][3] - arr3[i][5]) / arr3[i][5] + 1.0;
+        // arr3[i][6] = cfpt.c_mix[2][i];
+        // cfpt.set_point[2][i] = arr3[i][1];
+
+        tbl3[i].ml1 = sl[0].toFloat();
+        tbl3[i].pc1 = tbl3[i].ml1*100.0/MaxFlow_3;
+        tbl3[i].ml2 = sl[1].toFloat();
+        tbl3[i].pc2 = tbl3[i].ml2*100.0/MaxFlow_3;
+        tbl3[i].ml3 = sl[2].toFloat();
+        tbl3[i].pc3 = tbl3[i].ml3*100.0/MaxFlow_3;
+        cfpt.c_mix[2][i] = (tbl3[i].ml2 - tbl3[i].ml3)/tbl3[i].ml3 + 1.0;
+        tbl3[i].coeff = cfpt.c_mix[2][i];
+        cfpt.set_point[2][i] = tbl3[i].ml1;
     }
     clbrf->close();
     // MaxFlow_1 = arr1_max;
@@ -85,44 +115,44 @@ calibrTable::calibrTable(QString clbrn, QObject *parent) :
 void calibrTable::publish(){
     qDebug() << "From inside calibrTable::publish";
     QList<QString> lc;
-    lc.append(QString::number(top.f));
-    lc.append(top.s);
-    lc.append(" ");
-    lc.append(QString::number(MaxFlow_1));
-    lc.append(" ");
-    lc.append(" ");
+    // lc.append(QString::number(top.f));
+    // lc.append(top.s);
+    // lc.append(" ");
+    // lc.append(QString::number(MaxFlow_1));
+    // lc.append(" ");
+    // lc.append(" ");
     for(int i=0; i<10; i++){
-        lc.append(QString::number(arr1[i][0]));
-        lc.append(QString::number(arr1[i][1]));
-        lc.append(QString::number(arr1[i][2]));
-        lc.append(QString::number(arr1[i][3]));
-        lc.append(QString::number(arr1[i][4]));
-        lc.append(QString::number(arr1[i][5]));
-        lc.append(QString::number(arr1[i][6]));
+        lc.append(QString::number(tbl1[i].pc1));
+        lc.append(QString::number(tbl1[i].ml1));
+        lc.append(QString::number(tbl1[i].pc2));
+        lc.append(QString::number(tbl1[i].ml2));
+        lc.append(QString::number(tbl1[i].pc3));
+        lc.append(QString::number(tbl1[i].ml3));
+        lc.append(QString::number(tbl1[i].coeff));
     }
-    lc.append(QString::number(MaxFlow_2));
-    lc.append(" ");
-    lc.append(" ");
+    // lc.append(QString::number(MaxFlow_2));
+    // lc.append(" ");
+    // lc.append(" ");
     for(int i=0; i<10; i++){
-        lc.append(QString::number(arr2[i][0]));
-        lc.append(QString::number(arr2[i][1]));
-        lc.append(QString::number(arr2[i][2]));
-        lc.append(QString::number(arr2[i][3]));
-        lc.append(QString::number(arr2[i][4]));
-        lc.append(QString::number(arr2[i][5]));
-        lc.append(QString::number(arr2[i][6]));
+        lc.append(QString::number(tbl2[i].pc1));
+        lc.append(QString::number(tbl2[i].ml1));
+        lc.append(QString::number(tbl2[i].pc2));
+        lc.append(QString::number(tbl2[i].ml2));
+        lc.append(QString::number(tbl2[i].pc3));
+        lc.append(QString::number(tbl2[i].ml3));
+        lc.append(QString::number(tbl2[i].coeff));
     }
-    lc.append(QString::number(MaxFlow_3));
-    lc.append(" ");
-    lc.append(" ");
+    // lc.append(QString::number(MaxFlow_3));
+    // lc.append(" ");
+    // lc.append(" ");
     for(int i=0; i<10; i++){
-        lc.append(QString::number(arr3[i][0]));
-        lc.append(QString::number(arr3[i][1]));
-        lc.append(QString::number(arr3[i][2]));
-        lc.append(QString::number(arr3[i][3]));
-        lc.append(QString::number(arr3[i][4]));
-        lc.append(QString::number(arr3[i][5]));
-        lc.append(QString::number(arr3[i][6]));
+        lc.append(QString::number(tbl3[i].pc1));
+        lc.append(QString::number(tbl3[i].ml1));
+        lc.append(QString::number(tbl3[i].pc2));
+        lc.append(QString::number(tbl3[i].ml2));
+        lc.append(QString::number(tbl3[i].pc3));
+        lc.append(QString::number(tbl3[i].ml3));
+        lc.append(QString::number(tbl3[i].coeff));
     }
     emit toQML_clbrTbl(lc);
 }
@@ -135,35 +165,35 @@ void calibrTable::fromQML_calibTableCompleted(int id) {
     QList<QString> lc;
     if(id == 1){
         for(int i=0; i<10; i++){
-            lc.append(QString::number(arr1[i][0]));
-            lc.append(QString::number(arr1[i][1]));
-            lc.append(QString::number(arr1[i][2]));
-            lc.append(QString::number(arr1[i][3]));
-            lc.append(QString::number(arr1[i][4]));
-            lc.append(QString::number(arr1[i][5]));
-            lc.append(QString::number(arr1[i][6]));
+            lc.append(QString::number(tbl1[i].pc1));
+            lc.append(QString::number(tbl1[i].ml1));
+            lc.append(QString::number(tbl1[i].pc2));
+            lc.append(QString::number(tbl1[i].ml2));
+            lc.append(QString::number(tbl1[i].pc3));
+            lc.append(QString::number(tbl1[i].ml3));
+            lc.append(QString::number(tbl1[i].coeff));
         }
     }
     else     if(id == 2){
         for(int i=0; i<10; i++){
-            lc.append(QString::number(arr2[i][0]));
-            lc.append(QString::number(arr2[i][1]));
-            lc.append(QString::number(arr2[i][2]));
-            lc.append(QString::number(arr2[i][3]));
-            lc.append(QString::number(arr2[i][4]));
-            lc.append(QString::number(arr2[i][5]));
-            lc.append(QString::number(arr2[i][6]));
+            lc.append(QString::number(tbl2[i].pc1));
+            lc.append(QString::number(tbl2[i].ml1));
+            lc.append(QString::number(tbl2[i].pc2));
+            lc.append(QString::number(tbl2[i].ml2));
+            lc.append(QString::number(tbl2[i].pc3));
+            lc.append(QString::number(tbl2[i].ml3));
+            lc.append(QString::number(tbl2[i].coeff));
         }
     }
     else if(id == 3){
         for(int i=0; i<10; i++){
-            lc.append(QString::number(arr3[i][0]));
-            lc.append(QString::number(arr3[i][1]));
-            lc.append(QString::number(arr3[i][2]));
-            lc.append(QString::number(arr3[i][3]));
-            lc.append(QString::number(arr3[i][4]));
-            lc.append(QString::number(arr3[i][5]));
-            lc.append(QString::number(arr3[i][6]));
+            lc.append(QString::number(tbl3[i].pc1));
+            lc.append(QString::number(tbl3[i].ml1));
+            lc.append(QString::number(tbl3[i].pc2));
+            lc.append(QString::number(tbl3[i].ml2));
+            lc.append(QString::number(tbl3[i].pc3));
+            lc.append(QString::number(tbl3[i].ml3));
+            lc.append(QString::number(tbl3[i].coeff));
         }
     }
     emit toQML_clbrTbl2(lc, id);
@@ -200,7 +230,11 @@ void calibrTable::fromQML_RadioB(QString tabn, QString rbn, QString value) {
 
 void calibrTable::calibStage() {
     int err;
-    qDebug() << "calibStage stage, curvalue: " << curvalue;
+    switch(curtabn){
+    case 1: qDebug() << "calibStage stage, curvalue: " << tbl1[currbn-1].ml1; break;
+    case 2: qDebug() << "calibStage stage, curvalue: " << tbl2[currbn-1].ml1; break;
+    case 3: qDebug() << "calibStage stage, curvalue: " << tbl3[currbn-1].ml1; break;
+    }
     float anOut0=0, anOut1=0, anOut2=0;
     float anIn0, anIn1, anIn2;
     QList<QString> lc;
@@ -210,11 +244,11 @@ void calibrTable::calibStage() {
         ar._87063_TX[5] = 0x2;
         break;
     case 2:
-        anOut1 = curvalue * 5.000 / MaxFlow_1;
+        anOut1 = curvalue * 5.000 / MaxFlow_2;
         ar._87063_TX[5] = 0x4;
         break;
     case 3:
-        anOut2 = curvalue * 5.000 / MaxFlow_1;
+        anOut2 = curvalue * 5.000 / MaxFlow_3;
         ar._87063_TX[5] = 0x4;
         break;
     }
@@ -260,26 +294,54 @@ void calibrTable::calibStage() {
         switch (curtabn){
         case 1:
             anIn0 = ar._87017_RX[0];
-            toQML_clbrTbl3(anIn0 * MaxFlow_1/5.0, currbn);
+            tbl1[currbn-1].ml2 = anIn0 * MaxFlow_1/5.0;
+//            toQML_clbrTbl3(anIn0 * MaxFlow_1/5.0, currbn);
+            for(int i=0; i<10; i++){
+                tbl1[i].pc1 = tbl1[i].ml1*100.0/MaxFlow_1;
+                tbl1[i].pc2 = tbl1[i].ml2*100.0/MaxFlow_1;
+                tbl1[i].pc3 = tbl1[i].ml3*100.0/MaxFlow_1;
+                cfpt.c_mix_temp[0][i] = (tbl1[i].ml2 - tbl1[i].ml3)/tbl1[i].ml3 + 1.0;
+                tbl1[i].coeff = cfpt.c_mix_temp[0][i];
+                cfpt.set_point_temp[0][i] = tbl1[i].ml1;
+            }
             lc.append(QString::number(anOut0));
             lc.append(QString::number(anIn0));
             break;
         case 2:
             anIn1 = ar._87017_RX[0];
-            toQML_clbrTbl3(anIn1 * MaxFlow_1/5.0, currbn);
+            tbl2[currbn-1].ml2 = anIn1 * MaxFlow_2/5.0;
+//            toQML_clbrTbl3(anIn1 * MaxFlow_2/5.0, currbn);
+            for(int i=0; i<10; i++){
+                tbl2[i].pc1 = tbl2[i].ml1*100.0/MaxFlow_2;
+                tbl2[i].pc2 = tbl2[i].ml2*100.0/MaxFlow_2;
+                tbl2[i].pc3 = tbl2[i].ml3*100.0/MaxFlow_2;
+                cfpt.c_mix_temp[1][i] = (tbl2[i].ml2 - tbl2[i].ml3)/tbl2[i].ml3 + 1.0;
+                tbl2[i].coeff = cfpt.c_mix_temp[1][i];
+                cfpt.set_point_temp[1][i] = tbl2[i].ml1;
+            }
+            fromQML_calibTableCompleted(curtabn);
             lc.append(QString::number(anOut0));
             lc.append(QString::number(anIn0));
             break;
         case 3:
             anIn2 = ar._87017_RX[0];
-            toQML_clbrTbl3(anIn2 * MaxFlow_1/5.0, currbn);
+            tbl3[currbn-1].ml2 = anIn2 * MaxFlow_3/5.0;
+//            toQML_clbrTbl3(anIn2 * MaxFlow_3/5.0, currbn);
+            for(int i=0; i<10; i++){
+                tbl3[i].pc1 = tbl3[i].ml1*100.0/MaxFlow_3;
+                tbl3[i].pc2 = tbl3[i].ml2*100.0/MaxFlow_3;
+                tbl3[i].pc3 = tbl3[i].ml3*100.0/MaxFlow_3;
+                cfpt.c_mix_temp[2][i] = (tbl3[i].ml2 - tbl3[i].ml3)/tbl3[i].ml3 + 1.0;
+                tbl3[i].coeff = cfpt.c_mix_temp[2][i];
+                cfpt.set_point_temp[2][i] = tbl3[i].ml1;
+            }
             lc.append(QString::number(anOut0));
             lc.append(QString::number(anIn0));
             break;
         }
     }
+    fromQML_calibTableCompleted(curtabn);
     toQml_clbrPlot(lc);
-    calibTmr->stop();
 }
 
 void calibrTable::fromQML_calibTableManualEditingFinished(int tabn, int row, int column) {

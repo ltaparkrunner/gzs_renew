@@ -39,7 +39,7 @@ station::station(QString portn, int s_num, int &rerr, QObject *parent):
     ar._87017_TX[6] = 1;
     ar._87017_TX[7] = 0;
 
-    err = AnalogInAll_87K(ar._87017_TX, _87017_RX, szSend, szReceive);
+    err = AnalogInAll_87K(ar._87017_TX, ar._87017_RX, ar.szSend, ar.szReceive);
     if(err != 0){ init_err = -3; goto wrong_87017;}
 
     ar._87024_TX[0] = sp;          // port num
@@ -54,22 +54,22 @@ station::station(QString portn, int s_num, int &rerr, QObject *parent):
     ar._87024_RX[0] = 0.000;        // Digital out
 
     setlocale(LC_NUMERIC, "POSIX");
-    err = AnalogOut_87K(ar._87024_TX, ar._87024_RX, szSend, szReceive);
+    err = AnalogOut_87K(ar._87024_TX, ar._87024_RX, ar.szSend, ar.szReceive);
     if(err != 0){ init_err = -4; goto wrong_87024;}
 
     ar._87024_TX[5] = 1;           // Channel No.
     ar._87024_RX[0] = 0.000;        // Digital out
-    err = AnalogOut_87K(ar._87024_TX, ar._87024_RX, szSend, szReceive);
+    err = AnalogOut_87K(ar._87024_TX, ar._87024_RX, ar.szSend, ar.szReceive);
     if(err != 0){ init_err = -4; goto wrong_87024;}
 
     ar._87024_TX[5] = 2;           // Channel No.
     ar._87024_RX[0] = 0.000;        // Digital out
-    err = AnalogOut_87K(ar._87024_TX, ar._87024_RX, szSend, szReceive);
+    err = AnalogOut_87K(ar._87024_TX, ar._87024_RX, ar.szSend, ar.szReceive);
     if(err != 0){ init_err = -4; goto wrong_87024;}
 
     ar._87024_TX[5] = 3;           // Channel No.
     ar._87024_RX[0] = 0.000;        // Digital out
-    err = AnalogOut_87K(ar._87024_TX, ar._87024_RX, szSend, szReceive);
+    err = AnalogOut_87K(ar._87024_TX, ar._87024_RX, ar.szSend, ar.szReceive);
     if(err != 0){ init_err = -4; goto wrong_87024;}
 
     ar._87024_2_TX[0] = sp;          // port num
@@ -82,22 +82,22 @@ station::station(QString portn, int s_num, int &rerr, QObject *parent):
 
     ar._87024_2_TX[5] = 0;           // Channel No.
     ar._87024_2_RX[0] = 0.000;        // Digital out
-    err = AnalogOut_87K(ar._87024_2_TX, ar._87024_2_RX, szSend, szReceive);
+    err = AnalogOut_87K(ar._87024_2_TX, ar._87024_2_RX, ar.szSend, ar.szReceive);
     if(err != 0){ init_err = -5; goto wrong_87024_2;}
 
     ar._87024_2_TX[5] = 1;           // Channel No.
     ar._87024_2_RX[0] = 0.000;        // Digital out
-    err = AnalogOut_87K(ar._87024_2_TX, ar._87024_2_RX, szSend, szReceive);
+    err = AnalogOut_87K(ar._87024_2_TX, ar._87024_2_RX, ar.szSend, ar.szReceive);
     if(err != 0){ init_err = -5; goto wrong_87024_2;}
 
     ar._87024_2_TX[5] = 2;           // Channel No.
     ar._87024_2_RX[0] = 0.000;        // Digital out
-    err = AnalogOut_87K(ar._87024_2_TX, ar._87024_2_RX, szSend, szReceive);
+    err = AnalogOut_87K(ar._87024_2_TX, ar._87024_2_RX, ar.szSend, ar.szReceive);
     if(err != 0){ init_err = -5; goto wrong_87024_2;}
 
     ar._87024_2_TX[5] = 3;           // Channel No.
     ar._87024_2_RX[0] = 0.000;        // Digital out
-    err = AnalogOut_87K(ar._87024_2_TX, ar._87024_2_RX, szSend, szReceive);
+    err = AnalogOut_87K(ar._87024_2_TX, ar._87024_2_RX, ar.szSend, ar.szReceive);
     setlocale(LC_NUMERIC, oldlocale);
     if(err != 0){ init_err = -5; goto wrong_87024_2;}
 
@@ -112,7 +112,7 @@ station::station(QString portn, int s_num, int &rerr, QObject *parent):
 
     ar._87063_TX[5] = 0;           // Channel No.
 //    _87063_RX[0] = 0.000;        // Digital out
-    err = DigitalOut_87K(ar._87063_TX, ar._87063_RX, szSend, szReceive);
+    err = DigitalOut_87K(ar._87063_TX, ar._87063_RX, ar.szSend, ar.szReceive);
     if(err != 0){ init_err = -5; goto wrong_87063;}
 
     init_err = 0; rerr = init_err;
