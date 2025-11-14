@@ -12,8 +12,9 @@ Rectangle {
         {
             var i
             var imax = lc.length/7
-            console.log("imax: ", imax)
+//            console.log("imax: ", imax)
             if (n !== tabln) return;
+            tm1.clear()
             for(i = 0; i<imax; i++){
                 tm1.appendRow({"num":i+1, "percent1":Number(lc[7*i]), "mlm1":lc[7*i+1],
                                         "percent2":Number(lc[7*i+2]), "mlm2":lc[7*i+3],

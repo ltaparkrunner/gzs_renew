@@ -32,6 +32,8 @@ public slots:
     void startTest_fromQML();
     void stopTest_fromQML();
     void eqpRqst_fromQML(QString pn);
+    void calibClosed_fromQML();
+    void calibOpened_fromQML();
 private:
 //    int tm;
 //    QTimer* test_tmr;

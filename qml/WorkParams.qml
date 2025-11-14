@@ -8,6 +8,9 @@ import QtQuick.Window 2.0   //1.5//2.15
 Rectangle{
     id:wp
     color:"lightyellow"
+    Connections{
+        target: master
+    }
     ColumnLayout{
 //        anchors.fill: parent
 //        anchors.left: parent.left
@@ -214,8 +217,10 @@ Rectangle{
                         var component = Qt.createComponent("CalibrMaster.qml");
                         if (component.status === Component.Ready) {
                             var newWindow = component.createObject(wp); // 'root' is the parent for the new object
+//                            newWindow = component.createObject(wp); // 'root' is the parent for the new object
                             if (newWindow) {
                                 newWindow.show();
+                                master.calibOpened_fromQML()
                             } else {
                                 console.error("Failed to create new window object.");
                             }

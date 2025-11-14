@@ -57,6 +57,7 @@ public slots:
 //    void fromQML_RadioB(QString tabn, QString rbn);
     void fromQML_RadioB(QString tabn, QString rbn, QString value);
     void fromQML_calibTableManualEditingFinished(int tabn, int row, int column);
+    void fromQML_calibClosed();
 private:
     int curtabn;
     int currbn;

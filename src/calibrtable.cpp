@@ -206,13 +206,17 @@ void calibrTable::fromQML_RadioB(QString tabn, QString rbn, QString value) {
     int nrbn = rbn.toInt();
     curvalue = value.toFloat();
     if((curtabn != 0 && currbn != 0) && ( ntabn != 0 && nrbn != 0) && (curtabn != ntabn || currbn != nrbn) ){
-
+        calibTmr->stop();
+        curtabn = ntabn;
+        currbn = nrbn;
+        connect(calibTmr, &QTimer::timeout, this, &calibrTable::calibStage);
+        calibStage();
+        calibTmr->start(1000); //какой период таймера?
     }
     else if((curtabn != 0 && currbn != 0) && (  ntabn != 0 && nrbn != 0 ) && (curtabn == ntabn && currbn == nrbn)){
-
     }
     else if((curtabn != 0 && currbn != 0) && ( ntabn == 0 || nrbn == 0 )){
-
+        calibTmr->stop();
     }
     else if((curtabn == 0 || currbn == 0) && ( ntabn != 0 && nrbn != 0)){
         curtabn = ntabn;
@@ -230,6 +234,7 @@ void calibrTable::fromQML_RadioB(QString tabn, QString rbn, QString value) {
 
 void calibrTable::calibStage() {
     int err;
+    static int count = 4;
     switch(curtabn){
     case 1: qDebug() << "calibStage stage, curvalue: " << tbl1[currbn-1].ml1; break;
     case 2: qDebug() << "calibStage stage, curvalue: " << tbl2[currbn-1].ml1; break;
@@ -290,7 +295,8 @@ void calibrTable::calibStage() {
            msgBox.exec();
            return;
         }
-        lc.append(QTime::currentTime().toString());
+        lc.append(QDateTime::currentDateTime().toString());
+//        lc.append(QString::number(count++));
         switch (curtabn){
         case 1:
             anIn0 = ar._87017_RX[0];
@@ -319,7 +325,7 @@ void calibrTable::calibStage() {
                 tbl2[i].coeff = cfpt.c_mix_temp[1][i];
                 cfpt.set_point_temp[1][i] = tbl2[i].ml1;
             }
-            fromQML_calibTableCompleted(curtabn);
+            fromQML_calibTableCompleted(curtabn);           //????
             lc.append(QString::number(anOut0));
             lc.append(QString::number(anIn0));
             break;
@@ -349,5 +355,10 @@ void calibrTable::fromQML_calibTableManualEditingFinished(int tabn, int row, int
 }
 
 calibrTable::~calibrTable(){
+    calibTmr->stop();
+    delete calibTmr;
+}
 
+void calibrTable::fromQML_calibClosed(){
+    calibTmr->stop();
 }

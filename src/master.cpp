@@ -244,3 +244,11 @@ void master::ch_val(){
 //    params.Factor_Dilute++;
 //    qDebug() << "params.Factor_Dilute: " << params.Factor_Dilute;
 }
+
+void master::calibOpened_fromQML(){
+    qDebug() << "calibOpened_fromQML";
+}
+
+void master::calibClosed_fromQML(){
+    qDebug() << "calibClosed_fromQML";
+}

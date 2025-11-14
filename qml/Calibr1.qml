@@ -11,9 +11,32 @@ Rectangle{
     Layout.fillHeight: true
     Layout.fillWidth: true
     color: "green"
+    property var locale: Qt.locale()
+    property string timeString: "14:30:00"
+    property string timeFormat: "hh:mm:ss"
+
+
     Connections{
         target: clbrTbl
-//        function onToQML_clbrTbl2(lc, n) {}
+        function onToQml_clbrPlot(lc) {
+            console.log("QML_onToQml_clbrPlot", lc[0], "  ", lc[1], "  ", lc[2])
+//            var parsedTime = Date.fromLocaleString(locale, lc[0], timeFormat);
+//            console.log("parsedTime = ", parsedTime.tolocaleTimeString())
+//             let curr = new Date()
+// //            curr.
+//             console.log("new Date().getTime()   ", curr)
+//            new Date().getTime()
+//            console.log("parsedTime = ", curr.tolocaleTimeString())
+//            static count = 4
+//            var count = Number(lc[0])
+            xAxis2.max = new Date(lc[0])
+            ls1.append(xAxis2.max, lc[1])
+//            ls2.append({x:parsedTime, y:lc[2]})
+
+            // ls1.append({x:lc[0], y:lc[1]})
+            // ls2.append({x:lc[0], y:lc[2]})
+            //ls1.append({x: new Date().getTime(), y: 1})
+        }
     }
     ColumnLayout{
 //        implicitHeight : parent.height
@@ -38,36 +61,7 @@ Rectangle{
                 Layout.fillWidth: true
                 height: 250
                 color: "lightyellow"
-/*
-                ChartView {
-                    title: "Канал 'Сухой разбавитель'"
-                    anchors.fill: parent
-                    antialiasing: true
-                    // Define X-axis
-                    ValueAxis {
-                        id: xAxis
-                        min: 0
-                        max: 10
-                        titleText: "X-Axis Label"
-                    }
 
-                    // Define Y-axis
-                    ValueAxis {
-                        id: yAxis
-                        min: 0
-                        max: 5
-                        titleText: "Y-Axis Label"
-                    }
-                    LineSeries{
-                        axisX: xAxis
-                        axisY: yAxis
-
-                        XYPoint { x: 1; y: 2 }
-                        XYPoint { x: 3; y: 4 }
-                        XYPoint { x: 5; y: 3 }
-                    }
-                }
-*/
                 TableCalibr{
                     id: tc
                     property int tabln: tabn
@@ -152,28 +146,51 @@ Rectangle{
                 title: "Канал 'Сухой разбавитель'"
                 anchors.fill: parent
                 antialiasing: true
+                id: cv1
                 // Define X-axis
-                ValueAxis {
+                DateTimeAxis {
+//                ValueAxis{
                     id: xAxis2
-                    min: 0
-                    max: 10
-                    titleText: "X-Axis Label"
+                    format: "hh:mm:ss"
+                    // min: new Date().getTime() - 12000
+                    // max: new Date().getTime()
+                    min: new Date("2023-12-25")
+                    max: new Date(xAxis2.min.addSecs(10))
+//                    max: new Date(1970, 1, 1, 19, 30, 7, 0)
+//                    titleText: "X-Axis Label"
                 }
 
                 // Define Y-axis
                 ValueAxis {
                     id: yAxis2
-                    min: 0
-                    max: 5
-                    titleText: "Y-Axis Label"
+                    min: -1
+                    max: 2
+                    titleText: "Сигнал, В"
                 }
                 LineSeries{
+                    id: ls1
                     axisX: xAxis2
                     axisY: yAxis2
-
-                    XYPoint { x: 1; y: 2 }
-                    XYPoint { x: 3; y: 4 }
-                    XYPoint { x: 5; y: 3 }
+                    color: "blue"
+                    // XYPoint { x: new Date().getTime()-10000; y: 2 }
+                    // XYPoint { x: new Date().getTime()-5000; y: 1.5 }
+                    // XYPoint { x: new Date().getTime(); y: 1.4 }
+                }
+                LineSeries{
+                    id: ls2
+                    axisX: xAxis2
+                    axisY: yAxis2
+                    color: "green"
+                    // XYPoint { x: 1; y: 3 }
+                    // XYPoint { x: 3; y: 7 }
+                    // XYPoint { x: 5; y: 4 }
+                }
+                Component.onCompleted: {
+                    let t3 = new Date()
+                    xAxis2.max = t3
+                    console.log("ChartView is completed t3: ", xAxis2.max, "   ", xAxis2.max.toTimeString(),  "  ", xAxis2.max.toString())
+                    xAxis2.min = new Date(t3.getTime()-1000)
+                    console.log("ChartView is completed xAxis.max: ", xAxis2.min, "   ", xAxis2.min.toTimeString(),  "  ", xAxis2.min.toString())
                 }
             }
         }
