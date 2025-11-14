@@ -57,6 +57,7 @@ Rectangle {
         model: tm1
         delegate: DelegateChooser {
             DelegateChoice {
+                column: 6
                 delegate: Rectangle {
                     implicitWidth: 100
                     implicitHeight: 30
@@ -67,8 +68,21 @@ Rectangle {
                         //anchors.centerIn: parent
                         onEditingFinished: {
 //                          console.log("clbrTbl onEditingFinished tabn: ", tabn, "  row: ", row, "  column: ", column)
-                            clbrTbl.fromQML_calibTableManualEditingFinished(tabn, row, column)
+                            clbrTbl.fromQML_calibTableManualEditingFinished(tabn, row, column, text)
                         }
+                    }
+                }
+            }
+            DelegateChoice {
+                delegate: Rectangle {
+                    implicitWidth: 100
+                    implicitHeight: 30
+                    border.width: 1
+                    TextField {
+                        text: display
+                        anchors.fill:parent
+                        readOnly: true
+                        //anchors.centerIn: parent
                     }
                 }
             }

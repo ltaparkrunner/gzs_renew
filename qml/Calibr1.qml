@@ -19,23 +19,14 @@ Rectangle{
     Connections{
         target: clbrTbl
         function onToQml_clbrPlot(lc) {
-            console.log("QML_onToQml_clbrPlot", lc[0], "  ", lc[1], "  ", lc[2])
-//            var parsedTime = Date.fromLocaleString(locale, lc[0], timeFormat);
-//            console.log("parsedTime = ", parsedTime.tolocaleTimeString())
-//             let curr = new Date()
-// //            curr.
-//             console.log("new Date().getTime()   ", curr)
-//            new Date().getTime()
-//            console.log("parsedTime = ", curr.tolocaleTimeString())
-//            static count = 4
-//            var count = Number(lc[0])
+//            console.log("QML_onToQml_clbrPlot", lc[0], "  ", lc[1], "  ", lc[2])
             xAxis2.max = new Date(lc[0])
             ls1.append(xAxis2.max, lc[1])
-//            ls2.append({x:parsedTime, y:lc[2]})
-
-            // ls1.append({x:lc[0], y:lc[1]})
-            // ls2.append({x:lc[0], y:lc[2]})
-            //ls1.append({x: new Date().getTime(), y: 1})
+        }
+        function onToQml_clbrAxis(lc){
+            console.log("onToQml_clbrAxis  ", lc[0], "  ", lc[1])
+            xAxis2.min = new Date(lc[0])
+            xAxis2.max = new Date(lc[1])
         }
     }
     ColumnLayout{
@@ -154,8 +145,8 @@ Rectangle{
                     format: "hh:mm:ss"
                     // min: new Date().getTime() - 12000
                     // max: new Date().getTime()
-                    min: new Date("2023-12-25")
-                    max: new Date(xAxis2.min.addSecs(10))
+//                    min: new Date("2023-12-25")
+//                    max: new Date(xAxis2.min.addSecs(10))
 //                    max: new Date(1970, 1, 1, 19, 30, 7, 0)
 //                    titleText: "X-Axis Label"
                 }
@@ -185,13 +176,13 @@ Rectangle{
                     // XYPoint { x: 3; y: 7 }
                     // XYPoint { x: 5; y: 4 }
                 }
-                Component.onCompleted: {
-                    let t3 = new Date()
-                    xAxis2.max = t3
-                    console.log("ChartView is completed t3: ", xAxis2.max, "   ", xAxis2.max.toTimeString(),  "  ", xAxis2.max.toString())
-                    xAxis2.min = new Date(t3.getTime()-1000)
-                    console.log("ChartView is completed xAxis.max: ", xAxis2.min, "   ", xAxis2.min.toTimeString(),  "  ", xAxis2.min.toString())
-                }
+                // Component.onCompleted: {
+                //     let t3 = new Date()
+                //     xAxis2.max = t3
+                //     console.log("ChartView is completed t3: ", xAxis2.max, "   ", xAxis2.max.toTimeString(),  "  ", xAxis2.max.toString())
+                //     xAxis2.min = new Date(t3.getTime()-1000)
+                //     console.log("ChartView is completed xAxis.max: ", xAxis2.min, "   ", xAxis2.min.toTimeString(),  "  ", xAxis2.min.toString())
+                // }
             }
         }
     }

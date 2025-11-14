@@ -16,6 +16,7 @@ calibrTable::calibrTable(QString clbrn, QObject *parent) :
 ,   curvalue (0.0)
 ,   calibTmr (new QTimer(this))
 ,   cfpt ({0.0})
+,   isaxis(true)
 {
 //    qDebug() << "calibrTable constractor. Name: " << clbrn;
 //    clbrf = new QFile(clbrn);
@@ -206,10 +207,15 @@ void calibrTable::fromQML_RadioB(QString tabn, QString rbn, QString value) {
     int nrbn = rbn.toInt();
     curvalue = value.toFloat();
     if((curtabn != 0 && currbn != 0) && ( ntabn != 0 && nrbn != 0) && (curtabn != ntabn || currbn != nrbn) ){
+        // QList<QString> lc;
+        // lc.append(QDateTime::currentDateTime().toString());
+        // lc.append(QDateTime::currentDateTime().toString());
+        // emit toQml_clbrAxis(lc);
         calibTmr->stop();
         curtabn = ntabn;
         currbn = nrbn;
         connect(calibTmr, &QTimer::timeout, this, &calibrTable::calibStage);
+        isaxis = true;
         calibStage();
         calibTmr->start(1000); //какой период таймера?
     }
@@ -219,11 +225,18 @@ void calibrTable::fromQML_RadioB(QString tabn, QString rbn, QString value) {
         calibTmr->stop();
     }
     else if((curtabn == 0 || currbn == 0) && ( ntabn != 0 && nrbn != 0)){
+        // QList<QString> lc;
+        // // lc.append(QDateTime::currentDateTime().addSecs(-1).toString());
+        // lc.append(QDateTime::currentDateTime().toString());
+        // lc.append(QDateTime::currentDateTime().toString());
+        // emit toQml_clbrAxis(lc);
+        // qDebug("fromQML_RadioB      toQml_clbrAxis");
         curtabn = ntabn;
         currbn = nrbn;
 
         connect(calibTmr, &QTimer::timeout, this, &calibrTable::calibStage);
 //        calibTmr->setInterval(300);
+        isaxis = true;
         calibStage();
         calibTmr->start(1000); //какой период таймера?
     }
@@ -347,11 +360,42 @@ void calibrTable::calibStage() {
         }
     }
     fromQML_calibTableCompleted(curtabn);
+    if(isaxis) {
+        QList<QString> lc;
+        lc.append(QDateTime::currentDateTime().toString());
+        lc.append(QDateTime::currentDateTime().toString());
+        emit toQml_clbrAxis(lc);
+        isaxis = false;
+    }
     toQml_clbrPlot(lc);
 }
 
-void calibrTable::fromQML_calibTableManualEditingFinished(int tabn, int row, int column) {
-    qDebug() << "fromQML_calibTableManualEditingFinished tabn: " << tabn << " row: " << row << " column: " << column;
+void calibrTable::fromQML_calibTableManualEditingFinished(int tabn, int row, int column, QString mean) {
+    qDebug() << "fromQML_calibTableManualEditingFinished tabn: " << tabn << " row: " << row << " column: " << column << mean;
+//    curtabn = tabn;
+    bool ok;
+    float fmean = mean.toFloat(&ok);
+    if(ok) {
+        switch (tabn){
+            case 1:
+                tbl1[row-1].ml3 = fmean;
+                tbl1[row-1].pc3 = tbl1[row-1].ml3*100.0/MaxFlow_1;
+            break;
+            case 2:
+                tbl2[row-1].ml3 = fmean;
+                tbl2[row-1].pc3 = tbl2[row-1].ml3*100.0/MaxFlow_2;
+            break;
+            case 3:
+                tbl3[row-1].ml3 = fmean;
+                tbl3[row-1].pc3 = tbl3[row-1].ml3*100.0/MaxFlow_3;
+            break;
+        }
+        fromQML_calibTableCompleted(tabn);
+    }
+    else {
+        QMessageBox msgBox(QMessageBox::Critical, "Сообщение о проблеме", "Ошибка конвертации в число с плавающей точкой", QMessageBox::Close);
+        msgBox.exec();
+    }
 }
 
 calibrTable::~calibrTable(){

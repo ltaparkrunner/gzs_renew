@@ -1,6 +1,7 @@
 extern "C" {
 #include<stdio.h>
 #include<stdlib.h>
+#include <time.h>
 #include "sio.h"
 #include "i7k.h"
 #include "i87000_lnx.h"
@@ -231,6 +232,8 @@ WORD /*CALLBACK*/ AnalogInAll_87K_2(DWORD dwBuf[], float fBuf[],
 WORD /*CALLBACK*/ AnalogOut_87K(DWORD dwBuf[], float fBuf[],
         char szSend[], char szReceive[])
 {
+    time_t raw_time;
+    struct tm *lti;
   char    wPort,wFlag,c1,c2;
   WORD    wAddr,wRetVal,i,wCheckSum,wTimeOut,wT,wChannel;
   	__tod_t texp;
@@ -399,7 +402,10 @@ WORD /*CALLBACK*/ AnalogOut_87K(DWORD dwBuf[], float fBuf[],
 	sio_set_timer(wPort, 0, 1);		/* set timeout for 0.1 sec */
    	printf("String to send: string length: %ld, \nString: %s \n", strlen(szCmd8K), szCmd8K);
 	wRetVal = i7k_send_readt_cs(wPort, szCmd8K, szRec8K, RBUF_SIZE, &texp);
-	printf("Received string length: %d, \nString: %s \n", wRetVal, szRec8K);
+    raw_time = time(NULL);
+    lti = localtime(&raw_time);
+    printf("Received string time %s length:   %d, \nString: \n%s \n", asctime(lti), wRetVal, szRec8K);
+//	printf("Received string length: %d, \nString: %s \n", wRetVal, szRec8K);
 
    if(wFlag==1)      strcpy(szReceive,szRec8K);
 
@@ -432,6 +438,8 @@ WORD /*CALLBACK*/ AnalogOut_87K(DWORD dwBuf[], float fBuf[],
 WORD /*CALLBACK*/ DigitalOut_87K(DWORD dwBuf[], float fBuf[],
         char szSend[], char szReceive[])
 {
+    time_t raw_time;
+    struct tm *lti;
    char  wPort,wFlag,c1,c2,A,B,C,D;
    WORD  wAddr,wRetVal,wCheckSum,wTimeOut,wT;//,wAddr2
 	__tod_t texp;
@@ -545,7 +553,10 @@ WORD /*CALLBACK*/ DigitalOut_87K(DWORD dwBuf[], float fBuf[],
 	sio_set_timer(wPort, 0, 1);		/* set timeout for 0.1 sec */
    	printf("String to send: string length: %ld, \nString: %s \n", strlen(szCmd8K), szCmd8K);
 	wRetVal = i7k_send_readt_cs(wPort, szCmd8K, szRec8K, RBUF_SIZE, &texp);
-	printf("Received string length: %d, \nString: %s \n", wRetVal, szRec8K);
+    raw_time = time(NULL);
+    lti = localtime(&raw_time);
+    printf("Received string time %s length:   %d, \nString: \n%s \n", asctime(lti), wRetVal, szRec8K);
+//	printf("Received string length: %d, \nString: %s \n", wRetVal, szRec8K);
    if(wFlag==1)      strcpy(szReceive,szRec8K);
 
 //   if(wRetVal != NoError) return wRetVal;
@@ -576,7 +587,8 @@ WORD /*CALLBACK*/ DigitalOut_87K(DWORD dwBuf[], float fBuf[],
 WORD /*CALLBACK*/ AnalogInAll_87K(DWORD dwBuf[], float fBuf[],
         char szSend[], char szReceive[])
 {
-
+    time_t raw_time;
+    struct tm *lti;
 	char   wPort,wFlag,cTemp[80],wMode;
 	WORD   wRet,wAddr,wRetVal,i,j,wCheckSum,wTimeOut,wT,k;
 	__tod_t texp;
@@ -626,7 +638,9 @@ WORD /*CALLBACK*/ AnalogInAll_87K(DWORD dwBuf[], float fBuf[],
 	memset(szRec8K, 0, RBUF_SIZE);
     printf("wPort= %d, message: %s\n", wPort, szCmd8K);
 	wRetVal = i7k_send_readt_cs(wPort, szCmd8K, szRec8K, RBUF_SIZE, &texp);
-    printf("Received string length: %d, \nString: \n%s \n", wRetVal, szRec8K);
+    raw_time = time(NULL);
+    lti = localtime(&raw_time);
+    printf("Received string time %s length:   %d, \nString: \n%s \n", asctime(lti), wRetVal, szRec8K);
 
 	if(wFlag)
 	{

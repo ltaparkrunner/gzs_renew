@@ -51,12 +51,14 @@ signals:
     void toQML_clbrTbl2(QList<QString> lc, int tln);
     void toQml_clbrPlot(QList<QString> lc);
     void toQML_clbrTbl3(float, int);
+    void toQml_clbrAxis(QList<QString>);
 public slots:
     void fromQML_calibTableCompleted(QString id);
     void fromQML_calibTableCompleted(int id);
 //    void fromQML_RadioB(QString tabn, QString rbn);
     void fromQML_RadioB(QString tabn, QString rbn, QString value);
-    void fromQML_calibTableManualEditingFinished(int tabn, int row, int column);
+//    void fromQML_calibTableManualEditingFinished(int tabn, int row, int column);
+    void fromQML_calibTableManualEditingFinished(int tabn, int row, int column, QString mean);
     void fromQML_calibClosed();
 private:
     int curtabn;
@@ -65,6 +67,7 @@ private:
     QTimer *calibTmr;
     void calibStage();
     cfs_points cfpt;
+    bool isaxis;
 //    unsigned int Max
 //    void fromQML_
 };
