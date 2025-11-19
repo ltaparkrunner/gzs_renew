@@ -113,3 +113,11 @@ void simpleTable::publish(){
 void simpleTable::fromQML_smplTableCompleted(){
     publish();
 }
+
+bool simpleTable::isTable(){
+    return true;
+}
+
+int color(int col, int row, QString color){
+    return 0;
+}

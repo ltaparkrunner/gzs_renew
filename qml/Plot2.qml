@@ -16,6 +16,7 @@ Item{
         source: "resources/GAS2.jpg"
     }
     Button {
+        id: gb
         height: 40
         width: 200
         text: "Продувка газовой магистрали"

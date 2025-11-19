@@ -42,6 +42,10 @@ public:
     int MaxFlow_1;
     int MaxFlow_2;
     int MaxFlow_3;
+    bool isMaxFlow_1;
+    bool isMaxFlow_2;
+    bool isMaxFlow_3;
+    bool isBallon;
     calibrTable(QString clb_name = "Combo.str", QObject *parent = nullptr);
     ~calibrTable();
     void publish();

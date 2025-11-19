@@ -43,6 +43,9 @@ signals:
     void toQML_smplTbl(QList<QString> lc);
 public slots:
     void fromQML_smplTableCompleted();
+public:
+    bool isTable();
+    int color(int col, int row, QString color);
 };
 
 #endif // SIMPLETABLE_H

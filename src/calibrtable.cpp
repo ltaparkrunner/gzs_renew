@@ -34,6 +34,7 @@ calibrTable::calibrTable(QString clbrn, QObject *parent) :
     top.s = sl[1];
     sl = in.readLine().split(':');
     MaxFlow_1 = sl[0].toFloat();
+    if(MaxFlow_1 < 100.0) isMaxFlow_1 = true;
     for(int i=0; i<10; i++){
         sl = in.readLine().split(':');
         // arr1[i][1] = sl[0].toFloat();
@@ -58,6 +59,7 @@ calibrTable::calibrTable(QString clbrn, QObject *parent) :
     }
     sl = in.readLine().split(':');
     MaxFlow_2 = sl[0].toFloat();
+    if(MaxFlow_2 < 100.0) isMaxFlow_2 = true;
     for(int i=0; i<10; i++){
         sl = in.readLine().split(':');
         // arr2[i][1] = sl[0].toFloat();
@@ -82,6 +84,7 @@ calibrTable::calibrTable(QString clbrn, QObject *parent) :
     }
     sl = in.readLine().split(':');
     MaxFlow_3 = sl[0].toFloat();
+    if(MaxFlow_3 < 100.0) isMaxFlow_3 = true;
     for(int i=0; i<10; i++){
         sl = in.readLine().split(':');
         // arr3[i][1] = sl[0].toFloat();

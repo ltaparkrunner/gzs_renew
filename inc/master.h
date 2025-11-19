@@ -27,6 +27,7 @@ signals:
     void toQML_comList(QList<QString> lc);
     void toQML_initListString(QList<QString> lc, int c);
     void toQML_startMainW();
+
 public slots:
     void openefile_fromQML(QString urlList);
     void startTest_fromQML();
@@ -34,6 +35,9 @@ public slots:
     void eqpRqst_fromQML(QString pn);
     void calibClosed_fromQML();
     void calibOpened_fromQML();
+    void fromQML_btnStart(/*QList<QString> lc*/);
+    void fromQML_btnStop();
+    void fromQML_btn_blowing();
 private:
 //    int tm;
 //    QTimer* test_tmr;
@@ -41,6 +45,7 @@ private:
     int stopTest();
     int startInit();
     void publish();
+    char station_calc(unsigned int num);
 
 //    void pwExit(/*int ec, QProcess::ExitStatus es*/);
 //    unsigned char     crc_pr;
@@ -48,6 +53,7 @@ private:
     QList<QSerialPortInfo> serialPortInfos;
     serial *sp;
     station *gst;
+    bool isBlowing;
 //    QProcess *proc;
 public:
     Parameters params;

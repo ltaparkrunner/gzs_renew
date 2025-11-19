@@ -56,10 +56,12 @@ Rectangle{
                     Button {
                         id: b1
                         text: qsTr("Старт")
+                        onClicked: master.fromQML_btnStart()
                     }
                     Button {
                         id: b2
                         text: qsTr("Стоп")
+                        onClicked: master.fromQML_btnStop()
                     }
                 }
             }
@@ -177,6 +179,7 @@ Rectangle{
                     text: qsTr("Целевой газ")
                 }
                 ComboBox {
+                    id:cb1
                 //            text: "Выберите COM порт:"
                             currentIndex: 0
                             model: ListModel {
