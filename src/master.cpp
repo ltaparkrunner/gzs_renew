@@ -287,38 +287,39 @@ void master::fromQML_btn_blowing(){
 }
 
 char master::station_calc(unsigned int num){
-    int i;
-    float f;
-    QString S;
-    QTime T;
+    // int i;
+    // float f;
+    // QString S;
+    // QTime T;
 
-    char separ = '.';
+//    char separ = '.';
 
     params.clbrTbl.isMaxFlow_1 = true;
     params.clbrTbl.isMaxFlow_2 = true;
     params.clbrTbl.isMaxFlow_3 = true;
     params.clbrTbl.isBallon = true;
 
-    params.smplTbl.changeColor("white");
+    params.clearColor("white");
 
     if(!params.smplTbl.isCell(1,num)){
         params.smplTbl.color(1,num,"blue");
         params.toQML_statusBar("Ошибка ввода данных | Длительность");
         return 1;
     }
+
     if(!params.smplTbl.isCell(2,num)){
         params.smplTbl.color(2,num,"blue");
         params.toQML_statusBar("Ошибка ввода данных | Концентрация");
         return 1;
     }
-    else params.Conc_Gas = params.smplTbl.cgaz;
+    else params.Conc_Gas = params.smplTbl.dt[num].cncntr1;  // make QList(struct)
 
-    if(!params.smplTbl.isBallon()){
-        params.cmbTbl.color("red");
+    if(!params.isBallon_conc){
+        params.color(Ballon, "red");
         params.toQML_statusBar("Ошибка ввода данных | Концентрация в баллоне");
         return 1;
     }
-    else params.Conc_Balloon = params.cmbTbl.cgaz;
+    else params.Conc_Balloon = params.ballon_conc;
 
     if(!params.smplTbl.isCell(4,num)){
         params.smplTbl.color(4,num,"blue");
@@ -333,34 +334,34 @@ char master::station_calc(unsigned int num){
     }
 
     if(!params.clbrTbl.isMaxFlow_1){
-        params.clbrTbl.color(1, "red");
+        params.color(Max_1, "red");
         params.toQML_statusBar("Ошибка ввода данных | ЦЕЛЕВОЙ ГАЗ");
         return 2;
     }
-    else params.Flow_max_gas = params.clbrTbl.smth;
+    else params.Flow_max_gas = params.clbrTbl.MaxFlow_1;
 
     if(!params.clbrTbl.isMaxFlow_2){
-        params.clbrTbl.color(2,"blue");
+        params.color(Max_2,"red");
         params.toQML_statusBar("Ошибка ввода данных | СУХОЙ ВОЗДУХ");
         return 2;
     }
-    else params.Flow_max_suh = params.clbrTbl.smth;
+    else params.Flow_max_suh = params.clbrTbl.MaxFlow_2;
 
     if(!params.clbrTbl.isMaxFlow_3){
-        params.clbrTbl.color(3,"blue");
+        params.color(Max_3,"blue");
         params.toQML_statusBar("Ошибка ввода данных | ВЛАЖНЫЙ ВОЗДУХ");
         return 2;
     }
-    else params.Flow_max_vlag = params.clbrTbl.smth;
+    else params.Flow_max_vlag = params.clbrTbl.MaxFlow_3;
 
-    if(!params.cmbTbl.isCoeff){
-        params.cmbTbl.color(5,"blue");
+    if(params.cmbTbl.tblrows[params.numTGas].gname.isEmpty()){
+        params.color(Targ_gas, "blue");
         params.toQML_statusBar("Ошибка ввода данных | Тип целевого газа");
         return 2;
     }
     // Percent of target gaz
     try{
-        params.C_gas = params.cmbTbl.tblrows[num_tgaz].persentage;
+        params.C_gas = params.cmbTbl.tblrows[params.numTGas].persentage;
     }
     catch(...){
         params.C_gas = 1.00;

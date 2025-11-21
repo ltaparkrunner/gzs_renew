@@ -6,6 +6,15 @@
 #include "calibrtable.h"
 
 #include <QObject>
+
+enum gvw {
+    Max_1,
+    Max_2,
+    Max_3,
+    Targ_gas,
+    Ballon
+};
+
 /*
 struct   TParameters
 {
@@ -75,11 +84,18 @@ public:
     float          Flow_max_vlag;          // Заданный макс. расход по каналу "влажного воздуха"
     float          C_gas;                  // Поправочный коэффициент для газа
     float          C_mix;                  // Поправочный коэффициент для смеси
+    float          ballon_conc;
+    bool           isBallon_conc;
+    QString         targetType;
+    int             numTGas;
 signals:
     void toQML_statusBar(QString msg);
 public:
     void button_calculateClick();
-
+    void clearColor(QString);
+    bool isBallon();
+    void color(gvw plc, QString color);
+private:
 };
 
 #endif // PARAMS_H

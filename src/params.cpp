@@ -141,3 +141,15 @@ void Parameters::button_calculateClick(){
     qDebug() << "button_calculateClick() what for??";
     toQML_statusBar("button_calculateClick()");
 }
+
+void Parameters::color(gvw plc, QString color) {
+
+}
+
+void Parameters::clearColor(QString cl) {
+
+}
+
+bool Parameters::isBallon() {
+
+}

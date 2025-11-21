@@ -118,6 +118,10 @@ bool simpleTable::isTable(){
     return true;
 }
 
-int color(int col, int row, QString color){
+int simpleTable::color(int col, int row, QString color){
     return 0;
+}
+
+bool simpleTable::isCell(int col, int row) {
+    return true;
 }

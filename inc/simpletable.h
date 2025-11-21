@@ -46,6 +46,7 @@ public slots:
 public:
     bool isTable();
     int color(int col, int row, QString color);
+    bool isCell(int col, int row);
 };
 
 #endif // SIMPLETABLE_H
