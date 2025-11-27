@@ -90,6 +90,19 @@ Rectangle {
           delegate: DelegateChooser {
 //              id:dcd
               DelegateChoice {
+                  column: 0
+                  delegate: Rectangle {
+                      implicitWidth: 100
+                      implicitHeight: 30
+                      border.width: 1
+                      TextField {
+                          text: display
+                          readOnly: true
+                          anchors.fill:parent
+                      }
+                  }
+              }
+              DelegateChoice {
                   column: smpl.columns - 1
                   row: smpl.rows - 1
                   delegate: Rectangle {
@@ -120,7 +133,7 @@ Rectangle {
                             tm21.appendRow(strbuf[rws-1])
                           }
                           onEditingFinished: {
-                                console.log("onToQML_smplTbl TextField Keys.onEditingFinished duration")
+                            console.log("onToQML_smplTbl TextField Keys.onEditingFinished duration")
 
                           }
                       }
@@ -149,6 +162,13 @@ Rectangle {
                                 case 5: x.humidity = text; break;
                               }
                               tm21.setRow(row, x)
+                              let lrow = [];
+                              lrow.push(x.duration)
+                              lrow.push(x.cncntr1)
+                              lrow.push(x.cncntr2)
+                              lrow.push(x.sumStream)
+                              lrow.push(x.humidity)
+                              smplTbl.fromQML_smplTableEditFinished(lrow, row)
                           }
                       }
                   }
