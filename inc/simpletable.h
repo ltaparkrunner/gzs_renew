@@ -5,33 +5,38 @@
 #include <QTime>
 #include <QFile>
 #include <QList>
-
+enum clr{
+    wht,
+    grn,
+    bl,
+    rd
+};
 struct ttl_t{
     int offset;
-    bool sucs_of;
+    clr clr_of;
     QString nm;
-    bool sucs_nm;
+    clr clr_nm;
 };
 struct dt_t{
     int num_row;
-    bool sucs_nr;
+    clr clr_nr;
     QTime duration;
-    bool sucs_dur;
+    clr clr_dur;
     int cncntr1;
-    bool sucs_c1;
+    clr clr_c1;
     int cncntr2;
-    bool sucs_c2;
+    clr clr_c2;
     int sumStream;
-    bool sucs_ss;
+    clr clr_sS;
     int relatHumidity;
-    bool sucs_rH;
+    clr clr_rH;
 };
 
 struct dim_t{
     int height;
     int width;
-    bool sucs_h;
-    bool sucs_w;
+    clr clr_h;
+    clr clr_w;
 };
 
 struct simpleTable : public QObject
@@ -45,12 +50,14 @@ public:
     /*explicit*/ simpleTable(QString tn = "Table.cfg", QObject *parent = nullptr);
     /*explicit*/ simpleTable(QObject *parent = nullptr);
     void publish();
+    void publish2();
     QFile *stf;
 
     int rowsNum;
 //    int checkTableRow(int n);
 signals:
     void toQML_smplTbl(QList<QString> lc);
+    void toQML_smplTbl2(QList<int> lc, QList<QString> ls);
 public slots:
     void fromQML_smplTableCompleted();
     void fromQML_smplTableEditFinished(QList<QString> ls);

@@ -150,6 +150,6 @@ void Parameters::clearColor(QString cl) {
 
 }
 
-bool Parameters::isBallon() {
-    return false;
-}
+// bool Parameters::isBallon() {
+//     return false;
+// }

@@ -26,47 +26,55 @@ simpleTable::simpleTable(QString tn, QObject *parent):
     QTextStream in(stf);
     QStringList sl = in.readLine().split(',');
     if(sl.length() < 2) goto parse_err;
-//    bool ok;
-    dim.width = sl[0].toInt(&dim.sucs_w);
-    dim.height = sl[1].toInt(&dim.sucs_h);
+    bool ok;
+    dim.width = sl[0].toInt(&ok);
+    dim.clr_w = ok ? wht : rd;
+    dim.height = sl[1].toInt(&ok);
+    dim.clr_h = ok ? wht : rd;
 
     for(i = 0; i < 6; i++){
         sl = in.readLine().split(',');
 //        st.ttl->operator [](i).offset = sl[1].toInt();
-        ttl[i].offset = sl[1].toInt(&ttl[i].sucs_of);
+        ttl[i].offset = sl[1].toInt(&ok);
+        ttl[i].clr_of = ok ? wht : rd;
     }
 
     for(i = 0; i < 6; i++){
         sl = in.readLine().split(',');
         if(sl.length()<3) goto parse_err;
         ttl[i].nm = sl[2]; //.toInt();
-        if(ttl[i].nm=="") ttl[i].sucs_nm = false;
-        else ttl[i].sucs_nm = true;
+        if(ttl[i].nm=="") ttl[i].clr_nm = rd;
+        else ttl[i].clr_nm = wht;
     }
 
     for(i = 0; i < 4; i++){
-        dt.append({0, false, t0, 0, false, 0, false, 0, false, 0, false});
+        dt.append({0, rd, t0, rd, 0, rd, 0, rd, 0, rd, 0, rd});
         sl = in.readLine().split(',');
         if(sl.length()<3) goto parse_err;
-        dt[i].num_row = sl[2].toInt(&dt[i].sucs_nr);
+        dt[i].num_row = sl[2].toInt(&ok);
+        dt[i].clr_nr = ok ? wht : rd;
         sl = in.readLine().split(',');
         if(sl.length()<3) goto parse_err;
         dt[i].duration = QTime::fromString(sl[2],"hh:mm:ss");
-        if(dt[i].duration > t0 && t1 > dt[i].duration) dt[i].sucs_dur = true;
-        else dt[i].sucs_dur = false;
-        // else ttl[i].sucs_nm = true;
+        if(dt[i].duration > t0 && t1 > dt[i].duration) dt[i].clr_dur = wht;
+        else dt[i].clr_dur = rd;
+        // else ttl[i].clr_nm = true;
         sl = in.readLine().split(',');
         if(sl.length()<3) goto parse_err;
-        dt[i].cncntr1 = sl[2].toInt(&dt[i].sucs_c1);
+        dt[i].cncntr1 = sl[2].toInt(&ok);
+        dt[i].clr_c1 = ok ? wht : rd;
         sl = in.readLine().split(',');
         if(sl.length()<3) goto parse_err;
-        dt[i].cncntr2 = sl[2].toInt(&dt[i].sucs_c2);
+        dt[i].cncntr2 = sl[2].toInt(&ok);
+        dt[i].clr_c2 = ok ? wht : rd;
         sl = in.readLine().split(',');
         if(sl.length()<3) goto parse_err;
-        dt[i].sumStream = sl[2].toInt(&dt[i].sucs_ss);
+        dt[i].sumStream = sl[2].toInt(&ok);
+        dt[i].clr_sS = ok ? wht : rd;
         sl = in.readLine().split(',');
         if(sl.length()<3) goto parse_err;
-        dt[i].relatHumidity = sl[2].toInt(&dt[i].sucs_rH);
+        dt[i].relatHumidity = sl[2].toInt(&ok);
+        dt[i].clr_rH = ok ? wht : rd;
     }
 
     parse_err:
@@ -100,12 +108,13 @@ simpleTable::simpleTable(QObject *parent):
     ttl[5].nm = "Относительная влажность газовой смеси (%)";
 
     for(i=0; i<6; i++) {
-        ttl[i].sucs_of = true;
-        ttl[i].sucs_nm = true;
+        ttl[i].clr_of = wht;
+        ttl[i].clr_nm = wht;
     }
 
     for(i = 0; i < 2; i++){
-        dt.append({0, false, t0, 0, false, 0, false, 0, false, 0, false});
+//        dt.append({0, false, t0, 0, false, 0, false, 0, false, 0, false});
+        dt.append({0, rd, t0, rd, 0, rd, 0, rd, 0, rd, 0, rd});
         dt[i].num_row = i+1;
         dt[i].duration = QTime::fromString("0:00:30","h:mm:ss");
         dt[i].cncntr1 = 0;
@@ -113,12 +122,12 @@ simpleTable::simpleTable(QObject *parent):
         dt[i].sumStream = 200;
         dt[i].relatHumidity = 100;
 
-        dt[i].sucs_nr = true;
-        dt[i].sucs_dur = true;
-        dt[i].sucs_c1 = true;
-        dt[i].sucs_c2 = true;
-        dt[i].sucs_rH = true;
-        dt[i].sucs_ss = true;
+        dt[i].clr_nr = grn;//wht;
+        dt[i].clr_dur = bl;//wht;
+        dt[i].clr_c1 = grn; //wht
+        dt[i].clr_c2 = wht;
+        dt[i].clr_sS = wht;
+        dt[i].clr_rH = rd;
     }
 
 }
@@ -145,8 +154,40 @@ void simpleTable::publish(){
     emit toQML_smplTbl(lc);
 }
 
+void simpleTable::publish2(){
+//    qDebug() << "simpleTable::publish() the beginning";
+    QList<int> ln;
+    QList<QString> ls;
+    int i;
+    for(i = 0; i < 6; i++){
+        ln.append(ttl[i].offset);
+    }
+    for(i = 0; i < 6; i++){
+        ls.append(ttl[i].nm);
+    }
+//    for(i = 0; i < 4; i++){
+    for(i = 0; i < 2; i++){
+        ln.append(dt[i].num_row);
+        ln.append(dt[i].clr_nr);
+//        lc.append(dt[i].duration.toString("hh:mm:ss"));
+        ln.append(dt[i].clr_dur);
+        ln.append(dt[i].cncntr1);
+        ln.append(dt[i].clr_c1);
+        ln.append(dt[i].cncntr2);
+        ln.append(dt[i].clr_c2);
+        ln.append(dt[i].sumStream);
+        ln.append(dt[i].clr_sS);
+        ln.append(dt[i].relatHumidity);
+        ln.append(dt[i].clr_rH);
+
+        ls.append(dt[i].duration.toString("hh:mm:ss"));
+    }
+//    qDebug() << "before toQML_smplTbl(lc)";
+    emit toQML_smplTbl2(ln, ls);
+}
+
 void simpleTable::fromQML_smplTableCompleted(){
-    publish();
+    publish2();
 }
 
 bool simpleTable::isTable(){

@@ -93,7 +93,7 @@ signals:
 public:
     void button_calculateClick();
     void clearColor(QString);
-    bool isBallon();
+//    bool isBallon();
     void color(gvw plc, QString color);
 private:
 };
