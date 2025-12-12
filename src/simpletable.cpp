@@ -204,7 +204,4 @@ bool simpleTable::isCell(int col, int row) {
 
 void simpleTable::fromQML_smplTableEditFinished(QList<QString> ls) {
     qDebug() << "fromQML_smplTableEditFinished: " << ls[0] << " " << ls[1] << "  " << ls[2] << "  " << ls[3] << "  " << ls[4];
-
-
-
 }

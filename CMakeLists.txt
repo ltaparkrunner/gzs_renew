@@ -91,7 +91,8 @@ endif()
 
 #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-Bstatic")
 add_executable(gaz_mixer  ${PROJECT_SOURCES}
-    inc/clibinc.h)
+    inc/clibinc.h
+    inc/auxil.h)
 #    src/station.h src/station.cpp)
 
 target_compile_definitions(gaz_mixer PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)

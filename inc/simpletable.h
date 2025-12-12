@@ -5,19 +5,16 @@
 #include <QTime>
 #include <QFile>
 #include <QList>
-enum clr{
-    wht,
-    grn,
-    bl,
-    rd
-};
-struct ttl_t{
+
+#include "auxil.h"
+
+struct ttl_t{       // Titles
     int offset;
     clr clr_of;
     QString nm;
     clr clr_nm;
 };
-struct dt_t{
+struct dt_t{        // main table
     int num_row;
     clr clr_nr;
     QTime duration;
@@ -32,7 +29,7 @@ struct dt_t{
     clr clr_rH;
 };
 
-struct dim_t{
+struct dim_t{       // table dimentions
     int height;
     int width;
     clr clr_h;

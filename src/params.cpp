@@ -23,8 +23,18 @@ Parameters::Parameters(QString cmb_name, QString tname,  QString clbr_name, QObj
 ,   clbrTbl(clbr_name, this)
 {
 }
+int Parameters::startCheckTblRow(int n){
+    clbrTbl.mf.clrMaxFlow_1 = wht;
+    clbrTbl.mf.clrMaxFlow_2 = wht;
+    clbrTbl.mf.clrMaxFlow_3 = wht;
+    clbrTbl.mf.clrBallon = wht;
+    cmbTbl.clrCombo = wht;
 
-int Parameters::checkTblRow(int n){
+//    if(smplTbl.)
+    return 0;
+}
+
+int Parameters::checkTblRow(int n){                                         //              Station_calc
     if(!(smplTbl.dt[n].duration.isValid())) {
         toQML_statusBar("Ошибка ввода данных | Длительность");
         return 1;
@@ -48,23 +58,23 @@ int Parameters::checkTblRow(int n){
     }
     else RH = smplTbl.dt[n].relatHumidity;
 
-    if(!(clbrTbl.MaxFlow_1 > 0 && clbrTbl.MaxFlow_1 < 100)) {
+    if(!(clbrTbl.mf.MaxFlow_1 > 0 && clbrTbl.mf.MaxFlow_1 < 100)) {
         toQML_statusBar("Ошибка ввода данных | \"ЦЕЛЕВОЙ ГАЗ\"");
         return 2;
     }
-    else  Flow_max_gas = clbrTbl.MaxFlow_1;
+    else  Flow_max_gas = clbrTbl.mf.MaxFlow_1;
 
-    if(!(clbrTbl.MaxFlow_2 > 0 && clbrTbl.MaxFlow_2 < 100)) {
+    if(!(clbrTbl.mf.MaxFlow_2 > 0 && clbrTbl.mf.MaxFlow_2 < 100)) {
         toQML_statusBar("Ошибка ввода данных | \"СУХОЙ ВОЗДУХ\"");
         return 2;
     }
-    else  Flow_max_suh = clbrTbl.MaxFlow_2;
+    else  Flow_max_suh = clbrTbl.mf.MaxFlow_2;
 
-    if(!(clbrTbl.MaxFlow_3 > 0 && clbrTbl.MaxFlow_3 < 100)) {
+    if(!(clbrTbl.mf.MaxFlow_3 > 0 && clbrTbl.mf.MaxFlow_3 < 100)) {
         toQML_statusBar("Ошибка ввода данных | \"ВЛАЖНЫЙ ВОЗДУХ\"");
         return 2;
     }
-    else  Flow_max_vlag = clbrTbl.MaxFlow_3;
+    else  Flow_max_vlag = clbrTbl.mf.MaxFlow_3;
 
     if(cmbTbl.tblrows[n].gname.isEmpty()){
         toQML_statusBar("Ошибка ввода данных | Тип целевого газа");

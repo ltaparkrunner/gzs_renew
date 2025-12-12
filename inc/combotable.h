@@ -2,6 +2,7 @@
 #define COMBOTABLE_H
 
 #include <QFile>
+#include "auxil.h"
 
 struct tblrow{
    QString gname;
@@ -24,6 +25,7 @@ private:
     int cmbTblLen;
 public:
     tblrow tblrows[30];
+    clr clrCombo;
 };
 
 #endif // COMBOTABLE_H

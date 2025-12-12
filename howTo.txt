@@ -1,0 +1,8 @@
+Station_work -- only on the start of working
+ICP_working  -- on every cycle. i.e. on the start and in timer callback.
+ReadOnly for tables is just after clGrayText in TimerTimer
+and in the beginning of Station_work
+
+ReadOnly = false in func Draw_table, in glassButton_stopClick, and in the beginning of TimerTimer
+
+clGrayText is in the end of Timer callback and in the beginning of station work.

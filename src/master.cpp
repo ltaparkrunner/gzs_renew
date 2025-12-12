@@ -262,8 +262,8 @@ void master::fromQML_btnStart(/*lc*/){
 
     /*** ПРОВЕРКА НА КРАСНОТУ ***/
 
-    if((!params.clbrTbl.isMaxFlow_1) || (!params.clbrTbl.isMaxFlow_2) ||
-    (!params.clbrTbl.isMaxFlow_3) || (!params.clbrTbl.isBallon))
+    if((!params.clbrTbl.mf.clrMaxFlow_1) || (!params.clbrTbl.mf.clrMaxFlow_2) ||
+    (!params.clbrTbl.mf.clrMaxFlow_3) || (!params.clbrTbl.mf.clrBallon))
 //    ||(cb1.isproper()))
     {
         QMessageBox msgBox(QMessageBox::Warning, "Сообщение о проблеме", "В таблице калибровки неправильные данные (Это точно про калибровку, может быть это главная таблица?)" , QMessageBox::Close);
@@ -294,10 +294,10 @@ char master::station_calc(unsigned int num){
 
 //    char separ = '.';
 
-    params.clbrTbl.isMaxFlow_1 = true;
-    params.clbrTbl.isMaxFlow_2 = true;
-    params.clbrTbl.isMaxFlow_3 = true;
-    params.clbrTbl.isBallon = true;
+    params.clbrTbl.mf.clrMaxFlow_1 = true;
+    params.clbrTbl.mf.clrMaxFlow_2 = true;
+    params.clbrTbl.mf.clrMaxFlow_3 = true;
+    params.clbrTbl.mf.clrBallon = true;
 
     params.clearColor("white");
 
@@ -333,26 +333,26 @@ char master::station_calc(unsigned int num){
         return 1;
     }
 
-    if(!params.clbrTbl.isMaxFlow_1){
+    if(!params.clbrTbl.mf.clrMaxFlow_1){
         params.color(Max_1, "red");
         params.toQML_statusBar("Ошибка ввода данных | ЦЕЛЕВОЙ ГАЗ");
         return 2;
     }
-    else params.Flow_max_gas = params.clbrTbl.MaxFlow_1;
+    else params.Flow_max_gas = params.clbrTbl.mf.MaxFlow_1;
 
-    if(!params.clbrTbl.isMaxFlow_2){
+    if(!params.clbrTbl.mf.clrMaxFlow_2){
         params.color(Max_2,"red");
         params.toQML_statusBar("Ошибка ввода данных | СУХОЙ ВОЗДУХ");
         return 2;
     }
-    else params.Flow_max_suh = params.clbrTbl.MaxFlow_2;
+    else params.Flow_max_suh = params.clbrTbl.mf.MaxFlow_2;
 
-    if(!params.clbrTbl.isMaxFlow_3){
+    if(!params.clbrTbl.mf.clrMaxFlow_3){
         params.color(Max_3,"blue");
         params.toQML_statusBar("Ошибка ввода данных | ВЛАЖНЫЙ ВОЗДУХ");
         return 2;
     }
-    else params.Flow_max_vlag = params.clbrTbl.MaxFlow_3;
+    else params.Flow_max_vlag = params.clbrTbl.mf.MaxFlow_3;
 
     if(params.cmbTbl.tblrows[params.numTGas].gname.isEmpty()){
         params.color(Targ_gas, "blue");

@@ -4,6 +4,8 @@
 #include <QFile>
 #include <QTimer>
 
+#include "auxil.h"
+
 struct cfs_points{
     float c_mix[3][10];             // Поправочные коэффициенты для расходомеров
     float c_mix_temp[3][10];
@@ -19,6 +21,16 @@ struct calibRow{
     float pc3;
     float ml3;
     float coeff;
+};
+
+struct MaxFlow{
+    int MaxFlow_1;
+    int MaxFlow_2;
+    int MaxFlow_3;
+    bool clrMaxFlow_1;
+    bool clrMaxFlow_2;
+    bool clrMaxFlow_3;
+    bool clrBallon;
 };
 
 struct calibrTable : public QObject
@@ -39,13 +51,8 @@ public:
     calibRow tbl1[10];
     calibRow tbl2[10];
     calibRow tbl3[10];
-    int MaxFlow_1;
-    int MaxFlow_2;
-    int MaxFlow_3;
-    bool isMaxFlow_1;
-    bool isMaxFlow_2;
-    bool isMaxFlow_3;
-    bool isBallon;
+
+    MaxFlow mf;
     calibrTable(QString clb_name = "Combo.str", QObject *parent = nullptr);
     ~calibrTable();
     void publish();
@@ -65,13 +72,13 @@ public slots:
     void fromQML_calibTableManualEditingFinished(int tabn, int row, int column, QString mean);
     void fromQML_calibClosed();
 private:
-    int curtabn;
-    int currbn;
-    float curvalue;
+    int curtabn;                // current page(tab) (3 of them) and current table
+    int currbn;                 // current button (row) (10 of them)
+    float curvalue;             // current value inserted to string
     QTimer *calibTmr;
     void calibStage();
     cfs_points cfpt;
-    bool isaxis;
+    bool isaxis;                // to redraw ixis on plot
 //    unsigned int Max
 //    void fromQML_
 };

@@ -56,6 +56,7 @@ public:
             emit Factor_DiluteChanged();
         }
     }
+    int startCheckTblRow(int n);
     int checkTblRow(int n);
 signals:
     void Factor_DiluteChanged();
