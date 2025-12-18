@@ -262,8 +262,8 @@ void master::fromQML_btnStart(/*lc*/){
 
     /*** ПРОВЕРКА НА КРАСНОТУ ***/
 
-    if((!params.clbrTbl.mf.clrMaxFlow_1) || (!params.clbrTbl.mf.clrMaxFlow_2) ||
-    (!params.clbrTbl.mf.clrMaxFlow_3) || (!params.clbrTbl.mf.clrBallon))
+    if((wht != params.clbrTbl.mf.clrMF_1) || (wht != params.clbrTbl.mf.clrMF_2) ||
+    (wht != params.clbrTbl.mf.clrMF_3) || (wht != params.cmbTbl.clrBn))
 //    ||(cb1.isproper()))
     {
         QMessageBox msgBox(QMessageBox::Warning, "Сообщение о проблеме", "В таблице калибровки неправильные данные (Это точно про калибровку, может быть это главная таблица?)" , QMessageBox::Close);
@@ -285,7 +285,7 @@ void master::fromQML_btnStop(){
 void master::fromQML_btn_blowing(){
 
 }
-
+/*
 char master::station_calc(unsigned int num){
     // int i;
     // float f;
@@ -294,10 +294,10 @@ char master::station_calc(unsigned int num){
 
 //    char separ = '.';
 
-    params.clbrTbl.mf.clrMaxFlow_1 = true;
-    params.clbrTbl.mf.clrMaxFlow_2 = true;
-    params.clbrTbl.mf.clrMaxFlow_3 = true;
-    params.clbrTbl.mf.clrBallon = true;
+    params.clbrTbl.mf.clrMF_1 = wht;
+    params.clbrTbl.mf.clrMF_2 = wht;
+    params.clbrTbl.mf.clrMF_3 = wht;
+    params.cmbTbl.clrBn = wht;
 
     params.clearColor("white");
 
@@ -333,21 +333,21 @@ char master::station_calc(unsigned int num){
         return 1;
     }
 
-    if(!params.clbrTbl.mf.clrMaxFlow_1){
+    if(!params.clbrTbl.mf.clrMF_1){
         params.color(Max_1, "red");
         params.toQML_statusBar("Ошибка ввода данных | ЦЕЛЕВОЙ ГАЗ");
         return 2;
     }
     else params.Flow_max_gas = params.clbrTbl.mf.MaxFlow_1;
 
-    if(!params.clbrTbl.mf.clrMaxFlow_2){
+    if(!params.clbrTbl.mf.clrMF_2){
         params.color(Max_2,"red");
         params.toQML_statusBar("Ошибка ввода данных | СУХОЙ ВОЗДУХ");
         return 2;
     }
     else params.Flow_max_suh = params.clbrTbl.mf.MaxFlow_2;
 
-    if(!params.clbrTbl.mf.clrMaxFlow_3){
+    if(!params.clbrTbl.mf.clrMF_3){
         params.color(Max_3,"blue");
         params.toQML_statusBar("Ошибка ввода данных | ВЛАЖНЫЙ ВОЗДУХ");
         return 2;
@@ -422,3 +422,4 @@ char master::station_calc(unsigned int num){
     params.toQML_statusBar("Режим без ошибок");
     return 0;
 }
+*/

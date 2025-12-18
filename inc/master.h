@@ -45,7 +45,7 @@ private:
     int stopTest();
     int startInit();
     void publish();
-    char station_calc(unsigned int num);
+//    char station_calc(unsigned int num);
 
 //    void pwExit(/*int ec, QProcess::ExitStatus es*/);
 //    unsigned char     crc_pr;

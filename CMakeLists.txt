@@ -31,6 +31,7 @@ if(QT_VERSION_MAJOR EQUAL 6)
         ${src_dir}combotable.cpp
         ${src_dir}calibrtable.cpp
         ${src_dir}simpletable.cpp
+#        ${src_dir}max_flow_rate.cpp
         ${src_dir}params.cpp
         ${src_dir}tableModel.cpp
         ${src_dir}monitoring.cpp
@@ -46,6 +47,7 @@ if(QT_VERSION_MAJOR EQUAL 6)
         ${inc_dir}combotable.h
         ${inc_dir}calibrtable.h
         ${inc_dir}simpletable.h
+#        ${inc_dir}max_flow_rate.h
         ${inc_dir}params.h
         ${inc_dir}monitoring.h
         ${inc_dir}serial.h
@@ -62,6 +64,7 @@ elseif(QT_VERSION_MAJOR EQUAL 5)
         ${src_dir}combotable.cpp
         ${src_dir}calibrtable.cpp
         ${src_dir}simpletable.cpp
+#        ${src_dir}max_flow_rate.cpp
         ${src_dir}params.cpp
         ${src_dir}tableModel.cpp
         ${src_dir}monitoring.cpp
@@ -78,6 +81,7 @@ elseif(QT_VERSION_MAJOR EQUAL 5)
         ${inc_dir}combotable.h
         ${inc_dir}calibrtable.h
         ${inc_dir}simpletable.h
+#        ${inc_dir}max_flow_rate.h
         ${inc_dir}params.h
         ${inc_dir}mycppobject.h
         ${inc_dir}monitoring.h
@@ -92,7 +96,10 @@ endif()
 #set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-Bstatic")
 add_executable(gaz_mixer  ${PROJECT_SOURCES}
     inc/clibinc.h
-    inc/auxil.h)
+    inc/auxil.h
+#    inc/max_flow_rate.h
+#    src/max_flow_rate.cpp
+)
 #    src/station.h src/station.cpp)
 
 target_compile_definitions(gaz_mixer PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)

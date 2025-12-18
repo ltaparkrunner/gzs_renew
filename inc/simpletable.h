@@ -57,7 +57,8 @@ signals:
     void toQML_smplTbl2(QList<int> lc, QList<QString> ls);
 public slots:
     void fromQML_smplTableCompleted();
-    void fromQML_smplTableEditFinished(QList<QString> ls);
+//    void fromQML_smplTableEditFinished(QList<QString> ls);
+    void fromQML_smplTableEditFinished(QList<QString> ls, int row, int clmn);
 public:
     bool isTable();
     int color(int col, int row, QString color);

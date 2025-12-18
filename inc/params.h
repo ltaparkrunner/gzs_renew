@@ -96,6 +96,8 @@ public:
     void clearColor(QString);
 //    bool isBallon();
     void color(gvw plc, QString color);
+public slots:
+    void fromQML_smplTableEditFinished(QList<QString> ls, int row, int clmn);
 private:
 };
 

@@ -27,10 +27,10 @@ struct MaxFlow{
     int MaxFlow_1;
     int MaxFlow_2;
     int MaxFlow_3;
-    bool clrMaxFlow_1;
-    bool clrMaxFlow_2;
-    bool clrMaxFlow_3;
-    bool clrBallon;
+    clr clrMF_1;
+    clr clrMF_2;
+    clr clrMF_3;
+//    bool clrBallon;
 };
 
 struct calibrTable : public QObject

@@ -25,7 +25,11 @@ private:
     int cmbTblLen;
 public:
     tblrow tblrows[30];
-    clr clrCombo;
+//    clr clrCombo;
+    float ballon;
+    clr clrBn;
+    int cur_row;
+    clr clrCmb;
 };
 
 #endif // COMBOTABLE_H

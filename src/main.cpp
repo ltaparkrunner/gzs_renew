@@ -30,6 +30,7 @@ int main(int argc, char *argv[])
     context->setContextProperty("cmbTbl", &(um.params.cmbTbl));
     context->setContextProperty("smplTbl", &(um.params.smplTbl));
     context->setContextProperty("clbrTbl", &(um.params.clbrTbl));
+    context->setContextProperty("params", &(um.params));
 //    context->setContextProperty("MyCppObject", &um.mo);
 
 // The following are needed to make examples run without having to install the module

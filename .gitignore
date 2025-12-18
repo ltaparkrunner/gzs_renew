@@ -43,3 +43,4 @@
 # Extra tuning
 CMakeLists.txt.user
 build/
+foto/

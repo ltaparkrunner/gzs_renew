@@ -24,59 +24,82 @@ Parameters::Parameters(QString cmb_name, QString tname,  QString clbr_name, QObj
 {
 }
 int Parameters::startCheckTblRow(int n){
-    clbrTbl.mf.clrMaxFlow_1 = wht;
-    clbrTbl.mf.clrMaxFlow_2 = wht;
-    clbrTbl.mf.clrMaxFlow_3 = wht;
-    clbrTbl.mf.clrBallon = wht;
-    cmbTbl.clrCombo = wht;
+    clbrTbl.mf.clrMF_1 = wht;
+    clbrTbl.mf.clrMF_2 = wht;
+    clbrTbl.mf.clrMF_3 = wht;
+    cmbTbl.clrBn = wht;
+    cmbTbl.clrCmb = wht;
 
+    if(smplTbl.dt[1].clr_c1 != gr)
+        for(int i=1; i<smplTbl.rowsNum; i++) {
+            smplTbl.dt[i].clr_c1 = wht;
+            smplTbl.dt[i].clr_c2 = wht;
+            smplTbl.dt[i].clr_dur = wht;
+            smplTbl.dt[i].clr_nr = wht;
+            smplTbl.dt[i].clr_rH = wht;
+            smplTbl.dt[i].clr_sS = wht;
+        }
 //    if(smplTbl.)
     return 0;
 }
 
 int Parameters::checkTblRow(int n){                                         //              Station_calc
     if(!(smplTbl.dt[n].duration.isValid())) {
+        smplTbl.dt[n].clr_dur = bl;
         toQML_statusBar("Ошибка ввода данных | Длительность");
         return 1;
     }
 
     if(!(smplTbl.dt[n].cncntr1 > 0 && smplTbl.dt[n].cncntr1 < 100)) {
+        smplTbl.dt[n].clr_c1 = bl;
         toQML_statusBar("Ошибка ввода данных | Концентрация");
         return 1;
     }
     else Conc_Gas = smplTbl.dt[n].cncntr1;
 
     if(!(smplTbl.dt[n].cncntr2 > 0 && smplTbl.dt[n].cncntr2 < 100)) {
+        smplTbl.dt[n].clr_c2 = rd;
         toQML_statusBar("Ошибка ввода данных | Концентрация в баллоне");
         return 1;
     }
     else Conc_Balloon = smplTbl.dt[n].cncntr2;
 
+    if(!(smplTbl.dt[n].sumStream < 0)) {
+        smplTbl.dt[n].clr_sS = rd;
+        toQML_statusBar("Ошибка ввода данных | Сум. поток");
+    }
+    else Flow_sum = smplTbl.dt[n].sumStream;
+
     if(!(smplTbl.dt[n].relatHumidity > 0 && smplTbl.dt[n].relatHumidity < 100)){
+        smplTbl.dt[n].clr_rH = rd;
         toQML_statusBar("Ошибка ввода данных | Относительная влажность");
         return 1;
     }
     else RH = smplTbl.dt[n].relatHumidity;
 
     if(!(clbrTbl.mf.MaxFlow_1 > 0 && clbrTbl.mf.MaxFlow_1 < 100)) {
+        clbrTbl.mf.clrMF_1 = bl;
         toQML_statusBar("Ошибка ввода данных | \"ЦЕЛЕВОЙ ГАЗ\"");
         return 2;
     }
     else  Flow_max_gas = clbrTbl.mf.MaxFlow_1;
 
     if(!(clbrTbl.mf.MaxFlow_2 > 0 && clbrTbl.mf.MaxFlow_2 < 100)) {
+        clbrTbl.mf.clrMF_2 = bl;
         toQML_statusBar("Ошибка ввода данных | \"СУХОЙ ВОЗДУХ\"");
         return 2;
     }
     else  Flow_max_suh = clbrTbl.mf.MaxFlow_2;
 
     if(!(clbrTbl.mf.MaxFlow_3 > 0 && clbrTbl.mf.MaxFlow_3 < 100)) {
+        clbrTbl.mf.clrMF_3 = bl;
         toQML_statusBar("Ошибка ввода данных | \"ВЛАЖНЫЙ ВОЗДУХ\"");
         return 2;
     }
     else  Flow_max_vlag = clbrTbl.mf.MaxFlow_3;
 
-    if(cmbTbl.tblrows[n].gname.isEmpty()){
+    if(cmbTbl.tblrows[cmbTbl.cur_row].gname.isEmpty()){
+        cmbTbl.clrCmb = rd;
         toQML_statusBar("Ошибка ввода данных | Тип целевого газа");
         return 2;
     }
@@ -92,6 +115,12 @@ int Parameters::checkTblRow(int n){                                         //  
     {
     //        for (int col=1; col<Form1->AdvStringGrid1->ColCount; col++)    // Красная строка
     //            AdvStringGrid1->Colors[col][number] = clRed;
+        smplTbl.dt[n].clr_c1 = rd;
+        smplTbl.dt[n].clr_c2 = rd;
+        smplTbl.dt[n].clr_dur = rd;
+        smplTbl.dt[n].clr_nr = rd;
+        smplTbl.dt[n].clr_rH = rd;
+        smplTbl.dt[n].clr_sS = rd;
         toQML_statusBar("Заданная концентрация газа больше концентрации в баллоне");
         return 3;
     }
@@ -118,6 +147,12 @@ int Parameters::checkTblRow(int n){                                         //  
     {
 //         for (int col=1; col<Form1->AdvStringGrid1->ColCount; col++)    // Красная строка
 //          AdvStringGrid1->Colors[col][number] = clRed;
+        smplTbl.dt[n].clr_c1 = rd;
+        smplTbl.dt[n].clr_c2 = rd;
+        smplTbl.dt[n].clr_dur = rd;
+        smplTbl.dt[n].clr_nr = rd;
+        smplTbl.dt[n].clr_rH = rd;
+        smplTbl.dt[n].clr_sS = rd;
         toQML_statusBar("Отрицательные параметры расхода");
         return 3;
     }
@@ -125,6 +160,12 @@ int Parameters::checkTblRow(int n){                                         //  
     {
 //         for (int col=1; col<Form1->AdvStringGrid1->ColCount; col++)    // Красная строка
 //             AdvStringGrid1->Colors[col][number] = clRed;
+        smplTbl.dt[n].clr_c1 = rd;
+        smplTbl.dt[n].clr_c2 = rd;
+        smplTbl.dt[n].clr_dur = rd;
+        smplTbl.dt[n].clr_nr = rd;
+        smplTbl.dt[n].clr_rH = rd;
+        smplTbl.dt[n].clr_sS = rd;
         toQML_statusBar("Расход \"сухого разбавителя\" больше максимально заданного");
         return 3;
      }
@@ -132,6 +173,12 @@ int Parameters::checkTblRow(int n){                                         //  
      {
 //         for (int col=1; col<Form1->AdvStringGrid1->ColCount; col++)    // Красная строка
 //          AdvStringGrid1->Colors[col][number] = clRed;
+        smplTbl.dt[n].clr_c1 = rd;
+        smplTbl.dt[n].clr_c2 = rd;
+        smplTbl.dt[n].clr_dur = rd;
+        smplTbl.dt[n].clr_nr = rd;
+        smplTbl.dt[n].clr_rH = rd;
+        smplTbl.dt[n].clr_sS = rd;
         toQML_statusBar("Расход \"целевого газа\" больше максимально заданного");
         return 3;
     }
@@ -139,6 +186,12 @@ int Parameters::checkTblRow(int n){                                         //  
     {
 //         for (int col=1; col<Form1->AdvStringGrid1->ColCount; col++)    // Красная строка
 //             AdvStringGrid1->Colors[col][number] = clRed;
+        smplTbl.dt[n].clr_c1 = rd;
+        smplTbl.dt[n].clr_c2 = rd;
+        smplTbl.dt[n].clr_dur = rd;
+        smplTbl.dt[n].clr_nr = rd;
+        smplTbl.dt[n].clr_rH = rd;
+        smplTbl.dt[n].clr_sS = rd;
         toQML_statusBar("Расход \"влажного разбавителя\" больше максимально заданного");
         return 3;
     }
@@ -160,6 +213,9 @@ void Parameters::clearColor(QString cl) {
 
 }
 
+void Parameters::fromQML_smplTableEditFinished(QList<QString> ls, int row, int clmn){
+    qDebug() << "Parameters::fromQML_smplTableEditFinished: " << ls[0] << " " << ls[1] << "  " << ls[2] << "  " << ls[3] << "  " << ls[4] << " " << row << " " << clmn << "\n";
+}
 // bool Parameters::isBallon() {
 //     return false;
 // }

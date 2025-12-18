@@ -202,6 +202,27 @@ bool simpleTable::isCell(int col, int row) {
     return true;
 }
 
-void simpleTable::fromQML_smplTableEditFinished(QList<QString> ls) {
-    qDebug() << "fromQML_smplTableEditFinished: " << ls[0] << " " << ls[1] << "  " << ls[2] << "  " << ls[3] << "  " << ls[4];
+void simpleTable::fromQML_smplTableEditFinished(QList<QString> ls, int row, int clmn) {
+    qDebug() << "fromQML_smplTableEditFinished: " << ls[0] << " " << ls[1] << "  " << ls[2] << "  " << ls[3] << "  " << ls[4] << " " << row << " " << clmn << "\n";
+    bool ok;
+    float tmp;
+    if(clmn == 2) {
+        tmp = ls[2].toFloat(&ok);
+        if(ok){
+            dt[row].cncntr1 = tmp;
+            dt[row].cncntr2 = dt[row].cncntr1 * 10000;
+        }
+    }
+    else if(clmn == 3) {
+        tmp = ls[3].toFloat(&ok);
+        if(ok) {
+            dt[row].cncntr2 = tmp;
+            dt[row].cncntr1 = dt[row].cncntr2 / 10000;
+        }
+    }
+
+
+
+    //TODO: Call Parameters::checkTblRow(int n)
+//    if(row)
 }
