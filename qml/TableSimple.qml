@@ -231,7 +231,7 @@ Rectangle {
                               lrow.push(x.cncntr2)
                               lrow.push(x.sumStream)
                               lrow.push(x.humidity)
-                              smplTbl.fromQML_smplTableEditFinished(lrow, row, column)
+//                              smplTbl.fromQML_smplTableEditFinished(lrow, row, column)
                               params.fromQML_smplTableEditFinished(lrow, row, column)
                           }
                       }

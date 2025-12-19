@@ -17,16 +17,15 @@
 
 Parameters::Parameters(QString cmb_name, QString tname,  QString clbr_name, QObject *parent):
     QObject(parent)
-,   cmbTbl(cmb_name, this)
-//,   smplTbl(tname, this)
 ,   smplTbl(this)
 ,   clbrTbl(clbr_name, this)
+,   cmbTbl(this->clbrTbl.cr, cmb_name, this)
 {
 }
 int Parameters::startCheckTblRow(int n){
-    clbrTbl.mf.clrMF_1 = wht;
-    clbrTbl.mf.clrMF_2 = wht;
-    clbrTbl.mf.clrMF_3 = wht;
+    clbrTbl.cr.clrMF_1 = wht;
+    clbrTbl.cr.clrMF_2 = wht;
+    clbrTbl.cr.clrMF_3 = wht;
     cmbTbl.clrBn = wht;
     cmbTbl.clrCmb = wht;
 
@@ -77,26 +76,26 @@ int Parameters::checkTblRow(int n){                                         //  
     }
     else RH = smplTbl.dt[n].relatHumidity;
 
-    if(!(clbrTbl.mf.MaxFlow_1 > 0 && clbrTbl.mf.MaxFlow_1 < 100)) {
-        clbrTbl.mf.clrMF_1 = bl;
+    if(!(clbrTbl.cr.MaxFlow_1 > 0 && clbrTbl.cr.MaxFlow_1 < 100)) {
+        clbrTbl.cr.clrMF_1 = bl;
         toQML_statusBar("Ошибка ввода данных | \"ЦЕЛЕВОЙ ГАЗ\"");
         return 2;
     }
-    else  Flow_max_gas = clbrTbl.mf.MaxFlow_1;
+    else  Flow_max_gas = clbrTbl.cr.MaxFlow_1;
 
-    if(!(clbrTbl.mf.MaxFlow_2 > 0 && clbrTbl.mf.MaxFlow_2 < 100)) {
-        clbrTbl.mf.clrMF_2 = bl;
+    if(!(clbrTbl.cr.MaxFlow_2 > 0 && clbrTbl.cr.MaxFlow_2 < 100)) {
+        clbrTbl.cr.clrMF_2 = bl;
         toQML_statusBar("Ошибка ввода данных | \"СУХОЙ ВОЗДУХ\"");
         return 2;
     }
-    else  Flow_max_suh = clbrTbl.mf.MaxFlow_2;
+    else  Flow_max_suh = clbrTbl.cr.MaxFlow_2;
 
-    if(!(clbrTbl.mf.MaxFlow_3 > 0 && clbrTbl.mf.MaxFlow_3 < 100)) {
-        clbrTbl.mf.clrMF_3 = bl;
+    if(!(clbrTbl.cr.MaxFlow_3 > 0 && clbrTbl.cr.MaxFlow_3 < 100)) {
+        clbrTbl.cr.clrMF_3 = bl;
         toQML_statusBar("Ошибка ввода данных | \"ВЛАЖНЫЙ ВОЗДУХ\"");
         return 2;
     }
-    else  Flow_max_vlag = clbrTbl.mf.MaxFlow_3;
+    else  Flow_max_vlag = clbrTbl.cr.MaxFlow_3;
 
     if(cmbTbl.tblrows[cmbTbl.cur_row].gname.isEmpty()){
         cmbTbl.clrCmb = rd;
@@ -215,6 +214,15 @@ void Parameters::clearColor(QString cl) {
 
 void Parameters::fromQML_smplTableEditFinished(QList<QString> ls, int row, int clmn){
     qDebug() << "Parameters::fromQML_smplTableEditFinished: " << ls[0] << " " << ls[1] << "  " << ls[2] << "  " << ls[3] << "  " << ls[4] << " " << row << " " << clmn << "\n";
+    smplTbl.fromQML_smplTableEditFinished(ls, row, clmn);
+    startCheckTblRow(row);
+    checkTblRow(row);
+
+    smplTbl.publish2();
+    cmbTbl.publish();
+    // TODO: output simpleTable and comboTable After checkTblRow
+    //
+
 }
 // bool Parameters::isBallon() {
 //     return false;

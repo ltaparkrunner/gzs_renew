@@ -34,10 +34,10 @@ calibrTable::calibrTable(QString clbrn, QObject *parent) :
     top.s = sl[1];
     sl = in.readLine().split(':');
     bool ok;
-    mf.MaxFlow_1 = sl[0].toFloat(&ok);
-    mf.clrMF_1 = ok ? wht : rd;
-    if((mf.clrMF_1 == wht) && (mf.MaxFlow_1 < 100.0) && (mf.MaxFlow_1 > 0)) mf.clrMF_1 = wht;
-    else mf.clrMF_1 = rd;
+    cr.MaxFlow_1 = sl[0].toFloat(&ok);
+    cr.clrMF_1 = ok ? wht : rd;
+    if((cr.clrMF_1 == wht) && (cr.MaxFlow_1 < 100.0) && (cr.MaxFlow_1 > 0)) cr.clrMF_1 = wht;
+    else cr.clrMF_1 = rd;
     for(int i=0; i<10; i++){
         sl = in.readLine().split(':');
         // arr1[i][1] = sl[0].toFloat();
@@ -52,49 +52,49 @@ calibrTable::calibrTable(QString clbrn, QObject *parent) :
 
         tbl1[i].ml1 = sl[0].toFloat(&ok);
         if(!ok)tbl1[i].ml1 = 0.0;
-        tbl1[i].pc1 = ok ? tbl1[i].ml1*100.0/mf.MaxFlow_1 : 0.0;
+        tbl1[i].pc1 = ok ? tbl1[i].ml1*100.0/cr.MaxFlow_1 : 0.0;
         tbl1[i].ml2 = sl[1].toFloat(&ok);
         if(!ok)tbl1[i].ml2 = 0.0;
-        tbl1[i].pc2 = ok ? tbl1[i].ml2*100.0/mf.MaxFlow_1 : 0.0;
+        tbl1[i].pc2 = ok ? tbl1[i].ml2*100.0/cr.MaxFlow_1 : 0.0;
         tbl1[i].ml3 = sl[2].toFloat(&ok);
         if(!ok)tbl1[i].ml3 = 0.0;
-        tbl1[i].pc3 = ok ? tbl1[i].ml3*100.0/mf.MaxFlow_1 : 0.0;
+        tbl1[i].pc3 = ok ? tbl1[i].ml3*100.0/cr.MaxFlow_1 : 0.0;
         cfpt.c_mix[0][i] = (tbl1[i].ml2 - tbl1[i].ml3)/tbl1[i].ml3 + 1.0;
         tbl1[i].coeff = cfpt.c_mix[0][i];
         cfpt.set_point[0][i] = tbl1[i].ml1;
     }
     sl = in.readLine().split(':');
-    mf.MaxFlow_2 = sl[0].toFloat(&ok);
-    mf.clrMF_1 = ok ? wht : rd;
+    cr.MaxFlow_2 = sl[0].toFloat(&ok);
+    cr.clrMF_1 = ok ? wht : rd;
     for(int i=0; i<10; i++){
         sl = in.readLine().split(':');
         tbl2[i].ml1 = sl[0].toFloat(&ok);
         if(!ok)tbl2[i].ml1 = 0.0;
-        tbl2[i].pc1 = ok ? tbl2[i].ml1*100.0/mf.MaxFlow_2 : 0.0;
+        tbl2[i].pc1 = ok ? tbl2[i].ml1*100.0/cr.MaxFlow_2 : 0.0;
         tbl2[i].ml2 = sl[1].toFloat(&ok);
         if(!ok)tbl2[i].ml2 = 0.0;
-        tbl2[i].pc2 = ok ? tbl2[i].ml2*100.0/mf.MaxFlow_2 : 0.0;
+        tbl2[i].pc2 = ok ? tbl2[i].ml2*100.0/cr.MaxFlow_2 : 0.0;
         tbl2[i].ml3 = sl[2].toFloat(&ok);
         if(!ok)tbl2[i].ml3 = 0.0;
-        tbl2[i].pc3 = ok ? tbl2[i].ml3*100.0/mf.MaxFlow_2 : 0.0;
+        tbl2[i].pc3 = ok ? tbl2[i].ml3*100.0/cr.MaxFlow_2 : 0.0;
         cfpt.c_mix[1][i] = (tbl2[i].ml2 - tbl2[i].ml3)/tbl2[i].ml3 + 1.0;
         tbl2[i].coeff = cfpt.c_mix[1][i];
         cfpt.set_point[1][i] = tbl2[i].ml1;
     }
     sl = in.readLine().split(':');
-    mf.MaxFlow_3 = sl[0].toFloat(&ok);
-    mf.clrMF_3 = ok ? wht : rd;
+    cr.MaxFlow_3 = sl[0].toFloat(&ok);
+    cr.clrMF_3 = ok ? wht : rd;
     for(int i=0; i<10; i++){
         sl = in.readLine().split(':');
         tbl3[i].ml1 = sl[0].toFloat(&ok);
         if(!ok)tbl3[i].ml1 = 0.0;
-        tbl3[i].pc1 = ok ? tbl3[i].ml1*100.0/mf.MaxFlow_3 : 0.0;
+        tbl3[i].pc1 = ok ? tbl3[i].ml1*100.0/cr.MaxFlow_3 : 0.0;
         tbl3[i].ml2 = sl[1].toFloat(&ok);
         if(!ok)tbl3[i].ml2 = 0.0;
-        tbl3[i].pc2 = ok ? tbl3[i].ml2*100.0/mf.MaxFlow_3 : 0.0;
+        tbl3[i].pc2 = ok ? tbl3[i].ml2*100.0/cr.MaxFlow_3 : 0.0;
         tbl3[i].ml3 = sl[2].toFloat(&ok);
         if(!ok)tbl3[i].ml3 = 0.0;
-        tbl3[i].pc3 = ok ? tbl3[i].ml3*100.0/mf.MaxFlow_3 : 0.0;
+        tbl3[i].pc3 = ok ? tbl3[i].ml3*100.0/cr.MaxFlow_3 : 0.0;
         cfpt.c_mix[2][i] = (tbl3[i].ml2 - tbl3[i].ml3)/tbl3[i].ml3 + 1.0;
         tbl3[i].coeff = cfpt.c_mix[2][i];
         cfpt.set_point[2][i] = tbl3[i].ml1;
@@ -253,15 +253,15 @@ void calibrTable::calibStage() {
     QList<QString> lc;
     switch (curtabn){
     case 1:
-        anOut0 = curvalue * 5.000 / mf.MaxFlow_1;
+        anOut0 = curvalue * 5.000 / cr.MaxFlow_1;
         ar._87063_TX[5] = 0x2;
         break;
     case 2:
-        anOut1 = curvalue * 5.000 / mf.MaxFlow_2;
+        anOut1 = curvalue * 5.000 / cr.MaxFlow_2;
         ar._87063_TX[5] = 0x4;
         break;
     case 3:
-        anOut2 = curvalue * 5.000 / mf.MaxFlow_3;
+        anOut2 = curvalue * 5.000 / cr.MaxFlow_3;
         ar._87063_TX[5] = 0x4;
         break;
     }
@@ -308,12 +308,12 @@ void calibrTable::calibStage() {
         switch (curtabn){
         case 1:
             anIn0 = ar._87017_RX[0];
-            tbl1[currbn-1].ml2 = anIn0 * mf.MaxFlow_1/5.0;
+            tbl1[currbn-1].ml2 = anIn0 * cr.MaxFlow_1/5.0;
 //            toQML_clbrTbl3(anIn0 * mf.MaxFlow_1/5.0, currbn);
             for(int i=0; i<10; i++){
-                tbl1[i].pc1 = tbl1[i].ml1*100.0/mf.MaxFlow_1;
-                tbl1[i].pc2 = tbl1[i].ml2*100.0/mf.MaxFlow_1;
-                tbl1[i].pc3 = tbl1[i].ml3*100.0/mf.MaxFlow_1;
+                tbl1[i].pc1 = tbl1[i].ml1*100.0/cr.MaxFlow_1;
+                tbl1[i].pc2 = tbl1[i].ml2*100.0/cr.MaxFlow_1;
+                tbl1[i].pc3 = tbl1[i].ml3*100.0/cr.MaxFlow_1;
                 cfpt.c_mix_temp[0][i] = (tbl1[i].ml2 - tbl1[i].ml3)/tbl1[i].ml3 + 1.0;
                 tbl1[i].coeff = cfpt.c_mix_temp[0][i];
                 cfpt.set_point_temp[0][i] = tbl1[i].ml1;
@@ -323,12 +323,12 @@ void calibrTable::calibStage() {
             break;
         case 2:
             anIn1 = ar._87017_RX[0];
-            tbl2[currbn-1].ml2 = anIn1 * mf.MaxFlow_2/5.0;
-//            toQML_clbrTbl3(anIn1 * mf.MaxFlow_2/5.0, currbn);
+            tbl2[currbn-1].ml2 = anIn1 * cr.MaxFlow_2/5.0;
+//            toQML_clbrTbl3(anIn1 * cr.MaxFlow_2/5.0, currbn);
             for(int i=0; i<10; i++){
-                tbl2[i].pc1 = tbl2[i].ml1*100.0/mf.MaxFlow_2;
-                tbl2[i].pc2 = tbl2[i].ml2*100.0/mf.MaxFlow_2;
-                tbl2[i].pc3 = tbl2[i].ml3*100.0/mf.MaxFlow_2;
+                tbl2[i].pc1 = tbl2[i].ml1*100.0/cr.MaxFlow_2;
+                tbl2[i].pc2 = tbl2[i].ml2*100.0/cr.MaxFlow_2;
+                tbl2[i].pc3 = tbl2[i].ml3*100.0/cr.MaxFlow_2;
                 cfpt.c_mix_temp[1][i] = (tbl2[i].ml2 - tbl2[i].ml3)/tbl2[i].ml3 + 1.0;
                 tbl2[i].coeff = cfpt.c_mix_temp[1][i];
                 cfpt.set_point_temp[1][i] = tbl2[i].ml1;
@@ -339,12 +339,12 @@ void calibrTable::calibStage() {
             break;
         case 3:
             anIn2 = ar._87017_RX[0];
-            tbl3[currbn-1].ml2 = anIn2 * mf.MaxFlow_3/5.0;
-//            toQML_clbrTbl3(anIn2 * mf.MaxFlow_3/5.0, currbn);
+            tbl3[currbn-1].ml2 = anIn2 * cr.MaxFlow_3/5.0;
+//            toQML_clbrTbl3(anIn2 * cr.MaxFlow_3/5.0, currbn);
             for(int i=0; i<10; i++){
-                tbl3[i].pc1 = tbl3[i].ml1*100.0/mf.MaxFlow_3;
-                tbl3[i].pc2 = tbl3[i].ml2*100.0/mf.MaxFlow_3;
-                tbl3[i].pc3 = tbl3[i].ml3*100.0/mf.MaxFlow_3;
+                tbl3[i].pc1 = tbl3[i].ml1*100.0/cr.MaxFlow_3;
+                tbl3[i].pc2 = tbl3[i].ml2*100.0/cr.MaxFlow_3;
+                tbl3[i].pc3 = tbl3[i].ml3*100.0/cr.MaxFlow_3;
                 cfpt.c_mix_temp[2][i] = (tbl3[i].ml2 - tbl3[i].ml3)/tbl3[i].ml3 + 1.0;
                 tbl3[i].coeff = cfpt.c_mix_temp[2][i];
                 cfpt.set_point_temp[2][i] = tbl3[i].ml1;
@@ -374,15 +374,15 @@ void calibrTable::fromQML_calibTableManualEditingFinished(int tabn, int row, int
         switch (tabn){
             case 1:
                 tbl1[row-1].ml3 = fmean;
-                tbl1[row-1].pc3 = tbl1[row-1].ml3*100.0/mf.MaxFlow_1;
+                tbl1[row-1].pc3 = tbl1[row-1].ml3*100.0/cr.MaxFlow_1;
             break;
             case 2:
                 tbl2[row-1].ml3 = fmean;
-                tbl2[row-1].pc3 = tbl2[row-1].ml3*100.0/mf.MaxFlow_2;
+                tbl2[row-1].pc3 = tbl2[row-1].ml3*100.0/cr.MaxFlow_2;
             break;
             case 3:
                 tbl3[row-1].ml3 = fmean;
-                tbl3[row-1].pc3 = tbl3[row-1].ml3*100.0/mf.MaxFlow_3;
+                tbl3[row-1].pc3 = tbl3[row-1].ml3*100.0/cr.MaxFlow_3;
             break;
         }
         fromQML_calibTableCompleted(tabn);

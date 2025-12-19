@@ -62,9 +62,9 @@ signals:
     void Factor_DiluteChanged();
 public:
 //    calibrTable clbrTbl;
-    comboTable cmbTbl;
     simpleTable smplTbl;
     calibrTable clbrTbl;
+    comboTable cmbTbl;
     int         Conc_Gas;               // Заданная концентрация целевого газа на выходе
     int          Conc_Balloon;           // Заданная концентрация целевого газа в баллоне
 

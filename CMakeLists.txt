@@ -31,7 +31,7 @@ if(QT_VERSION_MAJOR EQUAL 6)
         ${src_dir}combotable.cpp
         ${src_dir}calibrtable.cpp
         ${src_dir}simpletable.cpp
-#        ${src_dir}max_flow_rate.cpp
+        ${src_dir}crates.cpp
         ${src_dir}params.cpp
         ${src_dir}tableModel.cpp
         ${src_dir}monitoring.cpp
@@ -47,7 +47,7 @@ if(QT_VERSION_MAJOR EQUAL 6)
         ${inc_dir}combotable.h
         ${inc_dir}calibrtable.h
         ${inc_dir}simpletable.h
-#        ${inc_dir}max_flow_rate.h
+        ${inc_dir}crates.h
         ${inc_dir}params.h
         ${inc_dir}monitoring.h
         ${inc_dir}serial.h
@@ -64,7 +64,7 @@ elseif(QT_VERSION_MAJOR EQUAL 5)
         ${src_dir}combotable.cpp
         ${src_dir}calibrtable.cpp
         ${src_dir}simpletable.cpp
-#        ${src_dir}max_flow_rate.cpp
+        ${src_dir}crates.cpp
         ${src_dir}params.cpp
         ${src_dir}tableModel.cpp
         ${src_dir}monitoring.cpp
@@ -81,7 +81,7 @@ elseif(QT_VERSION_MAJOR EQUAL 5)
         ${inc_dir}combotable.h
         ${inc_dir}calibrtable.h
         ${inc_dir}simpletable.h
-#        ${inc_dir}max_flow_rate.h
+        ${inc_dir}crates.h
         ${inc_dir}params.h
         ${inc_dir}mycppobject.h
         ${inc_dir}monitoring.h
@@ -97,6 +97,8 @@ endif()
 add_executable(gaz_mixer  ${PROJECT_SOURCES}
     inc/clibinc.h
     inc/auxil.h
+    inc/crates.h
+    src/crates.cpp
 #    inc/max_flow_rate.h
 #    src/max_flow_rate.cpp
 )

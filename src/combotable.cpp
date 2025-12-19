@@ -6,9 +6,10 @@
 
 #include <QTimer>
 #include <QList>
-comboTable::comboTable(QString cmbn, QObject *parent):
+comboTable::comboTable(crates_t &cr, QString cmbn, QObject *parent):
     QObject(parent)
 ,   cmbTblLen (0)
+,   cr_r (cr)
 {
 //    qDebug() << "comboTable constractor. Name: " << cmbn;
     cmbf = new QFile(cmbn);
@@ -39,6 +40,7 @@ comboTable::comboTable(QString cmbn, QObject *parent):
         }
     }
     cmbTblLen = i-1;
+
 
     QTimer::singleShot(8000, this, &comboTable::publish);
 }

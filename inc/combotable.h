@@ -3,6 +3,7 @@
 
 #include <QFile>
 #include "auxil.h"
+#include "crates.h"
 
 struct tblrow{
    QString gname;
@@ -13,7 +14,7 @@ class comboTable : public QObject
 {
     Q_OBJECT
 public:
-    explicit comboTable(QString combon = "Combo.str", QObject *parent = nullptr);
+    explicit comboTable(crates_t &cr, QString combon = "Combo.str", QObject *parent = nullptr);
     void publish();
     int checkTblrow(int r);
 signals:
@@ -30,6 +31,7 @@ public:
     clr clrBn;
     int cur_row;
     clr clrCmb;
+    crates_t &cr_r;
 };
 
 #endif // COMBOTABLE_H

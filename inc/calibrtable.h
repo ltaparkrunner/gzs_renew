@@ -5,6 +5,7 @@
 #include <QTimer>
 
 #include "auxil.h"
+#include "crates.h"
 
 struct cfs_points{
     float c_mix[3][10];             // Поправочные коэффициенты для расходомеров
@@ -21,16 +22,6 @@ struct calibRow{
     float pc3;
     float ml3;
     float coeff;
-};
-
-struct MaxFlow{
-    int MaxFlow_1;
-    int MaxFlow_2;
-    int MaxFlow_3;
-    clr clrMF_1;
-    clr clrMF_2;
-    clr clrMF_3;
-//    bool clrBallon;
 };
 
 struct calibrTable : public QObject
@@ -52,7 +43,7 @@ public:
     calibRow tbl2[10];
     calibRow tbl3[10];
 
-    MaxFlow mf;
+    crates_t cr;
     calibrTable(QString clb_name = "Combo.str", QObject *parent = nullptr);
     ~calibrTable();
     void publish();

@@ -262,8 +262,8 @@ void master::fromQML_btnStart(/*lc*/){
 
     /*** ПРОВЕРКА НА КРАСНОТУ ***/
 
-    if((wht != params.clbrTbl.mf.clrMF_1) || (wht != params.clbrTbl.mf.clrMF_2) ||
-    (wht != params.clbrTbl.mf.clrMF_3) || (wht != params.cmbTbl.clrBn))
+    if((wht != params.clbrTbl.cr.clrMF_1) || (wht != params.clbrTbl.cr.clrMF_2) ||
+    (wht != params.clbrTbl.cr.clrMF_3) || (wht != params.cmbTbl.clrBn))
 //    ||(cb1.isproper()))
     {
         QMessageBox msgBox(QMessageBox::Warning, "Сообщение о проблеме", "В таблице калибровки неправильные данные (Это точно про калибровку, может быть это главная таблица?)" , QMessageBox::Close);

@@ -207,22 +207,20 @@ void simpleTable::fromQML_smplTableEditFinished(QList<QString> ls, int row, int 
     bool ok;
     float tmp;
     if(clmn == 2) {
-        tmp = ls[2].toFloat(&ok);
+        tmp = ls[1].toFloat(&ok);
         if(ok){
             dt[row].cncntr1 = tmp;
             dt[row].cncntr2 = dt[row].cncntr1 * 10000;
         }
     }
     else if(clmn == 3) {
-        tmp = ls[3].toFloat(&ok);
+        tmp = ls[2].toFloat(&ok);
         if(ok) {
             dt[row].cncntr2 = tmp;
             dt[row].cncntr1 = dt[row].cncntr2 / 10000;
         }
     }
 
-
-
-    //TODO: Call Parameters::checkTblRow(int n)
+    //TODO: Output of recounted concentrations
 //    if(row)
 }
