@@ -12,7 +12,7 @@ extern "C" {
     #include "i7k.h"
     #include "i87000_lnx.h"
 }
-master::master(QString cmb_name, QString tname,  QString clbr_name, int tim, QObject *parent) :
+master::master(QString cmb_name, QString tname,  QString clbr_name, int stn, int tim, QObject *parent) :
     QObject(parent)
 //  , fn (fname)
 //  , tm (tim)
@@ -23,6 +23,7 @@ master::master(QString cmb_name, QString tname,  QString clbr_name, int tim, QOb
 //  , fp (nullptr)
 //  ,fp(new file_parser(fname, lag, parent))
 //  , mbsvr(new mbTcpServer(parent))
+,   st_num(stn)
 {
 
 //    connect(test_tmr, &QTimer::timeout, this, &master::ch_val);
@@ -52,10 +53,12 @@ void master::publish(){
         QMessageBox msgBox(QMessageBox::Warning, "Сообщение о проблеме", "Последовательные порты отсутствуют. Не получится связаться с газосмесительной установкой", QMessageBox::Close);
         msgBox.exec();
     }
+//    this->~master();
 }
 
 int master::startInit(){
-    int res = wfiles::checkFile(QString("Combo.str"));
+    int num;
+    int res = wfiles::checkFile(QString("Combo.str"), num);
     switch (res) {
         case -2: {
                 QMessageBox msgBox(QMessageBox::Warning, "Сообщение о проблеме", "Не существует файла Combo.str, закрываю программу", QMessageBox::Close);
@@ -196,7 +199,7 @@ void master::eqpRqst_fromQML(QString pname){
                 msgBox.exec();
             }
             else{
-                QMessageBox msgBox(QMessageBox::Warning, "Сообщение об успехе", "Последовательный порт " + sp->portName() + " успешно открыт." , QMessageBox::Close);
+                QMessageBox msgBox(QMessageBox::Warning, "Сообщение об успехе 2", "Последовательный порт " + sp->portName() + " успешно открыт." , QMessageBox::Close);
                 msgBox.exec();
             }
             break;
@@ -204,7 +207,8 @@ void master::eqpRqst_fromQML(QString pname){
     }
     if(sp->isOpen()) sp->close();
     int err;
-    gst = new station("/dev/ttyUSB0", 6, err, this);
+    qDebug() << "Master st_num = " << st_num;
+    gst = new station("/dev/ttyUSB0", /* st_num */ 6, err, this);
     switch(err){
         case 0:{
             QMessageBox msgBox(QMessageBox::Warning, "Инициализация прошла успешно", "Загрузите/создайте настройки газовой станции." , QMessageBox::Close);
@@ -216,7 +220,6 @@ void master::eqpRqst_fromQML(QString pname){
             msgBox.exec();}
             break;
     }
-
 }
 
 void master::sendPbData(){
@@ -262,8 +265,8 @@ void master::fromQML_btnStart(/*lc*/){
 
     /*** ПРОВЕРКА НА КРАСНОТУ ***/
 
-    if((wht != params.clbrTbl.cr.clrMF_1) || (wht != params.clbrTbl.cr.clrMF_2) ||
-    (wht != params.clbrTbl.cr.clrMF_3) || (wht != params.cmbTbl.clrBn))
+    if((wht != params.cr.clr_MF_1) || (wht != params.cr.clr_MF_2) ||
+    (wht != params.cr.clr_MF_3) || (wht != params.cr.clr_mbln))
 //    ||(cb1.isproper()))
     {
         QMessageBox msgBox(QMessageBox::Warning, "Сообщение о проблеме", "В таблице калибровки неправильные данные (Это точно про калибровку, может быть это главная таблица?)" , QMessageBox::Close);
@@ -423,3 +426,10 @@ char master::station_calc(unsigned int num){
     return 0;
 }
 */
+master::~master(){
+    params.clbrTbl.~calibrTable();
+    params.cmbTbl.~QObject();
+    params.smplTbl.~QObject();
+    params.cr.~QObject();
+    params.~QObject();
+}

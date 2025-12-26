@@ -27,6 +27,7 @@ station::station(QString portn, int s_num, int &rerr, QObject *parent):
 
     sprintf(name_tx, "$00M\r");
     retVal = i7k_send_readt_cs(sp, name_tx, rbuf, RBUF_SIZE, &texp);
+    qDebug() << "rbuf[8]= " << rbuf[8] << ",  rbuf[9]= " << rbuf[9];
     if((((rbuf[8]-'0')<<4) + (rbuf[9]-'0')) != s_num ) { init_err = -2; goto wrong_station_num;}
 
     WORD err;
@@ -131,7 +132,6 @@ station::station(QString portn, int s_num, int &rerr, QObject *parent):
     rerr = init_err;
     qDebug() << "station ERR: " << init_err;
     return;
-
 }
 
 //bool station::if_init(){}

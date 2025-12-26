@@ -18,7 +18,8 @@ class master : public QObject
 {
     Q_OBJECT
 public:
-    explicit master(/*QString fname = "Test.csv",*/ QString cmbn = "Combo.str", QString tn = "Table.cfg", QString cn = "Calibr.str", int time = 1000, QObject *parent = nullptr);
+    explicit master(/*QString fname = "Test.csv",*/ QString cmbn = "Combo.str", QString tn = "Table.cfg", QString cn = "Calibr.str", int stn = 6, int time = 1000, QObject *parent = nullptr);
+    ~master();
     void sendPbData();
     void ch_val();
 signals:
@@ -57,6 +58,7 @@ private:
 //    QProcess *proc;
 public:
     Parameters params;
+    int st_num;
 //    MyCppObject mo;
 };
 

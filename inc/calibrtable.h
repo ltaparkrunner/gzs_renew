@@ -29,8 +29,10 @@ struct calibrTable : public QObject
     Q_OBJECT
 public:
     struct top_t{
-        int f;
-        QString s;
+        int cb_indx;
+        clr clr_cbi;
+        float bln_cncntr;
+        clr clr_blnc;
     } top;
 //    float arr1_max;
 //    float arr1[10][7];
@@ -43,8 +45,8 @@ public:
     calibRow tbl2[10];
     calibRow tbl3[10];
 
-    crates_t cr;
-    calibrTable(QString clb_name = "Combo.str", QObject *parent = nullptr);
+
+    calibrTable(crates_t &cr, QString clb_name = "Combo.str", QObject *parent = nullptr);
     ~calibrTable();
     void publish();
     QFile *clbrf;
@@ -63,6 +65,7 @@ public slots:
     void fromQML_calibTableManualEditingFinished(int tabn, int row, int column, QString mean);
     void fromQML_calibClosed();
 private:
+    crates_t &cr;
     int curtabn;                // current page(tab) (3 of them) and current table
     int currbn;                 // current button (row) (10 of them)
     float curvalue;             // current value inserted to string
@@ -70,6 +73,7 @@ private:
     void calibStage();
     cfs_points cfpt;
     bool isaxis;                // to redraw ixis on plot
+//    int st_num;
 //    unsigned int Max
 //    void fromQML_
 };

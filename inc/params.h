@@ -1,6 +1,7 @@
 #ifndef PARAMS_H
 #define PARAMS_H
 
+#include "crates.h"
 #include "combotable.h"
 #include "simpletable.h"
 #include "calibrtable.h"
@@ -12,7 +13,7 @@ enum gvw {
     Max_2,
     Max_3,
     Targ_gas,
-    Ballon
+    Balloon
 };
 
 /*
@@ -62,9 +63,10 @@ signals:
     void Factor_DiluteChanged();
 public:
 //    calibrTable clbrTbl;
+    crates_t    cr;
     simpleTable smplTbl;
     calibrTable clbrTbl;
-    comboTable cmbTbl;
+    comboTable  cmbTbl;
     int         Conc_Gas;               // Заданная концентрация целевого газа на выходе
     int          Conc_Balloon;           // Заданная концентрация целевого газа в баллоне
 
@@ -85,8 +87,8 @@ public:
     float          Flow_max_vlag;          // Заданный макс. расход по каналу "влажного воздуха"
     float          C_gas;                  // Поправочный коэффициент для газа
     float          C_mix;                  // Поправочный коэффициент для смеси
-    float          ballon_conc;
-    bool           isBallon_conc;
+    float          balloon_conc;
+    bool           isBalloon_conc;
     QString         targetType;
     int             numTGas;
 signals:
@@ -94,7 +96,6 @@ signals:
 public:
     void button_calculateClick();
     void clearColor(QString);
-//    bool isBallon();
     void color(gvw plc, QString color);
 public slots:
     void fromQML_smplTableEditFinished(QList<QString> ls, int row, int clmn);

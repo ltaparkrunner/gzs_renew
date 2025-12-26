@@ -10,7 +10,7 @@ class wfiles
 {
 public:
 //    wfiles();
-  static int checkFile(QString fname);
+  static int checkFile(QString fname, int &sn);
   static int checkFile(QFile* cfile);
   static int checkFile(QString fname, QFile *fl);
   static int loadCombo(QString &fname);

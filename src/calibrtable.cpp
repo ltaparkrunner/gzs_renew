@@ -1,5 +1,7 @@
 #include "calibrtable.h"
 
+#include <QGuiApplication>
+#include <QApplication>
 #include "wfiles.h"
 #include <QTextStream>
 #include <QDebug>
@@ -8,8 +10,9 @@
 #include <QMessageBox>
 #include "clibinc.h"
 
-calibrTable::calibrTable(QString clbrn, QObject *parent) :
+calibrTable::calibrTable(crates_t &cr_r, QString clbrn, QObject *parent) :
     QObject (parent)
+,   cr (cr_r)
 ,   clbrf (new QFile(clbrn))
 ,   curtabn (0)
 ,   currbn (0)
@@ -17,10 +20,8 @@ calibrTable::calibrTable(QString clbrn, QObject *parent) :
 ,   calibTmr (new QTimer(this))
 ,   cfpt ({0.0})
 ,   isaxis(true)
+//,   st_num(6)
 {
-//    qDebug() << "calibrTable constractor. Name: " << clbrn;
-//    clbrf = new QFile(clbrn);
-    int res = wfiles::checkFile(clbrf);
     if (!clbrf->open(QIODevice::ReadOnly | QIODevice::Text)) {
         qDebug() << "calibrTable could not open file for reading:" << clbrf->errorString();
         return;
@@ -29,27 +30,30 @@ calibrTable::calibrTable(QString clbrn, QObject *parent) :
     QTextStream in(clbrf);
 //    clbrt = new calibrtable;
     QStringList sl = in.readLine().split(':');
-
-    top.f = sl[0].toInt();
-    top.s = sl[1];
-    sl = in.readLine().split(':');
     bool ok;
+    cr.cbIndx = sl[0].toInt(&ok);
+    if((!ok) || (cr.cbIndx > 100.0) || (cr.cbIndx < 0)) {
+        cr.clr_cbi = rd;
+        cr.cbIndx = -1.0;
+    }
+    else cr.clr_cbi = wht;
+    cr.MaxBln = sl[1].toFloat(&ok);
+//    cr.clr_mbln = ok ? wht : rd;
+    if((!ok) || (cr.MaxBln > 100.0) || (cr.MaxBln < 0)) {
+        cr.clr_mbln = rd;
+        cr.MaxBln = -1.0;
+    }
+    else cr.clr_mbln = wht;
+
+    sl = in.readLine().split(':');
+
     cr.MaxFlow_1 = sl[0].toFloat(&ok);
-    cr.clrMF_1 = ok ? wht : rd;
-    if((cr.clrMF_1 == wht) && (cr.MaxFlow_1 < 100.0) && (cr.MaxFlow_1 > 0)) cr.clrMF_1 = wht;
-    else cr.clrMF_1 = rd;
+    if((!ok) || (cr.MaxFlow_1 > 100.0) || (cr.MaxFlow_1 < 0)) {
+        cr.clr_MF_1 = rd; cr.MaxFlow_1 = -1.0;
+    }
+    else cr.clr_MF_1 = wht;
     for(int i=0; i<10; i++){
         sl = in.readLine().split(':');
-        // arr1[i][1] = sl[0].toFloat();
-        // arr1[i][0] = arr1[i][1]*100/mf.MaxFlow_1;
-        // arr1[i][3] = sl[1].toFloat();
-        // arr1[i][2] = arr1[i][3]*100/mf.MaxFlow_1;
-        // arr1[i][5] = sl[2].toFloat();
-        // arr1[i][4] = arr1[i][5]*100/mf.MaxFlow_1;
-        // cfpt.c_mix[0][i] = (arr1[i][3] - arr1[i][5]) / arr1[i][5] + 1.0;
-        // arr1[i][6] = cfpt.c_mix[0][i];
-        // cfpt.set_point[0][i] = arr1[i][1];
-
         tbl1[i].ml1 = sl[0].toFloat(&ok);
         if(!ok)tbl1[i].ml1 = 0.0;
         tbl1[i].pc1 = ok ? tbl1[i].ml1*100.0/cr.MaxFlow_1 : 0.0;
@@ -65,7 +69,10 @@ calibrTable::calibrTable(QString clbrn, QObject *parent) :
     }
     sl = in.readLine().split(':');
     cr.MaxFlow_2 = sl[0].toFloat(&ok);
-    cr.clrMF_1 = ok ? wht : rd;
+    if((!ok) || (cr.MaxFlow_2 > 100.0) || (cr.MaxFlow_2 < 0)) {
+        cr.clr_MF_2 = rd; cr.MaxFlow_2 = -1.0;
+    }
+    else cr.clr_MF_2 = wht;
     for(int i=0; i<10; i++){
         sl = in.readLine().split(':');
         tbl2[i].ml1 = sl[0].toFloat(&ok);
@@ -83,7 +90,10 @@ calibrTable::calibrTable(QString clbrn, QObject *parent) :
     }
     sl = in.readLine().split(':');
     cr.MaxFlow_3 = sl[0].toFloat(&ok);
-    cr.clrMF_3 = ok ? wht : rd;
+    if((!ok) || (cr.MaxFlow_3 > 100.0) || (cr.MaxFlow_3 < 0)) {
+        cr.clr_MF_3 = rd; cr.MaxFlow_3 = -1.0;
+    }
+    else cr.clr_MF_3 = wht;
     for(int i=0; i<10; i++){
         sl = in.readLine().split(':');
         tbl3[i].ml1 = sl[0].toFloat(&ok);
@@ -396,6 +406,7 @@ void calibrTable::fromQML_calibTableManualEditingFinished(int tabn, int row, int
 calibrTable::~calibrTable(){
     calibTmr->stop();
     delete calibTmr;
+    this->~QObject();
 }
 
 void calibrTable::fromQML_calibClosed(){

@@ -10,6 +10,10 @@
 #include "master.h"
 #include "mycppobject.h"
 #include <QDebug>
+
+#include "wfiles.h"
+#include <QMessageBox>
+
 int main(int argc, char *argv[])
 {
     // QApplication must be used.
@@ -19,14 +23,31 @@ int main(int argc, char *argv[])
     app.setOrganizationDomain("aoAvangard.org");
 
     app.setWindowIcon(QIcon(":/resources/Gas.ico"));
+    int st_num;
+    int res = wfiles::checkFile("Calibr.str", st_num);
+    qDebug() << "Current working directory: " << QDir::currentPath();
+    if(res == -1) {
+        QMessageBox msgBox(QMessageBox::Critical, "Фатальная ошибка", "Отсутствует файл калибровки\nCalibr.str.", QMessageBox::Close);
+        msgBox.exec();
+        QGuiApplication::exit(-1);
+        return -1;
+    }
+    else if(res == -2) {
+        QMessageBox msgBox(QMessageBox::Critical, "Фатальная ошибка", "Файл калибровки Calibr.str изменен.\nДальнейшая работа невозможна.", QMessageBox::Close);
+        msgBox.exec();
+        QGuiApplication::exit(-2);
+        return -2;
+    }
+
     QQmlApplicationEngine engine;//(/*QUrl("qrc:/main2.qml")*/);
 //    uMain* um=new uMain();
 
-    master um("Combo.str", "Table.cfg", "Calibr.str", 1000, &parentObject);
+    master um("Combo.str", "Table.cfg", "Calibr.str", st_num, 1000, &parentObject);
 
     QQmlContext *context = engine.rootContext();
 
     context->setContextProperty("master", &um);
+    context->setContextProperty("crTbl", &(um.params.cr));
     context->setContextProperty("cmbTbl", &(um.params.cmbTbl));
     context->setContextProperty("smplTbl", &(um.params.smplTbl));
     context->setContextProperty("clbrTbl", &(um.params.clbrTbl));

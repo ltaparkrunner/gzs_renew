@@ -97,14 +97,14 @@ Rectangle {
                                cncntr2:ln[11*i+11], "sumStream":ln[11*i+13], "humidity":ln[11*i+15]})
 //                for(j=0; j<6; j++)
                 clrAr.push(ln[11*i+7])
-                console.log(" ln[", 11*i+7, "]= ",  ln[11*i+7], " ")
-                console.log("clrAr[", k, "]= ", clrAr[k])
+//                console.log(" ln[", 11*i+7, "]= ",  ln[11*i+7], " ")
+//                console.log("clrAr[", k, "]= ", clrAr[k])
                 k=k+1
 
                 for(j=0; j<5; j++) {
-                    console.log(" ln[", 11*i+j*2+8, "]= ",  ln[11*i+j*2+8], " ")
+//                    console.log(" ln[", 11*i+j*2+8, "]= ",  ln[11*i+j*2+8], " ")
                     clrAr.push(ln[11*i+j*2+8])
-                    console.log("clrAr[", k, "]= ", clrAr[k])
+//                    console.log("clrAr[", k, "]= ", clrAr[k])
                     k = k+1
                 }
             }

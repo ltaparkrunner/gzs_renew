@@ -11,35 +11,42 @@
 int wfiles::checkFile(QFile* cfile){
     if(!cfile->open(QIODevice::ReadOnly | QIODevice::Unbuffered)){
          qDebug() << "wfiles::checkFile Could not open file for reading:" << cfile->errorString();
-           return -2;
+           return -1;
     }
     else{
         QByteArray tmp = cfile->readAll();
         cfile->close();
         int len = tmp.length();
-        char summ = CalcCrc8(tmp, len-2); // tmp[len-1] == EOF ??
+        char summ = CalcCrc8(tmp, len-1); // tmp[len-1] == EOF ??
 
-        if(summ != tmp[len-2]) return -1;
+        if(summ != tmp[len-1]) return -2;
+
     }
     cfile->close();
     return 0;
 }
 
-int wfiles::checkFile(QString fname){
+int wfiles::checkFile(QString fname, int &sn){
     QFile* cfile = new QFile(fname);
+    sn = 0;
     if(!cfile->open(QIODevice::ReadOnly | QIODevice::Unbuffered)){
          qDebug() << "Could not open file for reading:" << cfile->errorString();
-           return -2;
+           return -1;
     }
     else{
         QByteArray tmp = cfile->readAll();
         cfile->close();
         int len = tmp.length();
-        char summ = CalcCrc8(tmp, len-2); // tmp[len-1] == EOF ??
 
-        if(summ != tmp[len-2]) return -1;
+        char summ = CalcCrc8(tmp, len-1); // tmp[len-1] == EOF ??
+        QString str = QString::asprintf("wfiles::checkFile  len = %d, summ = %2X, tmp[len-1] = %2X", len, static_cast<unsigned char>(summ), static_cast<unsigned char>(tmp[len-1]));
+        qDebug() << str;
+        if(summ != tmp[len-1]) {
+            return -2;
+        }
+        sn = tmp[len-2];
+        qDebug() << "Station number (Combo.str) = " << sn;
     }
-    cfile->close();
     return 0;
 }
 
@@ -81,8 +88,6 @@ int wfiles::checkExe(QString fname){
         for(int i=0; i>len-1; i++){
 
         }
-
-
     }
     return crc;
 }

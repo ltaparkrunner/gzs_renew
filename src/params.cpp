@@ -17,15 +17,16 @@
 
 Parameters::Parameters(QString cmb_name, QString tname,  QString clbr_name, QObject *parent):
     QObject(parent)
+,   cr(this)
 ,   smplTbl(this)
-,   clbrTbl(clbr_name, this)
-,   cmbTbl(this->clbrTbl.cr, cmb_name, this)
+,   clbrTbl(cr, clbr_name, this)
+,   cmbTbl(cr, cmb_name, this)
 {
 }
 int Parameters::startCheckTblRow(int n){
-    clbrTbl.cr.clrMF_1 = wht;
-    clbrTbl.cr.clrMF_2 = wht;
-    clbrTbl.cr.clrMF_3 = wht;
+    cr.clr_MF_1 = wht;
+    cr.clr_MF_2 = wht;
+    cr.clr_MF_3 = wht;
     cmbTbl.clrBn = wht;
     cmbTbl.clrCmb = wht;
 
@@ -76,26 +77,26 @@ int Parameters::checkTblRow(int n){                                         //  
     }
     else RH = smplTbl.dt[n].relatHumidity;
 
-    if(!(clbrTbl.cr.MaxFlow_1 > 0 && clbrTbl.cr.MaxFlow_1 < 100)) {
-        clbrTbl.cr.clrMF_1 = bl;
+    if(!(cr.MaxFlow_1 > 0 && cr.MaxFlow_1 < 100)) {
+        cr.clr_MF_1 = bl;
         toQML_statusBar("Ошибка ввода данных | \"ЦЕЛЕВОЙ ГАЗ\"");
         return 2;
     }
-    else  Flow_max_gas = clbrTbl.cr.MaxFlow_1;
+    else  Flow_max_gas = cr.MaxFlow_1;
 
-    if(!(clbrTbl.cr.MaxFlow_2 > 0 && clbrTbl.cr.MaxFlow_2 < 100)) {
-        clbrTbl.cr.clrMF_2 = bl;
+    if(!(cr.MaxFlow_2 > 0 && cr.MaxFlow_2 < 100)) {
+        cr.clr_MF_2 = bl;
         toQML_statusBar("Ошибка ввода данных | \"СУХОЙ ВОЗДУХ\"");
         return 2;
     }
-    else  Flow_max_suh = clbrTbl.cr.MaxFlow_2;
+    else  Flow_max_suh = cr.MaxFlow_2;
 
-    if(!(clbrTbl.cr.MaxFlow_3 > 0 && clbrTbl.cr.MaxFlow_3 < 100)) {
-        clbrTbl.cr.clrMF_3 = bl;
+    if(!(cr.MaxFlow_3 > 0 && cr.MaxFlow_3 < 100)) {
+        cr.clr_MF_3 = bl;
         toQML_statusBar("Ошибка ввода данных | \"ВЛАЖНЫЙ ВОЗДУХ\"");
         return 2;
     }
-    else  Flow_max_vlag = clbrTbl.cr.MaxFlow_3;
+    else  Flow_max_vlag = cr.MaxFlow_3;
 
     if(cmbTbl.tblrows[cmbTbl.cur_row].gname.isEmpty()){
         cmbTbl.clrCmb = rd;
@@ -224,6 +225,4 @@ void Parameters::fromQML_smplTableEditFinished(QList<QString> ls, int row, int c
     //
 
 }
-// bool Parameters::isBallon() {
-//     return false;
-// }
+

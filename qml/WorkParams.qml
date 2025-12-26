@@ -11,6 +11,18 @@ Rectangle{
     Connections{
         target: master
     }
+    Connections {
+        target: crTbl
+//        function onToQML_crTbl(lf, lclr)
+        function onToQML_crTbl(lf)
+        {
+            console.log("onToQML_crTbl lf[1]: ", lf[1])
+            t38.text = lf[0]
+            t39.text = lf[1]
+            t310.text = lf[2]
+            t311.text = lf[3]
+        }
+    }
     ColumnLayout{
 //        anchors.fill: parent
 //        anchors.left: parent.left
@@ -172,6 +184,9 @@ Rectangle{
                             id: t311
                             text: qsTr("1.000")
                         }
+                    }
+                    Component.onCompleted: {
+                        crTbl.fromQML_crCompleted()
                     }
                 }
                 Text {
