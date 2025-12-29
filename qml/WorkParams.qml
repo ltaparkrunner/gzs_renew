@@ -297,6 +297,36 @@ Rectangle{
         Text{
             text: "forever2"
         }
+        // Rectangle{
+        //     color: "lightblue"
+        //     Layout.fillWidth: true
+        //     height: 20
+        // }
+
+        // qtquickcontrols-customize
+        Slider{
+            id:sd1
+            Layout.fillWidth: true
+            from: 1
+            to: 2
+            value:1
+            stepSize: 1
+            handle: Rectangle {
+                x: sd1.leftPadding + sd1.visualPosition * (sd1.availableWidth - width)
+                y: sd1.topPadding + sd1.availableHeight / 2 - height / 2
+                implicitWidth: 13
+                implicitHeight: 13
+                radius: 6
+
+                color: sd1.pressed ? "#f0f0f0" : "#f6f6f6"
+                border.color: "#bdbebf"
+            }
+
+            orientation: Qt.Horizontal
+            onValueChanged: {
+                console.log("Slider new value:", value)
+            }
+        }
 
         Rectangle{
             color: "red"
