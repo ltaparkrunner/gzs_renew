@@ -26,6 +26,7 @@ if(QT_VERSION_MAJOR EQUAL 6)
         ${src_dir}main.cpp
         ${src_dir}master.cpp
         ${src_dir}wfiles.cpp
+        ${src_dir}trackBar.cpp
 #        ${src_dir}calcMixture.cpp
 #        ${src_dir}coefftable.cpp
         ${src_dir}combotable.cpp
@@ -42,6 +43,7 @@ if(QT_VERSION_MAJOR EQUAL 6)
         ${inc_dir}main.h
         ${inc_dir}master.h
         ${inc_dir}wfiles.h
+        ${inc_dir}trackBar.h
 #        ${inc_dir}calcMixture.h
 #        ${inc_dir}coefftable.h
         ${inc_dir}combotable.h
@@ -59,6 +61,7 @@ elseif(QT_VERSION_MAJOR EQUAL 5)
         ${src_dir}main.cpp
         ${src_dir}master.cpp
         ${src_dir}wfiles.cpp
+        ${src_dir}trackBar.cpp
 #        ${src_dir}calcMixture.cpp
 #        ${src_dir}coefftable.cpp
         ${src_dir}combotable.cpp
@@ -76,6 +79,7 @@ elseif(QT_VERSION_MAJOR EQUAL 5)
         ${inc_dir}main.h
         ${inc_dir}master.h
         ${inc_dir}wfiles.h
+        ${inc_dir}trackBar.h
 #        ${inc_dir}calcMixture.h
 #        ${inc_dir}coefftable.h
         ${inc_dir}combotable.h
@@ -99,6 +103,8 @@ add_executable(gaz_mixer  ${PROJECT_SOURCES}
     inc/auxil.h
     inc/crates.h
     src/crates.cpp
+    inc/trackBar.h
+    src/trackBar.cpp
 #    inc/max_flow_rate.h
 #    src/max_flow_rate.cpp
 )
