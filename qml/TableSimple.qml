@@ -90,24 +90,28 @@ Rectangle {
                 }
                 else lm2.append({title1:ls[i]})
             }
+
             tm21.clear()
-            var k = 0
+//            var k = 0
             for(i=0; i<imax; i++){
                 tm21.appendRow({"mnumber":ln[11*i+6], duration:ls[i+6], cncntr1:ln[11*i+9],
                                cncntr2:ln[11*i+11], "sumStream":ln[11*i+13], "humidity":ln[11*i+15]})
-//                for(j=0; j<6; j++)
                 clrAr.push(ln[11*i+7])
-//                console.log(" ln[", 11*i+7, "]= ",  ln[11*i+7], " ")
-//                console.log("clrAr[", k, "]= ", clrAr[k])
-                k=k+1
+//                k=k+1
 
                 for(j=0; j<5; j++) {
-//                    console.log(" ln[", 11*i+j*2+8, "]= ",  ln[11*i+j*2+8], " ")
                     clrAr.push(ln[11*i+j*2+8])
-//                    console.log("clrAr[", k, "]= ", clrAr[k])
-                    k = k+1
+//                    k = k+1
                 }
             }
+        }
+        function onToQML_smplTbl3(num, rw, cl){
+            var indx = tm21.index(rw, cl)
+            tm21.setData(indx, "display", num)
+        }
+        function onToQML_smplTbl4(s, rw, cl){
+            var indx = tm21.index(rw, cl)
+            tm21.setData(indx, "display", s)
         }
     }
     Connections{
@@ -233,7 +237,7 @@ Rectangle {
                               lrow.push(x.humidity)
 //                              smplTbl.fromQML_smplTableEditFinished(lrow, row, column)
                               params.fromQML_smplTableEditFinished(lrow, row, column)
-                          }
+                           }
                       }
                   }
               }

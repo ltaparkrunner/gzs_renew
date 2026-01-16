@@ -105,6 +105,8 @@ add_executable(gaz_mixer  ${PROJECT_SOURCES}
     src/crates.cpp
     inc/trackBar.h
     src/trackBar.cpp
+    inc/mtime.h
+    src/mtime.cpp
 #    inc/max_flow_rate.h
 #    src/max_flow_rate.cpp
 )

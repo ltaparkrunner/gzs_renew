@@ -8,8 +8,11 @@
 #include <QTimer>
 //#include <QList>
 
-QTime t0 = QTime::fromString("00:00:05", "hh:mm:ss");
-QTime t1 = QTime::fromString("05:00:00", "hh:mm:ss");
+// QTime t0 = QTime::fromString("00:00:05", "hh:mm:ss");
+// QTime t1 = QTime::fromString("05:00:00", "hh:mm:ss");
+
+mtime t0 = mtime(0, 0, 5);
+mtime t1 = mtime(5, 0, 0);
 
 simpleTable::simpleTable(QString tn, QObject *parent):
     QObject(parent)
@@ -25,6 +28,7 @@ simpleTable::simpleTable(QString tn, QObject *parent):
     }
     QTextStream in(stf);
     QStringList sl = in.readLine().split(',');
+    QStringList sl2;
     if(sl.length() < 2) goto parse_err;
     bool ok;
     dim.width = sl[0].toInt(&ok);
@@ -55,7 +59,10 @@ simpleTable::simpleTable(QString tn, QObject *parent):
         dt[i].clr_nr = ok ? wht : rd;
         sl = in.readLine().split(',');
         if(sl.length()<3) goto parse_err;
-        dt[i].duration = QTime::fromString(sl[2],"hh:mm:ss");
+//        dt[i].duration = QTime::fromString(sl[2],"hh:mm:ss");
+        sl2 = sl[2].split(':');
+        if(sl2.length()<3) goto parse_err;
+        dt[i].duration = mtime(sl2[0], sl2[1], sl2[3]);
         if(dt[i].duration > t0 && t1 > dt[i].duration) dt[i].clr_dur = wht;
         else dt[i].clr_dur = rd;
         // else ttl[i].clr_nm = true;
@@ -116,7 +123,8 @@ simpleTable::simpleTable(QObject *parent):
 //        dt.append({0, false, t0, 0, false, 0, false, 0, false, 0, false});
         dt.append({0, rd, t0, rd, 0, rd, 0, rd, 0, rd, 0, rd});
         dt[i].num_row = i+1;
-        dt[i].duration = QTime::fromString("0:00:30","h:mm:ss");
+//        dt[i].duration = QTime::fromString("0:00:30","h:mm:ss");
+        dt[i].duration = mtime(0, 0, 30);
         dt[i].cncntr1 = 0;
         dt[i].cncntr2 = 0;
         dt[i].sumStream = 200;
@@ -144,7 +152,8 @@ void simpleTable::publish(){
 //    for(i = 0; i < 4; i++){
     for(i = 0; i < 2; i++){
         lc.append(QString::number(dt[i].num_row));
-        lc.append(dt[i].duration.toString("hh:mm:ss"));
+//        lc.append(dt[i].duration.toString("hh:mm:ss"));
+        lc.append(dt[i].duration.to_string());
         lc.append(QString::number(dt[i].cncntr1));
         lc.append(QString::number(dt[i].cncntr2));
         lc.append(QString::number(dt[i].sumStream));
@@ -180,9 +189,9 @@ void simpleTable::publish2(){
         ln.append(dt[i].relatHumidity);
         ln.append(dt[i].clr_rH);
 
-        ls.append(dt[i].duration.toString("hh:mm:ss"));
+//        ls.append(dt[i].duration.toString("hh:mm:ss"));
+        ls.append(dt[i].duration.to_string());
     }
-//    qDebug() << "before toQML_smplTbl(lc)";
     emit toQML_smplTbl2(ln, ls);
 }
 
@@ -220,7 +229,29 @@ void simpleTable::fromQML_smplTableEditFinished(QList<QString> ls, int row, int 
             dt[row].cncntr1 = dt[row].cncntr2 / 10000;
         }
     }
-
+    else if(clmn == 1) {
+        QStringList sl = ls[0].split(':');
+        if(sl.length()>=3){
+            mtime tm = mtime(sl[0], sl[1], sl[2]);
+            if(tm.isValid()) {
+                dt[row].duration = tm;
+            }
+        }
+    }
     //TODO: Output of recounted concentrations
 //    if(row)
+}
+
+void simpleTable::publish3(int row, int clmn){
+    if(clmn == 2) {
+        toQML_smplTbl3(dt[row].cncntr2, row, 3);
+        toQML_smplTbl3(dt[row].cncntr1, row, 2);
+    }
+    else if(clmn == 3) {
+        toQML_smplTbl3(dt[row].cncntr1, row, 2);
+        toQML_smplTbl3(dt[row].cncntr2, row, 3);
+    }
+    else if(clmn == 1) {
+        toQML_smplTbl4(dt[row].duration.to_string(), row, 1);
+    }
 }

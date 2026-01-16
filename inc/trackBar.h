@@ -9,10 +9,12 @@ struct trackBar{
 //    int
     int posChanged(simpleTable stbl){
         try{
-            QTime RegimeTime = stbl.dt[pos].duration;
+//            QTime RegimeTime = stbl.dt[pos].duration;
+            mtime RegimeTime = stbl.dt[pos].duration;
             // RegimeTime output to current time
 
-            QTime TotalTime =QTime::fromString("00:00:00", "hh:mm:ss");
+//            QTime TotalTime =QTime::fromString("00:00:00", "hh:mm:ss");
+            mtime TotalTime = mtime(0, 0, 0);
             int ln = stbl.dt.length();
             for(int row = pos; row<stbl.dt.length(); row++)
                 TotalTime = TotalTime + stbl.dt[row].duration;
@@ -22,7 +24,7 @@ struct trackBar{
             //  output ???
             //  output ???
         }
-        stbl.checkTable();
+//        stbl.checkTable();
         // output Flow_gas, Flow_air, Flow_vlag_gas, C_mix
         return 0;
     }

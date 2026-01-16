@@ -219,7 +219,8 @@ void Parameters::fromQML_smplTableEditFinished(QList<QString> ls, int row, int c
     startCheckTblRow(row);
     checkTblRow(row);
 
-    smplTbl.publish2();
+//    smplTbl.publish2();
+    smplTbl.publish3(row, clmn);
     cmbTbl.publish();
     // TODO: output simpleTable and comboTable After checkTblRow
     //

@@ -2,9 +2,10 @@
 #define SIMPLETABLE_H
 
 #include <QString>
-#include <QTime>
+//#include <QTime>
 #include <QFile>
 #include <QList>
+#include "mtime.h"
 
 #include "auxil.h"
 
@@ -17,7 +18,8 @@ struct ttl_t{       // Titles
 struct dt_t{        // main table
     int num_row;
     clr clr_nr;
-    QTime duration;
+//    QTime duration;
+    mtime duration;
     clr clr_dur;
     int cncntr1;
     clr clr_c1;
@@ -48,6 +50,8 @@ public:
     /*explicit*/ simpleTable(QObject *parent = nullptr);
     void publish();
     void publish2();
+    void publish3(int row, int clmn);
+//    void publish3(int nm, int row, int clmn);
     QFile *stf;
 
     int rowsNum;
@@ -55,6 +59,8 @@ public:
 signals:
     void toQML_smplTbl(QList<QString> lc);
     void toQML_smplTbl2(QList<int> lc, QList<QString> ls);
+    void toQML_smplTbl3(int nm, int row, int clmn);
+    void toQML_smplTbl4(QString tm, int row, int clmn);
 public slots:
     void fromQML_smplTableCompleted();
 //    void fromQML_smplTableEditFinished(QList<QString> ls);
