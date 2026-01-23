@@ -48,6 +48,7 @@ public:
 
     /*explicit*/ simpleTable(QString tn = "Table.cfg", QObject *parent = nullptr);
     /*explicit*/ simpleTable(QObject *parent = nullptr);
+    int noFileInit();
     void publish();
     void publish2();
     void publish3(int row, int clmn);
@@ -65,6 +66,7 @@ public slots:
     void fromQML_smplTableCompleted();
 //    void fromQML_smplTableEditFinished(QList<QString> ls);
     void fromQML_smplTableEditFinished(QList<QString> ls, int row, int clmn);
+    void fromQML_smplTableRowAdded(QList<QString> ls, int row, int clmn);
 public:
     bool isTable();
     int color(int col, int row, QString color);

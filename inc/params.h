@@ -41,6 +41,7 @@ struct   TParameters
     float          C_mix_2;                // поправочный коэффициент для смеси
 };
 */
+
 class Parameters : public QObject
 {
     Q_OBJECT
@@ -58,7 +59,7 @@ public:
         }
     }
     int startCheckTblRow(int n);
-    int checkTblRow(int n);
+    int checkTblRow(int n);  // Station_Calc(ARow)
 signals:
     void Factor_DiluteChanged();
 public:

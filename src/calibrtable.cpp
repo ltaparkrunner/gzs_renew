@@ -32,23 +32,29 @@ calibrTable::calibrTable(crates_t &cr_r, QString clbrn, QObject *parent) :
     QStringList sl = in.readLine().split(':');
     bool ok;
     cr.cbIndx = sl[0].toInt(&ok);
-    if((!ok) || (cr.cbIndx > 100.0) || (cr.cbIndx < 0)) {
+    if((!ok) || (cr.cbIndx > cr.restr.INDX_MAX) || (cr.cbIndx < 0)) {
         cr.clr_cbi = rd;
         cr.cbIndx = -1.0;
     }
     else cr.clr_cbi = wht;
-    cr.MaxBln = sl[1].toFloat(&ok);
-//    cr.clr_mbln = ok ? wht : rd;
-    if((!ok) || (cr.MaxBln > 100.0) || (cr.MaxBln < 0)) {
-        cr.clr_mbln = rd;
-        cr.MaxBln = -1.0;
-    }
-    else cr.clr_mbln = wht;
 
+//     cr.MaxBln = sl[1].toFloat(&ok);
+//     if((!ok) || (cr.MaxBln > cr.restr.BLLN_MAX) || (cr.MaxBln < 0)) {
+//         cr.clr_mbln = rd;
+//         cr.MaxBln = -1.0;
+//     }
+//     else cr.clr_mbln = wht;
+
+    cr.ballon_cncntr = sl[1].toFloat(&ok);
+    if((!ok) || (cr.ballon_cncntr > cr.restr.BLLN_MAX) || (cr.ballon_cncntr < 0)) {
+        cr.clr_bc = rd;
+        cr.ballon_cncntr = -1.0;
+    }
+    else cr.clr_bc = wht;
     sl = in.readLine().split(':');
 
     cr.MaxFlow_1 = sl[0].toFloat(&ok);
-    if((!ok) || (cr.MaxFlow_1 > 100.0) || (cr.MaxFlow_1 < 0)) {
+    if((!ok) || (cr.MaxFlow_1 > cr.restr.TARG_MAX) || (cr.MaxFlow_1 < 0)) {
         cr.clr_MF_1 = rd; cr.MaxFlow_1 = -1.0;
     }
     else cr.clr_MF_1 = wht;
@@ -69,7 +75,7 @@ calibrTable::calibrTable(crates_t &cr_r, QString clbrn, QObject *parent) :
     }
     sl = in.readLine().split(':');
     cr.MaxFlow_2 = sl[0].toFloat(&ok);
-    if((!ok) || (cr.MaxFlow_2 > 100.0) || (cr.MaxFlow_2 < 0)) {
+    if((!ok) || (cr.MaxFlow_2 > cr.restr.DRY_AIR_MAX) || (cr.MaxFlow_2 < 0)) {
         cr.clr_MF_2 = rd; cr.MaxFlow_2 = -1.0;
     }
     else cr.clr_MF_2 = wht;
@@ -90,7 +96,7 @@ calibrTable::calibrTable(crates_t &cr_r, QString clbrn, QObject *parent) :
     }
     sl = in.readLine().split(':');
     cr.MaxFlow_3 = sl[0].toFloat(&ok);
-    if((!ok) || (cr.MaxFlow_3 > 100.0) || (cr.MaxFlow_3 < 0)) {
+    if((!ok) || (cr.MaxFlow_3 > cr.restr.WET_AIR_MAX) || (cr.MaxFlow_3 < 0)) {
         cr.clr_MF_3 = rd; cr.MaxFlow_3 = -1.0;
     }
     else cr.clr_MF_3 = wht;

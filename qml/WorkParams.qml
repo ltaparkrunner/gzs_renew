@@ -20,7 +20,7 @@ Rectangle{
             t38.text = lf[0]
             t39.text = lf[1]
             t310.text = lf[2]
-            t311.text = lf[3]
+            ti34.text = lf[3] // bln_cncntr ballon concentration
         }
     }
     ColumnLayout{

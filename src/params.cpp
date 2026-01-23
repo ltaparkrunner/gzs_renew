@@ -18,7 +18,7 @@
 Parameters::Parameters(QString cmb_name, QString tname,  QString clbr_name, QObject *parent):
     QObject(parent)
 ,   cr(this)
-,   smplTbl(this)
+,   smplTbl(tname, this)
 ,   clbrTbl(cr, clbr_name, this)
 ,   cmbTbl(cr, cmb_name, this)
 {
@@ -57,8 +57,8 @@ int Parameters::checkTblRow(int n){                                         //  
     }
     else Conc_Gas = smplTbl.dt[n].cncntr1;
 
-    if(!(smplTbl.dt[n].cncntr2 > 0 && smplTbl.dt[n].cncntr2 < 100)) {
-        smplTbl.dt[n].clr_c2 = rd;
+    if(!(smplTbl.dt[n].cncntr2 > 0 && smplTbl.dt[n].cncntr2 < 100)) {               //TODO: Conc_Balloon
+        smplTbl.dt[n].clr_c2 = rd;                                                  //TODO: from Calibr.str
         toQML_statusBar("Ошибка ввода данных | Концентрация в баллоне");
         return 1;
     }

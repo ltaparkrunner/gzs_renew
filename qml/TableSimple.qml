@@ -67,7 +67,7 @@ Rectangle {
             var st
             const ml = 12//15
             var row
-            console.log("onToQML_smplTbl imax: ", imax, "  ln.length: ", ln.length)
+            console.log("onToQML_smplTbl2 imax: ", imax, "  ln.length: ", ln.length)
 
             lm2.clear()
 
@@ -154,11 +154,46 @@ Rectangle {
                       implicitHeight: 30
                       border.width: 1
 //                      color: "blue"
+                      // ComboBox{
+                      //     width:200
+                      //     model:["Banana", "Apple", "Coconut"]
+                      //     onCurrentIndexChanged: {
+                      //         console.log("Selected item: ", currentText)
+                      //     }
+                      // }
                       TextField {
                           text: display
                           readOnly: true
                           anchors.fill:parent
                       }
+//                    ContextMenu.menu:
+                    Menu{
+                        id: contextMenu
+                        MenuItem{
+                            text: "Cut"
+                            onTriggered: {
+                                console.log("Context menu Cut, row ", row)
+                            }
+                        }
+                        MenuItem{
+                            text:"Удалить строку"
+                            onTriggered: {
+                                console.log("Context menu Удалить строку, row ", row)
+                            }
+                        }
+                    }
+
+                    MouseArea{
+                       anchors.fill: parent
+                       acceptedButtons: Qt.LeftButton | Qt.RightButton
+                       onClicked: {
+                            if(mouse.button === Qt.RightButton){
+                                contextMenu.x = mouse.x
+                                contextMenu.y = mouse.y
+                                contextMenu.popup()
+                            }
+                       }
+                    }
                   }
               }
               DelegateChoice {
@@ -194,10 +229,16 @@ Rectangle {
                             }
                             strbuf[rws-1].mnumber = (rws+1).toString()
                             tm21.appendRow(strbuf[rws-1])
+                            let lrow = [];
+                            lrow.push(strbuf[rws-1].duration)
+                            lrow.push(strbuf[rws-1].cncntr1)
+                            lrow.push(strbuf[rws-1].cncntr2)
+                            lrow.push(strbuf[rws-1].sumStream)
+                            lrow.push(strbuf[rws-1].humidity)
+                            smplTbl.fromQML_smplTableRowAdded(lrow, row, column)
                           }
                           onEditingFinished: {
                             console.log("onToQML_smplTbl TextField Keys.onEditingFinished duration")
-
                           }
                       }
                   }
