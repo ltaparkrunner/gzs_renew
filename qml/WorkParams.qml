@@ -1,7 +1,9 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.0
 import QtCharts 2.0
-import QtQuick.Controls 2.5
+import QtQuick.Controls 2.15
+import Qt.labs.qmlmodels 1.0
+import QtQml.Models 2.15
 import QtQuick.Window 2.0   //1.5//2.15
 //import Qt.labs.qmlmodels 2.5
 
@@ -200,11 +202,15 @@ Rectangle{
                 //                 id: cbItems
                 //                 ListElement { text: "Synthentic air : 1.00" }
                 //                 ListElement { text: "Nytrogen : 0.30" }
+                //                 ListElement { text: "Synthentic air2 : 1.00" }
+                //                 ListElement { text: "Nytrogen2 : 0.30" }
+                //                 ListElement { text: "Synthentic air3 : 1.00" }
+                //                 ListElement { text: "Nytrogen3 : 0.30" }
                 //             }
                 //             width: 200
                 //             onCurrentIndexChanged: console.log(cbItems.get(currentIndex).text)
                 // }
-                TableCombo{
+                TableCombo2{
                     id:tc32
                 }
                 Text {

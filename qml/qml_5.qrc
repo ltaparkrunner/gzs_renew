@@ -21,5 +21,6 @@
         <file>Scroll_1.qml</file>
         <file>Chooser_1.qml</file>
         <file>Choose_2.qml</file>
+        <file>TableCombo2.qml</file>
     </qresource>
 </RCC>
