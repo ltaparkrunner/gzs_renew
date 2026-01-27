@@ -30,6 +30,8 @@ public:
     int cur_row;
     clr clrCmb;
     crates_t &cr_r;
+public slots:
+    void fromQML_cmbTableCompleted();
 };
 
 #endif // COMBOTABLE_H
