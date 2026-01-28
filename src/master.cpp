@@ -14,34 +14,21 @@ extern "C" {
 }
 master::master(QString cmb_name, QString tname,  QString clbr_name, int stn, int tim, QObject *parent) :
     QObject(parent)
-//  , fn (fname)
-//  , tm (tim)
-//  , test_tmr (new QTimer(this))
 ,   params(cmb_name, tname, clbr_name, this)
-//  , terminal_finished (false)
-//  , mo()
-//  , fp (nullptr)
-//  ,fp(new file_parser(fname, lag, parent))
-//  , mbsvr(new mbTcpServer(parent))
 ,   st_num(stn)
 {
-
-//    connect(test_tmr, &QTimer::timeout, this, &master::ch_val);
-//    test_tmr->start(1000);
-
-    QTimer::singleShot(1000, this, &master::publish);
-    for(int row=1; row < params.smplTbl.rowsNum; row++)
-        params.checkTblRow(row);
+//  move it to class params
+//    for(int row=1; row < params.smplTbl.rowsNum; row++)
+//        params.checkTblRow(row);                            // Analog TForm1::AdvStringGridEditCellDone()
     params.button_calculateClick();
-    emit params.toQML_statusBar("Настройте связь с газовой станцией");
+    emit params.toQML_statusBar("Настройте связь с газовой станцией");  // TODO: StatusBar doesn't work
 
-    qDebug() << "Check checksum STATION-3K.exe";
+    qDebug() << "Check checksum STATION-3K.exe";    // TODO: Calculate STATION-3K.exe CRC16
 }
 
-void master::publish(){
+void master::appendSerials(){
 /*    const QList<QSerialPortInfo> */ serialPortInfos = QSerialPortInfo::availablePorts();
-//    QList<QString> lc;
-    qDebug()<< "Доступных последовательных портов: " << serialPortInfos.length();
+//    qDebug()<< "Доступных последовательных портов: " << serialPortInfos.length();
     for (QSerialPortInfo port: serialPortInfos) {
        cports.append(port.portName());
        qDebug() << "Доступный последовательный порт: "<< port.portName();
@@ -53,7 +40,6 @@ void master::publish(){
         QMessageBox msgBox(QMessageBox::Warning, "Сообщение о проблеме", "Последовательные порты отсутствуют. Не получится связаться с газосмесительной установкой", QMessageBox::Close);
         msgBox.exec();
     }
-//    this->~master();
 }
 
 int master::startInit(){
@@ -206,9 +192,12 @@ void master::eqpRqst_fromQML(QString pname){
         }
     }
     if(sp->isOpen()) sp->close();
+//    qDebug() << "Serial port name: " << sp->portName() << ",   Object Name: " << sp->objectName();
     int err;
-    qDebug() << "Master st_num = " << st_num;
-    gst = new station("/dev/ttyUSB0", /* st_num */ 6, err, this);
+//    qDebug() << "Master st_num = " << st_num;
+//    gst = new station("/dev/ttyUSB0",  st_num /* 6 */, err, this);  // TODO: take choosen serial port
+//    pname = QString("/dev/") + pname;
+    gst = new station(QString("/dev/") + pname,  st_num /* 6 */, err, this);  // TODO: take choosen serial port
     switch(err){
         case 0:{
             QMessageBox msgBox(QMessageBox::Warning, "Инициализация прошла успешно", "Загрузите/создайте настройки газовой станции." , QMessageBox::Close);
@@ -295,4 +284,9 @@ master::~master(){
     params.smplTbl.~QObject();
     params.cr.~QObject();
     params.~QObject();
+}
+
+void master::fromQML_ApplicationWindowCompleted(){
+//    qDebug() << "fromQML_WorkParamCompleted";
+    appendSerials();
 }

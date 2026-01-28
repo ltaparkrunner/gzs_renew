@@ -40,13 +40,10 @@ comboTable::comboTable(crates_t &cr, QString cmbn, QObject *parent):
         }
     }
     cmbTblLen = i-1;
-
-//    qDebug() << "comboTable::comboTable cmbTblLen: " <<  cmbTblLen;
-//    QTimer::singleShot(1500, this, &comboTable::publish);
 }
 
 void comboTable::publish(){
-    qDebug() << "From inside comboTable::publish";
+//    qDebug() << "From inside comboTable::publish";
     QList<QString> lc;
     for(int i1=0; i1<cmbTblLen; i1++){
        lc.append(tblrows[i1].gname);
@@ -54,15 +51,14 @@ void comboTable::publish(){
        lc.append(QString::number(tblrows[i1].persentage));
     }
     toQML_cmbTbl(lc);
-    qDebug() << "After toQML_cmbTbl(ls)";
+//    qDebug() << "After toQML_cmbTbl(ls)";
 }
 
 int comboTable::checkTblrow(int r){
-//    if()
     return 0;
 }
 
 void comboTable::fromQML_cmbTableCompleted() {
-    qDebug() << "From inside fromQML_cmbTableCompleted";
+//    qDebug() << "From inside fromQML_cmbTableCompleted";
     publish();
 }

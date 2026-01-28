@@ -210,7 +210,7 @@ Rectangle{
                 //             width: 200
                 //             onCurrentIndexChanged: console.log(cbItems.get(currentIndex).text)
                 // }
-                TableCombo2{
+                TableCombo{
                     id:tc32
                 }
                 Text {

@@ -14,7 +14,7 @@ ApplicationWindow{
 
     readonly property int menuh: 35
     readonly property int spch: 10
-
+    color: "lightgreen"
     Connections {
         target: master // Указываем целевое соединение
 
@@ -134,11 +134,24 @@ ApplicationWindow{
 //        text: "myCppObject.myText: " + MyCppObject.myText
 //        anchors.centerIn: parent
 //    }
-
-    Gview2{
-        id: mainw
+    ColumnLayout{
+        spacing: 3
         anchors.fill: parent
-        property bool vsbl: false
+        Gview2{
+            id: mainw
+            property bool vsbl: false
+        }
+        Rectangle{
+            id: cndln
+            Layout.alignment: Qt.AlignBottom
+            Layout.fillWidth: true
+            height: 20
+            color: "yellow"
+            Text{
+                text: "forever"
+            }
+        }
+
     }
 
 //    ColumnLayout{
@@ -188,4 +201,8 @@ ApplicationWindow{
         }
     }
 */
+    Component.onCompleted: {
+//        console.log("ApplicationWindow Component.onCompleted")
+        master.fromQML_ApplicationWindowCompleted()
+    }
 }

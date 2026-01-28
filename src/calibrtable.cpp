@@ -119,20 +119,11 @@ calibrTable::calibrTable(crates_t &cr_r, QString clbrn, QObject *parent) :
     // mf.MaxFlow_1 = arr1_max;
     // mf.MaxFlow_2 = arr2_max;
     // mf.MaxFlow_3 = arr3_max;
-
-
-//    QTimer::singleShot(8000, this, &calibrTable::publish);
 }
 
 void calibrTable::publish(){
     qDebug() << "From inside calibrTable::publish";
     QList<QString> lc;
-    // lc.append(QString::number(top.f));
-    // lc.append(top.s);
-    // lc.append(" ");
-    // lc.append(QString::number(mf.MaxFlow_1));
-    // lc.append(" ");
-    // lc.append(" ");
     for(int i=0; i<10; i++){
         lc.append(QString::number(tbl1[i].pc1));
         lc.append(QString::number(tbl1[i].ml1));
@@ -142,9 +133,6 @@ void calibrTable::publish(){
         lc.append(QString::number(tbl1[i].ml3));
         lc.append(QString::number(tbl1[i].coeff));
     }
-    // lc.append(QString::number(mf.MaxFlow_2));
-    // lc.append(" ");
-    // lc.append(" ");
     for(int i=0; i<10; i++){
         lc.append(QString::number(tbl2[i].pc1));
         lc.append(QString::number(tbl2[i].ml1));
@@ -154,9 +142,6 @@ void calibrTable::publish(){
         lc.append(QString::number(tbl2[i].ml3));
         lc.append(QString::number(tbl2[i].coeff));
     }
-    // lc.append(QString::number(mf.MaxFlow_3));
-    // lc.append(" ");
-    // lc.append(" ");
     for(int i=0; i<10; i++){
         lc.append(QString::number(tbl3[i].pc1));
         lc.append(QString::number(tbl3[i].ml1));
@@ -320,12 +305,10 @@ void calibrTable::calibStage() {
            return;
         }
         lc.append(QDateTime::currentDateTime().toString());
-//        lc.append(QString::number(count++));
         switch (curtabn){
         case 1:
             anIn0 = ar._87017_RX[0];
             tbl1[currbn-1].ml2 = anIn0 * cr.MaxFlow_1/5.0;
-//            toQML_clbrTbl3(anIn0 * mf.MaxFlow_1/5.0, currbn);
             for(int i=0; i<10; i++){
                 tbl1[i].pc1 = tbl1[i].ml1*100.0/cr.MaxFlow_1;
                 tbl1[i].pc2 = tbl1[i].ml2*100.0/cr.MaxFlow_1;

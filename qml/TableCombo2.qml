@@ -19,9 +19,6 @@ ComboBox {
         ListElement { key: "Option 5"; key2: "Option 10" }
     }
     textRole: {"key"; "key2"}
-    // Text{
-    //     text: model.key + model.key2
-    // }
 
     delegate: ItemDelegate {
         width: check_cb.width

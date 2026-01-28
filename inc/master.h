@@ -39,13 +39,14 @@ public slots:
     void fromQML_btnStart(/*QList<QString> lc*/);
     void fromQML_btnStop();
     void fromQML_btn_blowing();
+    void fromQML_ApplicationWindowCompleted();
 private:
 //    int tm;
 //    QTimer* test_tmr;
     int startTest();
     int stopTest();
     int startInit();
-    void publish();
+    void appendSerials();
 //    char station_calc(unsigned int num);
 
 //    void pwExit(/*int ec, QProcess::ExitStatus es*/);

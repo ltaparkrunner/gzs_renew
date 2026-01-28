@@ -50,6 +50,27 @@ int wfiles::checkFile(QString fname, int &sn){
     return 0;
 }
 
+int wfiles::checkFile(QString fname){
+    QFile* cfile = new QFile(fname);
+    if(!cfile->open(QIODevice::ReadOnly | QIODevice::Unbuffered)){
+         qDebug() << "Could not open file for reading:" << cfile->errorString();
+           return -1;
+    }
+    else{
+        QByteArray tmp = cfile->readAll();
+        cfile->close();
+        int len = tmp.length();
+
+        char summ = CalcCrc8(tmp, len-1); // tmp[len-1] == EOF ??
+        QString str = QString::asprintf("wfiles::checkFile  len = %d, summ = %2X, tmp[len-1] = %2X", len, static_cast<unsigned char>(summ), static_cast<unsigned char>(tmp[len-1]));
+        qDebug() << str;
+        if(summ != tmp[len-1]) {
+            return -2;
+        }
+    }
+    return 0;
+}
+
 int wfiles::checkFile(QString fname, QFile *fl){
     QFile cfile(fname);
     fl = nullptr;

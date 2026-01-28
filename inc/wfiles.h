@@ -13,6 +13,7 @@ public:
   static int checkFile(QString fname, int &sn);
   static int checkFile(QFile* cfile);
   static int checkFile(QString fname, QFile *fl);
+  static int checkFile(QString fname);
   static int loadCombo(QString &fname);
   static int checkExe(QString fname);
   static char CalcCrc8(QByteArray cBlock, int len);

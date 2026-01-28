@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     app.setOrganizationDomain("aoAvangard.org");
 
     app.setWindowIcon(QIcon(":/resources/Gas.ico"));
-    int st_num;
+    int st_num;                                         // TODO: check of station number Calibr.str vs facility(equpment, station ), write the right Calibr.str)
     int res = wfiles::checkFile("Calibr.str", st_num);
 //    qDebug() << "Current working directory: " << QDir::currentPath();
     if(res == -1) {
@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
         return -2;
     }
 
-    res = wfiles::checkFile("Combo.str", st_num);
+    res = wfiles::checkFile("Combo.str");
 //    qDebug() << "Current working directory: " << QDir::currentPath();
     if(res == -1) {
         QMessageBox msgBox(QMessageBox::Critical, "Фатальная ошибка", "Отсутствует файл калибровки\nCombo.str.", QMessageBox::Close);

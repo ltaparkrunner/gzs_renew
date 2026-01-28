@@ -81,18 +81,15 @@ Rectangle {
                 */
             }
         }
-        Rectangle{
-            id: cndln
-//            anchors.bottom: parent.bottom
-            Layout.alignment: Qt.AlignBottom
-            Layout.fillWidth: true
-//            implicitWidth : parent.width
-//            width:200
-            height: 20
-            color: "yellow"
-            Text{
-                text: "forever"
-            }
-        }
+        // Rectangle{
+        //     id: cndln
+        //     Layout.alignment: Qt.AlignBottom
+        //     Layout.fillWidth: true
+        //     height: 20
+        //     color: "yellow"
+        //     Text{
+        //         text: "forever"
+        //     }
+        // }
     }
 }
