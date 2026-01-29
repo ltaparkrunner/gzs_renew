@@ -62,6 +62,7 @@ signals:
     void toQML_smplTbl2(QList<int> lc, QList<QString> ls);
     void toQML_smplTbl3(int nm, int row, int clmn);
     void toQML_smplTbl4(QString tm, int row, int clmn);
+    void toQML_smplTblcheck();
 public slots:
     void fromQML_smplTableCompleted();
 //    void fromQML_smplTableEditFinished(QList<QString> ls);

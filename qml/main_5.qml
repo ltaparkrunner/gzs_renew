@@ -14,7 +14,19 @@ ApplicationWindow{
 
     readonly property int menuh: 35
     readonly property int spch: 10
-    color: "lightgreen"
+
+    Connections {
+        target: params
+        function onToQML_statusBar(str){
+            console.log("function onToQML_statusBar(str): ", str)
+            cndtxt.text = str
+        }
+        // function onToQML_statusBar(){
+        //     console.log("function onToQML_statusBar(str): ")
+        //     cndtxt.text = "Настройте связь с газовой станцией"
+        // }
+    }
+
     Connections {
         target: master // Указываем целевое соединение
 
@@ -44,15 +56,16 @@ ApplicationWindow{
         }
         function onToQML_startMainW()
         {
+            console.log("onToQML_startMainW")
             mainw.vsbl = true
         }
-
 //        function onOpenFileSucc(text, title){
 
 //            messageDialog2.text = text
 //            messageDialog2.open()
 //        }
     }
+
     Component {
         id: dynI
         MenuItem{
@@ -138,16 +151,26 @@ ApplicationWindow{
         spacing: 3
         anchors.fill: parent
         Gview2{
+            Layout.fillHeight: true
+            Layout.fillWidth: true
             id: mainw
             property bool vsbl: false
         }
         Rectangle{
+            // Connections {
+            //     target: params
+            //     function onToQML_statusBar(str){
+            //         cndtxt.text = str
+            //         console.log("function onToQML_statusBar(str): ", str)
+            //     }
+            // }
             id: cndln
             Layout.alignment: Qt.AlignBottom
             Layout.fillWidth: true
             height: 20
             color: "yellow"
             Text{
+                id: cndtxt
                 text: "forever"
             }
         }

@@ -195,21 +195,6 @@ Rectangle{
                     id: t312
                     text: qsTr("Целевой газ")
                 }
-                // ComboBox {
-                //     id:cb1
-                //             currentIndex: 0
-                //             model: ListModel {
-                //                 id: cbItems
-                //                 ListElement { text: "Synthentic air : 1.00" }
-                //                 ListElement { text: "Nytrogen : 0.30" }
-                //                 ListElement { text: "Synthentic air2 : 1.00" }
-                //                 ListElement { text: "Nytrogen2 : 0.30" }
-                //                 ListElement { text: "Synthentic air3 : 1.00" }
-                //                 ListElement { text: "Nytrogen3 : 0.30" }
-                //             }
-                //             width: 200
-                //             onCurrentIndexChanged: console.log(cbItems.get(currentIndex).text)
-                // }
                 TableCombo{
                     id:tc32
                 }

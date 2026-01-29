@@ -140,7 +140,7 @@ int simpleTable::noFileInit(){
     }
     return 0;
 }
-
+/*
 simpleTable::simpleTable(QObject *parent):
     QObject(parent)
 ,   stf (new QFile(""))
@@ -189,7 +189,7 @@ simpleTable::simpleTable(QObject *parent):
         dt[i].clr_rH = wht;
     }
 }
-
+*/
 void simpleTable::publish(){
 //    qDebug() << "simpleTable::publish() the beginning";
     QList<QString> lc;

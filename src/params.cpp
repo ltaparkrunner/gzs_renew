@@ -22,6 +22,16 @@ Parameters::Parameters(QString cmb_name, QString tname,  QString clbr_name, QObj
 ,   clbrTbl(cr, clbr_name, this)
 ,   cmbTbl(cr, cmb_name, this)
 {
+    // TODO: set Label_Current
+    // TODO: count Total_Time
+    // TODO: set trackBar to 1, set MAX trackBar
+    // TODO: merge of cells ??
+/*
+    for(dt_t lin: smplTbl.dt){
+        lin.fixDepentColumns(2);
+        checkTblRow(lin);  // Station_calc
+    }
+*/
 }
 int Parameters::startCheckTblRow(int n){
     cr.clr_MF_1 = wht;

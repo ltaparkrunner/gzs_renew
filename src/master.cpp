@@ -17,12 +17,7 @@ master::master(QString cmb_name, QString tname,  QString clbr_name, int stn, int
 ,   params(cmb_name, tname, clbr_name, this)
 ,   st_num(stn)
 {
-//  move it to class params
-//    for(int row=1; row < params.smplTbl.rowsNum; row++)
-//        params.checkTblRow(row);                            // Analog TForm1::AdvStringGridEditCellDone()
-    params.button_calculateClick();
-    emit params.toQML_statusBar("Настройте связь с газовой станцией");  // TODO: StatusBar doesn't work
-
+//    params.button_calculateClick();
     qDebug() << "Check checksum STATION-3K.exe";    // TODO: Calculate STATION-3K.exe CRC16
 }
 
@@ -103,10 +98,7 @@ bool fileExist(QString fn){
         } else return false;
     }
     else return false;
-
 }
-
-
 
 void master::openefile_fromQML(QString urlList){
 
@@ -287,6 +279,9 @@ master::~master(){
 }
 
 void master::fromQML_ApplicationWindowCompleted(){
-//    qDebug() << "fromQML_WorkParamCompleted";
+    qDebug() << "master::fromQML_ApplicationWindowCompleted";
+    QString str = "Настройте связь с газовой станцией";
+    emit params.toQML_statusBar(str);
+//    emit params.toQML_statusBar();
     appendSerials();
 }
