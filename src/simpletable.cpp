@@ -54,7 +54,7 @@ simpleTable::simpleTable(QString tn, QObject *parent):
         else ttl[i].clr_nm = wht;
     }
 //    qDebug() << "simpleTable_constructor 3";
-    for(i = 0; i < 4; i++){
+    for(i = 0; i < 4; i++){     // TODO: Make for random length in file
         dt.append({0, rd, t0, rd, 0, rd, 0, rd, 0, rd, 0, rd});
         sl = in.readLine().split(',');
         if(sl.length()<3) goto parse_err;
@@ -86,6 +86,7 @@ simpleTable::simpleTable(QString tn, QObject *parent):
         dt[i].relatHumidity = sl[2].toInt(&ok);
         dt[i].clr_rH = ok ? wht : rd;
     }
+    dt_len = dt.length();
     return;
     parse_err:
         QMessageBox msgBox(QMessageBox::Warning, "Сообщение о проблеме", "Не могу прочитать файл " + tn + "./n Заканчиваю работу.", QMessageBox::Close);

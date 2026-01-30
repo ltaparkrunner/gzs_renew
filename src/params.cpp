@@ -21,7 +21,9 @@ Parameters::Parameters(QString cmb_name, QString tname,  QString clbr_name, QObj
 ,   smplTbl(tname, this)
 ,   clbrTbl(cr, clbr_name, this)
 ,   cmbTbl(cr, cmb_name, this)
+,   sldr(2, smplTbl.dt_len, this)
 {
+
     // TODO: set Label_Current
     // TODO: count Total_Time
     // TODO: set trackBar to 1, set MAX trackBar

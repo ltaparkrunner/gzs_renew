@@ -25,6 +25,16 @@ Rectangle{
             ti34.text = lf[3] // bln_cncntr ballon concentration
         }
     }
+    Connections {
+        target: sldr
+        function onToQML_setPos(p){
+            sd1.value = p
+        }
+        function onToQML_setMax(m){
+            sd1.to = m
+        }
+    }
+
     ColumnLayout{
 //        anchors.fill: parent
 //        anchors.left: parent.left
@@ -317,7 +327,33 @@ Rectangle{
 
             orientation: Qt.Horizontal
             onValueChanged: {
-                console.log("Slider new value:", value)
+//                console.log("Slider new value:", value)
+                sldr.fromQML_posChanged(value)
+            }
+            Component.onCompleted: {
+                sldr.fromQML_sldrCompleted()
+            }
+        }
+        // Repeater to create the labels
+        Repeater{
+            model: sd1.stepSize > 0 ? 1+(sd1.to - sd1.from)/sd1.stepSize : 0
+            delegate: Text{
+                property real labelValue:sd1.from + index * sd1.stepSize
+                text: labelValue.toFixed()
+
+                font.pixelSize: 12
+                color: "black"
+                // the label's position
+                anchors.top: sd1.bottom
+                anchors.topMargin: 5
+
+                // Calculate the horisontal position
+                x:{
+                    var totalRange = sd1.to - sd1.from
+                    var positionFraction = (labelValue - sd1.from)/totalRange
+                    // Adjust position to center
+                    return sd1.x + positionFraction * sd1.width - width/2;
+                }
             }
         }
 

@@ -5,6 +5,7 @@
 #include "combotable.h"
 #include "simpletable.h"
 #include "calibrtable.h"
+#include "slider.h"
 
 #include <QObject>
 
@@ -71,6 +72,7 @@ public:
     simpleTable smplTbl;
     calibrTable clbrTbl;
     comboTable  cmbTbl;
+    slider      sldr;
     int         Conc_Gas;               // Заданная концентрация целевого газа на выходе
     int          Conc_Balloon;           // Заданная концентрация целевого газа в баллоне
 

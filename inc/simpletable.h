@@ -56,6 +56,7 @@ public:
     QFile *stf;
 
     int rowsNum;
+    int dt_len;
 //    int checkTableRow(int n);
 signals:
     void toQML_smplTbl(QList<QString> lc);

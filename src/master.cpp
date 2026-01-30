@@ -16,9 +16,10 @@ master::master(QString cmb_name, QString tname,  QString clbr_name, int stn, int
     QObject(parent)
 ,   params(cmb_name, tname, clbr_name, this)
 ,   st_num(stn)
+,   crc(wfiles::checkExe("gaz_mixer"))
 {
 //    params.button_calculateClick();
-    qDebug() << "Check checksum STATION-3K.exe";    // TODO: Calculate STATION-3K.exe CRC16
+    qDebug() << "Check checksum STATION-3K.exe" << crc;    // TODO: Calculate STATION-3K.exe CRC16
 }
 
 void master::appendSerials(){

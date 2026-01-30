@@ -99,18 +99,10 @@ int wfiles::checkExe(QString fname){
          qDebug() << "Could not open file for reading:" << cfile.errorString();
            return 0x01;
     }
-    else{
-        unsigned char tem;
-
-
-        QByteArray tmp = cfile.readAll();
-        cfile.close();
-        int len = tmp.length();
-        for(int i=0; i>len-1; i++){
-
-        }
-    }
-    return crc;
+    QByteArray tmp = cfile.readAll();
+    cfile.close();
+    int len = tmp.length();
+    return CalcCrc8(tmp, len); // or len-1 ??
 }
 
 char wfiles::CalcCrc8(QByteArray cBlock, int len)

@@ -60,6 +60,7 @@ private:
 public:
     Parameters params;
     int st_num;
+    int crc;
 //    MyCppObject mo;
 };
 
