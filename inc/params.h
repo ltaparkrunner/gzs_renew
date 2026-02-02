@@ -104,6 +104,8 @@ public:
     void color(gvw plc, QString color);
 public slots:
     void fromQML_smplTableEditFinished(QList<QString> ls, int row, int clmn);
+    void fromQML_smplTableRowAdded(QList<QString>lrow, int row, int column);
+    void fromQML_getFocus(int row, int column);
 };
 
 #endif // PARAMS_H

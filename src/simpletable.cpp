@@ -17,6 +17,7 @@ mtime t1 = mtime(5, 0, 0);
 simpleTable::simpleTable(QString tn, QObject *parent):
     QObject(parent)
 ,   stf (new QFile(tn))
+,   currRow(0)
 ,   rowsNum (4)
 {
     int i, j;
@@ -326,4 +327,5 @@ void simpleTable::fromQML_smplTableRowAdded(QList<QString> ls, int row, int clmn
     temp.clr_rH = rd;
     temp.clr_sS = rd;
     dt.append({row, rd, tt, rd, 0, rd, 0, rd, 0, rd, 0, rd});
+    rowsNum++;
 }

@@ -205,6 +205,7 @@ Rectangle {
                       border.width: 1
                       color: "green"
                       TextField {
+//                          color: activeFocusControl?"lightblue":""
                           text: display
                           // google AI regular expression for hh:mm:ss
                           //validator: RegularExpressionValidator{regularExpression: /^([0-1][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/}
@@ -235,7 +236,8 @@ Rectangle {
                             lrow.push(strbuf[rws-1].cncntr2)
                             lrow.push(strbuf[rws-1].sumStream)
                             lrow.push(strbuf[rws-1].humidity)
-                            smplTbl.fromQML_smplTableRowAdded(lrow, row, column)
+//                            smplTbl.fromQML_smplTableRowAdded(lrow, row, column)
+                            params.fromQML_smplTableRowAdded(lrow, row, column)
                           }
                           onEditingFinished: {
                             console.log("onToQML_smplTbl TextField Keys.onEditingFinished duration")
@@ -253,6 +255,7 @@ Rectangle {
                           //validator: RegularExpressionValidator{regularExpression: /^\d+$/}
                           anchors.fill:parent
                           background: Rectangle{
+                              id:bg1
                               property var cl: clrAr[row*smpl.columns + column]
                               color:cl===0?"white":cl===1?"lightgreen":cl===2?"lightblue":"yellow"
                           }
@@ -279,6 +282,14 @@ Rectangle {
 //                              smplTbl.fromQML_smplTableEditFinished(lrow, row, column)
                               params.fromQML_smplTableEditFinished(lrow, row, column)
                            }
+                          onActiveFocusChanged: {
+//                            console.log("TextField onFocusChanged:  row: ", row, "  column: ", column)
+                              if(activeFocus) {
+                                  bg1.color="lightblue"
+                                  params.fromQML_getFocus(row, column)
+                              }
+                              else bg1.color="white"
+                          }
                       }
                   }
               }

@@ -32,6 +32,7 @@ Rectangle{
         }
         function onToQML_setMax(m){
             sd1.to = m
+            rw1.spacing = Math.trunc(sd1.width/(m-1))-12
         }
     }
 
@@ -300,11 +301,26 @@ Rectangle{
         Text{
             text: "forever2"
         }
-        // Rectangle{
-        //     color: "lightblue"
-        //     Layout.fillWidth: true
-        //     height: 20
-        // }
+        // Repeater to create the labels
+
+        Row{
+            id: rw1
+            spacing: 1//{(Math.trunc(sd1.width/(sd1.from-sd1.to))-12) }       //330
+            Repeater{
+                model: sd1.stepSize > 0 ? 1+(sd1.to - sd1.from)/sd1.stepSize : 0
+                delegate: Text{
+                    property real labelValue:sd1.from + index * sd1.stepSize
+                    text: labelValue.toFixed()
+
+                    font.pixelSize: 12
+                    color: "black"
+                    // the label's position
+    //                anchors.top: sd1.bottom
+    //                anchors.topMargin: 5
+                    Layout.topMargin: 5
+                }
+            }
+        }
 
         // qtquickcontrols-customize
         Slider{
@@ -332,28 +348,6 @@ Rectangle{
             }
             Component.onCompleted: {
                 sldr.fromQML_sldrCompleted()
-            }
-        }
-        // Repeater to create the labels
-        Repeater{
-            model: sd1.stepSize > 0 ? 1+(sd1.to - sd1.from)/sd1.stepSize : 0
-            delegate: Text{
-                property real labelValue:sd1.from + index * sd1.stepSize
-                text: labelValue.toFixed()
-
-                font.pixelSize: 12
-                color: "black"
-                // the label's position
-                anchors.top: sd1.bottom
-                anchors.topMargin: 5
-
-                // Calculate the horisontal position
-                x:{
-                    var totalRange = sd1.to - sd1.from
-                    var positionFraction = (labelValue - sd1.from)/totalRange
-                    // Adjust position to center
-                    return sd1.x + positionFraction * sd1.width - width/2;
-                }
             }
         }
 

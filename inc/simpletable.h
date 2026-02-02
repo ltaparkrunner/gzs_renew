@@ -56,6 +56,7 @@ public:
     QFile *stf;
 
     int rowsNum;
+    int currRow;  //TODO: track this new variable
     int dt_len;
 //    int checkTableRow(int n);
 signals:

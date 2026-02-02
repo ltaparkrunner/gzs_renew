@@ -239,3 +239,29 @@ void Parameters::fromQML_smplTableEditFinished(QList<QString> ls, int row, int c
 
 }
 
+void Parameters::fromQML_smplTableRowAdded(QList<QString>lrow, int row, int column){
+    qDebug() << "Parameters::fromQML_smplTableEditFinished: " << lrow[0] << " " << lrow[1] << "  " << lrow[2] << row << " " << column << "\n";
+    smplTbl.fromQML_smplTableRowAdded(lrow, row, column);
+    sldr.toQML_setMax(smplTbl.rowsNum);
+}
+
+void Parameters::fromQML_getFocus(int row, int column){
+    if(smplTbl.currRow != row) {
+        smplTbl.dt[smplTbl.currRow].clr_c1 = wht;
+        smplTbl.dt[smplTbl.currRow].clr_c2 = wht;
+        smplTbl.dt[smplTbl.currRow].clr_dur = wht;
+        smplTbl.dt[smplTbl.currRow].clr_nr = wht;
+        smplTbl.dt[smplTbl.currRow].clr_rH = wht;
+        smplTbl.dt[smplTbl.currRow].clr_sS = wht;
+
+        smplTbl.currRow = row;
+
+        smplTbl.dt[smplTbl.currRow].clr_c1 = bl;
+        smplTbl.dt[smplTbl.currRow].clr_c2 = bl;
+        smplTbl.dt[smplTbl.currRow].clr_dur = bl;
+        smplTbl.dt[smplTbl.currRow].clr_nr = bl;
+        smplTbl.dt[smplTbl.currRow].clr_rH = bl;
+        smplTbl.dt[smplTbl.currRow].clr_sS = bl;
+    }
+    // all the rest are white
+}
