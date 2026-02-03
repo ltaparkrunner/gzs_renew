@@ -22,5 +22,6 @@
         <file>Chooser_1.qml</file>
         <file>Choose_2.qml</file>
         <file>TableCombo2.qml</file>
+        <file>Simple_background.qml</file>
     </qresource>
 </RCC>

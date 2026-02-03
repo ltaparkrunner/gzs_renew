@@ -21,7 +21,7 @@ Parameters::Parameters(QString cmb_name, QString tname,  QString clbr_name, QObj
 ,   smplTbl(tname, this)
 ,   clbrTbl(cr, clbr_name, this)
 ,   cmbTbl(cr, cmb_name, this)
-,   sldr(2, smplTbl.dt_len, this)
+,   sldr(2, smplTbl.rowsNum, this)
 {
 
     // TODO: set Label_Current
@@ -247,14 +247,18 @@ void Parameters::fromQML_smplTableRowAdded(QList<QString>lrow, int row, int colu
 
 void Parameters::fromQML_getFocus(int row, int column){
     if(smplTbl.currRow != row) {
-        smplTbl.dt[smplTbl.currRow].clr_c1 = wht;
-        smplTbl.dt[smplTbl.currRow].clr_c2 = wht;
-        smplTbl.dt[smplTbl.currRow].clr_dur = wht;
-        smplTbl.dt[smplTbl.currRow].clr_nr = wht;
-        smplTbl.dt[smplTbl.currRow].clr_rH = wht;
-        smplTbl.dt[smplTbl.currRow].clr_sS = wht;
-
-        smplTbl.currRow = row;
+        if(smplTbl.currRow >= 0 && smplTbl.currRow < smplTbl.rowsNum){
+            smplTbl.dt[smplTbl.currRow].clr_c1 = wht;
+            smplTbl.dt[smplTbl.currRow].clr_c2 = wht;
+            smplTbl.dt[smplTbl.currRow].clr_dur = wht;
+            smplTbl.dt[smplTbl.currRow].clr_nr = wht;
+            smplTbl.dt[smplTbl.currRow].clr_rH = wht;
+            smplTbl.dt[smplTbl.currRow].clr_sS = wht;
+            smplTbl.publishRowColors(smplTbl.currRow);
+        }
+        if(row >= 0 && row < smplTbl.rowsNum)
+            smplTbl.currRow = row;
+        else smplTbl.currRow = smplTbl.rowsNum - 1;
 
         smplTbl.dt[smplTbl.currRow].clr_c1 = bl;
         smplTbl.dt[smplTbl.currRow].clr_c2 = bl;
@@ -262,6 +266,7 @@ void Parameters::fromQML_getFocus(int row, int column){
         smplTbl.dt[smplTbl.currRow].clr_nr = bl;
         smplTbl.dt[smplTbl.currRow].clr_rH = bl;
         smplTbl.dt[smplTbl.currRow].clr_sS = bl;
+        smplTbl.publishRowColors(smplTbl.currRow);
     }
     // all the rest are white
 }

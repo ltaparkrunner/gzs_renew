@@ -56,7 +56,7 @@ Rectangle {
             tm21.clear()
             for(i=2; i<imax; i++){
                 tm21.appendRow({"mnumber":lc[6*i], duration:lc[6*i+1], cncntr1:lc[6*i+2],
-                               cncntr2:lc[6*i+3], "sumStream":lc[6*i+4], "humidity":lc[6*i+5]})
+                               cncntr2:lc[6*i+3], "sumStream":lc[6*i+4], "humidity":lc[6*i+5]})//, "dur_cl":"lightblue"})//, "hum_cl":"lightgreen"})
 //                tm21[1]["mnumber"].
             }
         }
@@ -95,7 +95,7 @@ Rectangle {
 //            var k = 0
             for(i=0; i<imax; i++){
                 tm21.appendRow({"mnumber":ln[11*i+6], duration:ls[i+6], cncntr1:ln[11*i+9],
-                               cncntr2:ln[11*i+11], "sumStream":ln[11*i+13], "humidity":ln[11*i+15]})
+                               cncntr2:ln[11*i+11], "sumStream":ln[11*i+13], "humidity":ln[11*i+15]})//, "dur_cl":"lightblue"}) //, "hum_cl":"lightgreen"})
                 clrAr.push(ln[11*i+7])
 //                k=k+1
 
@@ -113,6 +113,22 @@ Rectangle {
             var indx = tm21.index(rw, cl)
             tm21.setData(indx, "display", s)
         }
+        function onToQML_smplTbl5(ln, ls, row){
+            console.log("onToQML_smplTbl5 : ln.length", ln.length, "  ls.length: ", ls.length, "  row: ", row)
+            tm21.setRow(row, {"mnumber":ln[0], duration:ls, cncntr1:ln[1], cncntr2:ln[2], "sumStream":ln[3], "humidity":ln[4]})//, "dur_cl":"lightred"}) //, "hum_cl":"lightviolet"})
+            console.log("ln.slice: ", ln.slice(5), "clrAr.length: ", clrAr.length, "clrAr:", clrAr)
+
+//            clrAr.slice(row*6) = ln.slice(5)
+            for(var i=0; i<6; i++) clrAr[row*6+i] = ln[5+i]
+            console.log("clrAr:", clrAr)
+        }
+        function onToQML_smplTblRowColors(ln, row){
+//            for(var i=0; i<6; i++) clrAr[row*6+i] = ln[i]
+            console.log("onToQML_smplTblRowColors(ln, row): ", row)
+            var indx = tm21.index(row, 7)
+//            tm21.setData(indx, "background", "orange")
+//            console.log("clrAr:", clrAr)
+        }
     }
     Connections{
         target: params
@@ -126,13 +142,16 @@ Rectangle {
         TableModelColumn { display: "cncntr2"}
         TableModelColumn { display: "sumStream"}
         TableModelColumn { display: "humidity"}
+        TableModelColumn { background:  "bgColor"}
+//         TableModelColumn { background:  function(modelIndex){return "white"}}
         rows:[{
             mnumber : "mnumber",
             duration : "duration",
             cncntr1 : "cncntr1",
             cncntr2 : "cncntr2",
             sumStream : "sumStream",
-            humidity : "humidity"
+            humidity : "humidity",
+            "bgColor": "lightgreen"
         }]
     }
 
@@ -147,6 +166,10 @@ Rectangle {
         model: tm21
           delegate: DelegateChooser {
 //              id:dcd
+              DelegateChoice {
+                  roleValue: "bgColor"
+              }
+
               DelegateChoice {
                   column: 0
                   delegate: Rectangle {
@@ -197,7 +220,18 @@ Rectangle {
                   }
               }
               DelegateChoice {
-                  column: smpl.columns - 1
+                    column: smpl.columns - 1
+//                    visible: false
+                    roleValue: "dur_cl"
+                    delegate: Item{
+                        visible: false
+                        implicitWidth: 100
+                        implicitHeight: 30
+                    }
+              }
+
+              DelegateChoice {
+                  column: smpl.columns - 2//smpl.columns - 1
                   row: smpl.rows - 1
                   delegate: Rectangle {
                       implicitWidth: 100
@@ -256,8 +290,9 @@ Rectangle {
                           anchors.fill:parent
                           background: Rectangle{
                               id:bg1
-                              property var cl: clrAr[row*smpl.columns + column]
-                              color:cl===0?"white":cl===1?"lightgreen":cl===2?"lightblue":"yellow"
+//                              property var cl: clrAr[row*smpl.columns + column]
+//                              color:cl===0?"white":cl===1?"lightgreen":cl===2?"lightblue":"yellow"
+//                              color: background
                           }
                           Keys.onReturnPressed: {
                             console.log("onToQML_smplTbl TextField Keys.onEditingFinished duration")
@@ -285,10 +320,10 @@ Rectangle {
                           onActiveFocusChanged: {
 //                            console.log("TextField onFocusChanged:  row: ", row, "  column: ", column)
                               if(activeFocus) {
-                                  bg1.color="lightblue"
+//                                  bg1.color="lightblue"
                                   params.fromQML_getFocus(row, column)
                               }
-                              else bg1.color="white"
+//                              else bg1.color="white"
                           }
                       }
                   }

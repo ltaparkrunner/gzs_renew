@@ -358,7 +358,10 @@ Rectangle{
 //            Layout.fillHeight: true
             Layout.fillWidth: true
 
-            TableSimple{
+            // TableSimple{
+            //     id:ts
+            // }
+            Simple_background{
                 id:ts
             }
         }

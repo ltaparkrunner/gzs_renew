@@ -17,7 +17,7 @@ mtime t1 = mtime(5, 0, 0);
 simpleTable::simpleTable(QString tn, QObject *parent):
     QObject(parent)
 ,   stf (new QFile(tn))
-,   currRow(0)
+,   currRow(-1)
 ,   rowsNum (4)
 {
     int i, j;
@@ -87,7 +87,7 @@ simpleTable::simpleTable(QString tn, QObject *parent):
         dt[i].relatHumidity = sl[2].toInt(&ok);
         dt[i].clr_rH = ok ? wht : rd;
     }
-    dt_len = dt.length();
+    rowsNum = dt.length();
     return;
     parse_err:
         QMessageBox msgBox(QMessageBox::Warning, "Сообщение о проблеме", "Не могу прочитать файл " + tn + "./n Заканчиваю работу.", QMessageBox::Close);
@@ -266,7 +266,7 @@ bool simpleTable::isCell(int col, int row) {
 }
 
 void simpleTable::fromQML_smplTableEditFinished(QList<QString> ls, int row, int clmn) {
-    qDebug() << "fromQML_smplTableEditFinished: " << ls[0] << " " << ls[1] << "  " << ls[2] << "  " << ls[3] << "  " << ls[4] << " " << row << " " << clmn << "\n";
+//    qDebug() << "fromQML_smplTableEditFinished: " << ls[0] << " " << ls[1] << "  " << ls[2] << "  " << ls[3] << "  " << ls[4] << " " << row << " " << clmn << "\n";
     bool ok;
     float tmp;
     if(clmn == 2) {
@@ -293,7 +293,6 @@ void simpleTable::fromQML_smplTableEditFinished(QList<QString> ls, int row, int 
         }
     }
     //TODO: Output of recounted concentrations
-//    if(row)
 }
 
 void simpleTable::publish3(int row, int clmn){
@@ -328,4 +327,35 @@ void simpleTable::fromQML_smplTableRowAdded(QList<QString> ls, int row, int clmn
     temp.clr_sS = rd;
     dt.append({row, rd, tt, rd, 0, rd, 0, rd, 0, rd, 0, rd});
     rowsNum++;
+}
+
+void simpleTable::publishRow(int row){
+    QList<int> ln;
+
+    ln.append(dt[row].num_row);
+    ln.append(dt[row].cncntr1);
+    ln.append(dt[row].cncntr2);
+    ln.append(dt[row].sumStream);
+    ln.append(dt[row].relatHumidity);
+
+    ln.append(dt[row].clr_nr);
+    ln.append(dt[row].clr_dur);
+    ln.append(dt[row].clr_c1);
+    ln.append(dt[row].clr_c2);
+    ln.append(dt[row].clr_sS);
+    ln.append(dt[row].clr_rH);
+
+    toQML_smplTbl5(ln, dt[row].duration.to_string(), row);
+}
+
+void simpleTable::publishRowColors(int row){
+    QList<int> ln;
+    ln.append(dt[row].clr_nr);
+    ln.append(dt[row].clr_dur);
+    ln.append(dt[row].clr_c1);
+    ln.append(dt[row].clr_c2);
+    ln.append(dt[row].clr_sS);
+    ln.append(dt[row].clr_rH);
+
+    toQML_smplTblRowColors(ln, row);
 }

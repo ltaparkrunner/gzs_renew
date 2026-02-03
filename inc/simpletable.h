@@ -52,12 +52,14 @@ public:
     void publish();
     void publish2();
     void publish3(int row, int clmn);
+    void publishRow(int row);
+    void publishRowColors(int row);
 //    void publish3(int nm, int row, int clmn);
     QFile *stf;
 
-    int rowsNum;
+    int rowsNum;        // int rowsNum = dt.length();
     int currRow;  //TODO: track this new variable
-    int dt_len;
+//    int dt_len;     //TODO: rowsNum and dt_len are they the same? remove one of them        dt_len = dt.length();
 //    int checkTableRow(int n);
 signals:
     void toQML_smplTbl(QList<QString> lc);
@@ -65,6 +67,8 @@ signals:
     void toQML_smplTbl3(int nm, int row, int clmn);
     void toQML_smplTbl4(QString tm, int row, int clmn);
     void toQML_smplTblcheck();
+    void toQML_smplTbl5(QList<int> ln, QString ls, int row);
+    void toQML_smplTblRowColors(QList<int> ln, int row);
 public slots:
     void fromQML_smplTableCompleted();
 //    void fromQML_smplTableEditFinished(QList<QString> ls);
