@@ -344,7 +344,7 @@ Rectangle{
             orientation: Qt.Horizontal
             onValueChanged: {
 //                console.log("Slider new value:", value)
-                sldr.fromQML_posChanged(value)
+                params.fromQML_sliderPosChanged(value)
             }
             Component.onCompleted: {
                 sldr.fromQML_sldrCompleted()
@@ -358,12 +358,12 @@ Rectangle{
 //            Layout.fillHeight: true
             Layout.fillWidth: true
 
-            // TableSimple{
-            //     id:ts
-            // }
-            Simple_background{
+            TableSimple{
                 id:ts
             }
+            // Simple_background{
+            //     id:ts
+            // }
         }
     }
 }

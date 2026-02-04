@@ -359,3 +359,16 @@ void simpleTable::publishRowColors(int row){
 
     toQML_smplTblRowColors(ln, row);
 }
+
+void simpleTable::publishRowColors2(int row, int cln){
+    switch(cln){
+        case 0: toQML_smplTblRowColors2(dt[row].clr_nr, row, 0); break;
+        case 1: toQML_smplTblRowColors2(dt[row].clr_dur, row, 1); break;
+        case 2: toQML_smplTblRowColors2(dt[row].clr_c1, row, 2); break;
+        case 3: toQML_smplTblRowColors2(dt[row].clr_c2, row, 3); break;
+        case 4: toQML_smplTblRowColors2(dt[row].clr_sS, row, 4); break;
+        case 5: toQML_smplTblRowColors2(dt[row].clr_rH, row, 4); break;
+        default: break;
+    }
+    return;
+}

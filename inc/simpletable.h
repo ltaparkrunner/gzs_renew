@@ -54,6 +54,7 @@ public:
     void publish3(int row, int clmn);
     void publishRow(int row);
     void publishRowColors(int row);
+    void publishRowColors2(int row, int cln);
 //    void publish3(int nm, int row, int clmn);
     QFile *stf;
 
@@ -69,6 +70,7 @@ signals:
     void toQML_smplTblcheck();
     void toQML_smplTbl5(QList<int> ln, QString ls, int row);
     void toQML_smplTblRowColors(QList<int> ln, int row);
+    void toQML_smplTblRowColors2(int clr, int row, int cln);
 public slots:
     void fromQML_smplTableCompleted();
 //    void fromQML_smplTableEditFinished(QList<QString> ls);

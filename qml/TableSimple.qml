@@ -10,19 +10,14 @@ import QtQuick.Layouts 1.0
 //import QtQuick.Controls 1.5
 
 Rectangle {
-//    implicitWidth: tv.width
-//    implicitHeight: tv.height
-//    anchors.left: parent.left
-//    anchors.right: parent.right
-//    Layout.fillHeight: true
-//    Layout.fillWidth: true
     height: 200
     width: 800
     color: "green"
-    property var clrAr:[]
+    readonly property var colors: ["azure", "lightblue", "lightgreen", "lightpink", "grey" ]
     Connections{
         target: smplTbl
 //        onToQML_smplTbl:
+
         function onToQML_smplTbl(lc)
         {
             var i,j,l
@@ -56,8 +51,9 @@ Rectangle {
             tm21.clear()
             for(i=2; i<imax; i++){
                 tm21.appendRow({"mnumber":lc[6*i], duration:lc[6*i+1], cncntr1:lc[6*i+2],
-                               cncntr2:lc[6*i+3], "sumStream":lc[6*i+4], "humidity":lc[6*i+5]})//, "dur_cl":"lightblue"})//, "hum_cl":"lightgreen"})
-//                tm21[1]["mnumber"].
+                                cncntr2:lc[6*i+3], "sumStream":lc[6*i+4], "humidity":lc[6*i+5],
+                                mn_clr:"azure", dur_clr:"magneta", cn1_clr:"floralwhite", cn2_clr:"ivory",
+                                sS_clr:"lyghtcyan", hum_clr: "mintcream"})
             }
         }
         function onToQML_smplTbl2(ln, ls)
@@ -92,17 +88,13 @@ Rectangle {
             }
 
             tm21.clear()
-//            var k = 0
             for(i=0; i<imax; i++){
-                tm21.appendRow({"mnumber":ln[11*i+6], duration:ls[i+6], cncntr1:ln[11*i+9],
-                               cncntr2:ln[11*i+11], "sumStream":ln[11*i+13], "humidity":ln[11*i+15]})//, "dur_cl":"lightblue"}) //, "hum_cl":"lightgreen"})
-                clrAr.push(ln[11*i+7])
-//                k=k+1
-
-                for(j=0; j<5; j++) {
-                    clrAr.push(ln[11*i+j*2+8])
-//                    k = k+1
-                }
+                tm21.appendRow({"mnumber":ln[11*i+6],  duration:ls[i+6], cncntr1:ln[11*i+9],
+                               cncntr2:ln[11*i+11], "sumStream":ln[11*i+13], "humidity":ln[11*i+15],
+                               clr_nr:colors[ln[11*i+7]], clr_dur:colors[ln[11*i+8]], clr_c1:colors[ln[11*i+10]], clr_c2:colors[ln[11*i+12]],
+                               clr_sS:colors[ln[11*i+14]], clr_rH:colors[ln[11*i+16]]})
+                               // clr_nr:"lightblue", clr_dur:"azure", clr_c1:"azure", clr_c2:"lightblue",
+                               // clr_sS:"lightblue", clr_rH: "lightblue"})
             }
         }
         function onToQML_smplTbl3(num, rw, cl){
@@ -114,20 +106,24 @@ Rectangle {
             tm21.setData(indx, "display", s)
         }
         function onToQML_smplTbl5(ln, ls, row){
-            console.log("onToQML_smplTbl5 : ln.length", ln.length, "  ls.length: ", ls.length, "  row: ", row)
-            tm21.setRow(row, {"mnumber":ln[0], duration:ls, cncntr1:ln[1], cncntr2:ln[2], "sumStream":ln[3], "humidity":ln[4]})//, "dur_cl":"lightred"}) //, "hum_cl":"lightviolet"})
-            console.log("ln.slice: ", ln.slice(5), "clrAr.length: ", clrAr.length, "clrAr:", clrAr)
-
-//            clrAr.slice(row*6) = ln.slice(5)
-            for(var i=0; i<6; i++) clrAr[row*6+i] = ln[5+i]
-            console.log("clrAr:", clrAr)
+            tm21.setRow(row, {"mnumber":ln[0], duration:ls, dur_clr:"magneta", cncntr1:ln[1], cncntr2:ln[2], "sumStream":ln[3], "humidity":ln[4],
+                            clr_nr:colors[ln[5]], clr_dur:colors[ln[6]], clr_c1:colors[ln[7]], clr_c2:colors[ln[8]],
+                            clr_sS:colors[ln[9]], clr_rH: colors[ln[10]]})
+            console.log("ln.slice: ", ln.slice(5))
         }
         function onToQML_smplTblRowColors(ln, row){
-//            for(var i=0; i<6; i++) clrAr[row*6+i] = ln[i]
+            var indx
             console.log("onToQML_smplTblRowColors(ln, row): ", row)
-            var indx = tm21.index(row, 7)
-//            tm21.setData(indx, "background", "orange")
-//            console.log("clrAr:", clrAr)
+            for(var i=0; i<6; i++){
+                indx = tm21.index(row, i)
+                tm21.setData(indx, "background", colors[ln[0]])
+            }
+        }
+        function onToQML_smplTblRowColors2(clr, row, cln){
+            if(cln<6) {
+                var indx=tm21.index(row, cln)
+                tm21.setData(indx, "background", colors[clr])
+            }
         }
     }
     Connections{
@@ -136,22 +132,19 @@ Rectangle {
 //    color: "ivory"
     TableModel{
         id: tm21
-        TableModelColumn { display : "mnumber"}
-        TableModelColumn { display: "duration"}
-        TableModelColumn { display: "cncntr1"}
-        TableModelColumn { display: "cncntr2"}
-        TableModelColumn { display: "sumStream"}
-        TableModelColumn { display: "humidity"}
-        TableModelColumn { background:  "bgColor"}
-//         TableModelColumn { background:  function(modelIndex){return "white"}}
+        TableModelColumn { display : "mnumber"; background:"clr_nr"}
+        TableModelColumn { display: "duration"; background:"clr_dur"}
+        TableModelColumn { display: "cncntr1"; background: "clr_c1"}
+        TableModelColumn { display: "cncntr2"; background: "clr_c2"}
+        TableModelColumn { display: "sumStream"; background: "clr_sS"}
+        TableModelColumn { display: "humidity"; background: "clr_rH"}
         rows:[{
-            mnumber : "mnumber",
-            duration : "duration",
-            cncntr1 : "cncntr1",
-            cncntr2 : "cncntr2",
-            sumStream : "sumStream",
-            humidity : "humidity",
-            "bgColor": "lightgreen"
+            mnumber : "mnumber", clr_nr:"azure",
+            duration : "duration", clr_dur:"magneta",   //"aliceblue",
+            cncntr1 : "cncntr1", clr_c1:"floralwhite",
+            cncntr2 : "cncntr2", clr_c2:"ivory",
+            sumStream : "sumStream", clr_sS:"lyghtcyan",
+            humidity : "humidity", clr_rH: "mintcream"
         }]
     }
 
@@ -237,7 +230,7 @@ Rectangle {
                       implicitWidth: 100
                       implicitHeight: 30
                       border.width: 1
-                      color: "green"
+//                      color: "green"
                       TextField {
 //                          color: activeFocusControl?"lightblue":""
                           text: display
@@ -245,7 +238,7 @@ Rectangle {
                           //validator: RegularExpressionValidator{regularExpression: /^([0-1][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/}
                           anchors.fill:parent
                             background: Rectangle{
-                                color:clrAr[1]===0?"white":clrAr[1]===1?"lightgreen":clrAr[1]===2?"lightblue":"yellow"
+                                color:background
                             }
 
                           Keys.onReturnPressed: {
@@ -281,6 +274,7 @@ Rectangle {
               }
               DelegateChoice {
                   delegate: Rectangle {
+                      id: dcr1
                       implicitWidth: 100
                       implicitHeight: 30
                       border.width: 1
@@ -289,10 +283,10 @@ Rectangle {
                           //validator: RegularExpressionValidator{regularExpression: /^\d+$/}
                           anchors.fill:parent
                           background: Rectangle{
-                              id:bg1
+//                              id:bg1
 //                              property var cl: clrAr[row*smpl.columns + column]
 //                              color:cl===0?"white":cl===1?"lightgreen":cl===2?"lightblue":"yellow"
-//                              color: background
+                              color: background
                           }
                           Keys.onReturnPressed: {
                             console.log("onToQML_smplTbl TextField Keys.onEditingFinished duration")

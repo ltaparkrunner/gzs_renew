@@ -23,10 +23,11 @@ Rectangle {
     Connections{
         target: smplTbl
         function onToQML_smplTbl2(ln, ls){
-            console.log("onToQML_smplTbl2(lc)")
 //            tm21.clear()
-            tm21.appendRow({"mnumber":"forever", "color1":"lightblue", "duration":"young", "color2":"lightblue"}) //, "bgColor":"lightgreen",  "bgColor2":"lightblue"})//, "hum_cl":"lightgreen"})
-            tm21.appendRow({"mnumber":"forever", "color1":"lightblue", "duration":"young", "color2":"lightblue"}) //, "bgColor":"lightgreen", "bgColor2":"lightblue"})//, "hum_cl":"lightgreen"})
+            console.log("onToQML_smplTbl2 tm21.rowCount: ", tm21.rowCount)
+            tm21.appendRow({mnumber:"forever", "color1":"lightblue", duration:"young", "color2":"lightgreen"}) //, "bgColor":"lightgreen",  "bgColor2":"lightblue"})//, "hum_cl":"lightgreen"})
+//            tm21.appendRow({"mnumber":"forever",/* "color1":"lightblue",*/ "duration":"young"/*, "color2":"lightblue"*/}) //, "bgColor":"lightgreen", "bgColor2":"lightblue"})//, "hum_cl":"lightgreen"})
+            console.log("onToQML_smplTbl2 tm21.rowCount: ", tm21.rowCount)
         }
     }
     Connections{
@@ -42,17 +43,15 @@ Rectangle {
 //        TableModelColumn { background:  "bgColor2"}
 //        TableModelColumn { background:  function(modelIndex){return "white"}}
         rows:[{
-                "mnumber" : "mnumber", "color1":"lightgreen",
-                "duration" : "duration", "color2":"red"
-//                "bgColor": "lightblue",
-//                "bgColor2": "green"
-            },
-            {
-                "mnumber" : "mnumber", "color1":"lightgreen",
-                "duration" : "duration",  "color2":"blue"
-//                "bgColor": "lightblue",
-//                "bgColor2": "blue"
-            }]
+                mnumber : "mnumber", "color1":"lightgreen",
+                duration : "duration", "color2":"red"
+            }
+            // ,
+            // {
+            //     "mnumber" : "mnumber", //"color1":"lightgreen",
+            //     "duration" : "duration"//,  "color2":"blue"
+            // }
+        ]
     }
 
     TableView {
@@ -70,7 +69,6 @@ Rectangle {
         delegate: DelegateChooser {
             role: "display"// "background"
             DelegateChoice {
-
                 roleValue: "mnumber"
                 delegate: Rectangle{
                     implicitWidth: 100
@@ -118,15 +116,14 @@ Rectangle {
                     color: background
                 }
             }
-            // DelegateChoice {
-            //     roleValue: "bgColor"
-            //     delegate: Rectangle{
-            //         implicitWidth: 100
-            //         implicitHeight: 30
-            //         border.width: 1
-            //         color: "lightblue"//model.background
-            //     }
-            // }
+            DelegateChoice {
+                delegate: Rectangle{
+                    implicitWidth: 30
+                    implicitHeight: 30
+                    border.width: 1
+                    color: background
+                }
+            }
             // DelegateChooser {
             //             role: "background"
             // DelegateChoice {

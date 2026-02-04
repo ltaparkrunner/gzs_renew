@@ -46,19 +46,9 @@ struct   TParameters
 class Parameters : public QObject
 {
     Q_OBJECT
-//    Q_PROPERTY(int Factor_Dilute READ rFactor_Dilute WRITE setFactor_Dilute NOTIFY Factor_DiluteChanged)
-//    float          Conc_Gas;               // Заданная концентрация целевого газа на выходе
-//    float          Conc_Balloon;           // Заданная концентрация целевого газа в баллоне
 public:
 
     explicit Parameters(QString cmb_name, QString tname,  QString clbr_name, QObject *parent);
-    // int rFactor_Dilute() const {return Factor_Dilute;}
-    // void setFactor_Dilute(const int &num){
-    //     if(Factor_Dilute != num){
-    //         Factor_Dilute = num;
-    //         emit Factor_DiluteChanged();
-    //     }
-    // }
     int startCheckTblRow(int n);
     int checkTblRow(int n);  // Station_Calc(ARow)
 signals:
@@ -67,7 +57,6 @@ signals:
     void toQML_statusBar(QString msg);
 //    void toQML_statusBar();
 public:
-//    calibrTable clbrTbl;
     crates_t    cr;
     simpleTable smplTbl;
     calibrTable clbrTbl;
@@ -106,6 +95,7 @@ public slots:
     void fromQML_smplTableEditFinished(QList<QString> ls, int row, int clmn);
     void fromQML_smplTableRowAdded(QList<QString>lrow, int row, int column);
     void fromQML_getFocus(int row, int column);
+    void fromQML_sliderPosChanged(int value);
 };
 
 #endif // PARAMS_H

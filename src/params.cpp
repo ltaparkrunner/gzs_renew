@@ -267,6 +267,12 @@ void Parameters::fromQML_getFocus(int row, int column){
         smplTbl.dt[smplTbl.currRow].clr_rH = bl;
         smplTbl.dt[smplTbl.currRow].clr_sS = bl;
         smplTbl.publishRowColors(smplTbl.currRow);
+        sldr.toQML_setPos(row+1);
     }
     // all the rest are white
+}
+
+void Parameters::fromQML_sliderPosChanged(int val){
+//    fromQML_getFocus(val, 1);     // TODO: call cycling
+    sldr.fromQML_posChanged(val);
 }
