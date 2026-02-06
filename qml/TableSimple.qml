@@ -151,18 +151,23 @@ Rectangle {
 
     TableView {
         id: smpl
+//        activeFocus: true
         anchors.left: parent.left
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.top: header2.bottom
 //        clip: true
-
+//        KeyNavigation.down:
+        ItemSelectionModel{id: selectionModel}
         model: tm21
+        // KeyNavigation.up: topRight
+        // KeyNavigation.down: bottomLeft
+//        ItemSelectionModel:mymodel
           delegate: DelegateChooser {
-//              id:dcd
-              DelegateChoice {
-                  roleValue: "bgColor"
-              }
+              id:dcd
+              // DelegateChoice {
+              //     roleValue: "bgColor"
+              // }
 
               DelegateChoice {
                   column: 0
@@ -225,12 +230,13 @@ Rectangle {
               }
 
               DelegateChoice {
-                  column: smpl.columns - 2//smpl.columns - 1
+                  column: smpl.columns - 1//smpl.columns - 1
                   row: smpl.rows - 1
                   delegate: Rectangle {
                       implicitWidth: 100
                       implicitHeight: 30
                       border.width: 1
+//                      KeyNavigation.down: bottomLeft
 //                      color: "green"
                       TextField {
 //                          color: activeFocusControl?"lightblue":""
@@ -279,7 +285,20 @@ Rectangle {
                       implicitWidth: 100
                       implicitHeight: 30
                       border.width: 1
+//                       KeyNavigation.up: {
+//                           var indx = tm21.index(row+1, column)
+// //                          return smpl.itemAtIndex(indx)
+//                           return smpl.mapToItem(indx)
+//                       }
+                      // {
+                      //     console.log("In DelegateChoice Rectangle KeyNavigation.up: ")
+                      //     var indx = tm21.index(row+1, column)
+                      //     return Component}
+                      // KeyNavigation.down: bottom
+
                       TextField {
+                          // KeyNavigation.up: top
+                          // KeyNavigation.down: bottom
                           text: display
                           //validator: RegularExpressionValidator{regularExpression: /^\d+$/}
                           anchors.fill:parent
@@ -320,6 +339,19 @@ Rectangle {
                               }
 //                              else bg1.color="white"
                           }
+                          // Keys.onDownPressed: {
+                          //     console.log("TextField Keys.onDownPressed:  row: ", row, "  smpl.rows: ", smpl.rows)
+                          //     if(row<smpl.rows){
+                          //     }
+                          // }
+                          // Keys.onUpPressed: {
+                          //     console.log("TextField Keys.onUpPressed:  row: ", row, "  tm21.rowCount: ", tm21.rowCount)
+                          //     if(row>0){
+                          //         smpl.focus
+                          //     }
+
+                          // }
+
                       }
                   }
               }
