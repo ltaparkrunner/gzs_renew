@@ -245,34 +245,32 @@ void Parameters::fromQML_smplTableRowAdded(QList<QString>lrow, int row, int colu
     sldr.toQML_setMax(smplTbl.rowsNum);
 }
 
-void Parameters::fromQML_getFocus(int row, int column){
-    if(smplTbl.currRow != row) {
-        if(smplTbl.currRow >= 0 && smplTbl.currRow < smplTbl.rowsNum){
-            smplTbl.dt[smplTbl.currRow].clr_c1 = wht;
-            smplTbl.dt[smplTbl.currRow].clr_c2 = wht;
-            smplTbl.dt[smplTbl.currRow].clr_dur = wht;
-            smplTbl.dt[smplTbl.currRow].clr_nr = wht;
-            smplTbl.dt[smplTbl.currRow].clr_rH = wht;
-            smplTbl.dt[smplTbl.currRow].clr_sS = wht;
-            smplTbl.publishRowColors(smplTbl.currRow);
-        }
+void Parameters::fromQML_smplTableGetFocus(int row, int column){
+    if((smplTbl.currRow != row) && (row < smplTbl.rowsNum) && (row >= 0)) {
+        QList<clr> clrs={wht, wht, wht, wht, wht, wht};
+        smplTbl.publishRowColors3(clrs);
         if(row >= 0 && row < smplTbl.rowsNum)
             smplTbl.currRow = row;
         else smplTbl.currRow = smplTbl.rowsNum - 1;
-
-        smplTbl.dt[smplTbl.currRow].clr_c1 = bl;
-        smplTbl.dt[smplTbl.currRow].clr_c2 = bl;
-        smplTbl.dt[smplTbl.currRow].clr_dur = bl;
-        smplTbl.dt[smplTbl.currRow].clr_nr = bl;
-        smplTbl.dt[smplTbl.currRow].clr_rH = bl;
-        smplTbl.dt[smplTbl.currRow].clr_sS = bl;
-        smplTbl.publishRowColors(smplTbl.currRow);
+        clrs=QList({bl, bl, bl, bl, bl, bl});
+        smplTbl.publishRowColors3(clrs);
         sldr.toQML_setPos(row+1);
     }
-    // all the rest are white
 }
 
 void Parameters::fromQML_sliderPosChanged(int val){
-//    fromQML_getFocus(val, 1);     // TODO: call cycling
-    sldr.fromQML_posChanged(val);
+//    qDebug() << "smplTbl.currRow: " << smplTbl.currRow << "  slider pos: " <<  val;
+    val = val-1;
+    if((smplTbl.currRow != val) && (val < smplTbl.rowsNum) && (val >= 0)) {
+        QList<clr> clrs={wht, wht, wht, wht, wht, wht};
+        smplTbl.publishRowColors3(clrs);
+        if(val >= 0 && val < smplTbl.rowsNum)
+            smplTbl.currRow = val;
+        else smplTbl.currRow = smplTbl.rowsNum - 1;
+        clrs=QList({bl, bl, bl, bl, bl, bl});
+        smplTbl.publishRowColors3(clrs);
+        sldr.fromQML_posChanged(val+1);          //?? TODO
+//        qDebug() << "sldr.fromQML_posChanged:  slider pos: " <<  val+1;
+    }
 }
+

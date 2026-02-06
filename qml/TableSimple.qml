@@ -96,6 +96,7 @@ Rectangle {
                                // clr_nr:"lightblue", clr_dur:"azure", clr_c1:"azure", clr_c2:"lightblue",
                                // clr_sS:"lightblue", clr_rH: "lightblue"})
             }
+            console.log("onToQML_smplTbl2 imax: ", imax)
         }
         function onToQML_smplTbl3(num, rw, cl){
             var indx = tm21.index(rw, cl)
@@ -315,7 +316,7 @@ Rectangle {
 //                            console.log("TextField onFocusChanged:  row: ", row, "  column: ", column)
                               if(activeFocus) {
 //                                  bg1.color="lightblue"
-                                  params.fromQML_getFocus(row, column)
+                                  params.fromQML_smplTableGetFocus(row, column)
                               }
 //                              else bg1.color="white"
                           }

@@ -17,7 +17,7 @@ mtime t1 = mtime(5, 0, 0);
 simpleTable::simpleTable(QString tn, QObject *parent):
     QObject(parent)
 ,   stf (new QFile(tn))
-,   currRow(-1)
+,   currRow(0)  //currRow(-1)       TODO:
 ,   rowsNum (4)
 {
     int i, j;
@@ -367,8 +367,22 @@ void simpleTable::publishRowColors2(int row, int cln){
         case 2: toQML_smplTblRowColors2(dt[row].clr_c1, row, 2); break;
         case 3: toQML_smplTblRowColors2(dt[row].clr_c2, row, 3); break;
         case 4: toQML_smplTblRowColors2(dt[row].clr_sS, row, 4); break;
-        case 5: toQML_smplTblRowColors2(dt[row].clr_rH, row, 4); break;
+        case 5: toQML_smplTblRowColors2(dt[row].clr_rH, row, 5); break;
         default: break;
     }
     return;
+}
+
+void simpleTable::publishRowColors3(QList<clr> clrs){
+    qDebug() << "publishRowColors3 currRow: " << currRow << "  dt.length()" << dt.length();
+    if(clrs.length() >= 6){
+        dt[currRow].clr_c1 = clrs[0];
+        dt[currRow].clr_c2 = clrs[1];
+        dt[currRow].clr_dur = clrs[2];
+        dt[currRow].clr_nr = clrs[3];
+        dt[currRow].clr_rH = clrs[4];
+        dt[currRow].clr_sS = clrs[5];
+        publishRowColors(currRow);
+//        toQML_smplTblRowColors(clrs, currRow);
+    }
 }

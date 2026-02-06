@@ -55,6 +55,7 @@ public:
     void publishRow(int row);
     void publishRowColors(int row);
     void publishRowColors2(int row, int cln);
+    void publishRowColors3(QList<clr> clrs);
 //    void publish3(int nm, int row, int clmn);
     QFile *stf;
 

@@ -18,7 +18,9 @@ public:
 public slots:
     void fromQML_posChanged(int p){
         if(pos != p){
-            pos = p;
+            if(p > max) pos = max;
+            else if(p<1) pos = 1;
+            else pos = p;
             qDebug() << "Slider position is changed: " << p;
         }
     }
